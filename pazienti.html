@@ -26,21 +26,41 @@ main{max-width:860px;margin:-22px auto 40px;padding:0 16px}
 h3{margin:34px 0 12px;font-size:.85rem;text-transform:uppercase;letter-spacing:.6px;color:#5b6b78}
 .disc{background:#fff8e6;border:1px solid #f0d58c;border-radius:12px;padding:14px 16px;font-size:.88rem;color:#5a4a12;margin-top:28px}
 footer{text-align:center;color:#5b6b78;font-size:.82rem;padding:0 16px 32px}
+
+nav.sub{background:#fff;border-bottom:1px solid #dbe3e9;position:sticky;top:0;z-index:5;display:flex;gap:4px;justify-content:center;flex-wrap:wrap;padding:8px}
+nav.sub a{padding:7px 14px;border-radius:18px;text-decoration:none;color:#0f3d5e;font-weight:600;font-size:.9rem}
+nav.sub a.on{background:#0f3d5e;color:#fff}
+.dist{margin:0 0 22px}
+.dist h2{font-size:1.05rem;margin:0 0 10px;color:#0f3d5e}
+.list{display:flex;flex-wrap:wrap;gap:8px}
+.item{background:#fff;border:1px dashed #b9c6d0;border-radius:10px;padding:8px 12px;font-size:.9rem;color:#5b6b78}
+a.item{border:1px solid #0f3d5e;color:#0f3d5e;text-decoration:none;font-weight:600}
+.item small{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.4px;color:#8896a2}
+.sec{background:#fff;border:1px solid #dbe3e9;border-radius:14px;padding:18px 20px;margin-bottom:14px}
+.sec h2{margin:0 0 6px;font-size:1.05rem;color:#0f3d5e}
+.sec p{margin:0;color:#5b6b78;font-size:.93rem}
+main{margin-top:0;padding-top:28px}
 </style>
 </head>
 <body>
+<nav class="sub"><a href="index.html">← iltuofisiatra.it</a><a href="pazienti.html" class=on>Area pazienti</a><a href="patologie.html">Patologie</a><a href="procedure.html">Procedure</a></nav>
 <header>
-  <a class="back" href="index.html">← iltuofisiatra.it</a>
   <h1>Area <span>pazienti</span></h1>
-  <p>Informazioni chiare su salute, riabilitazione e percorsi di cura.</p>
+  <p>Informazioni chiare su patologie e procedure, scritte dal medico fisiatra.</p>
 </header>
 <main>
-  <h3>Contenuti</h3>
   <div class="grid">
-    <article class="card soon">
-      <span class="tag">In preparazione</span>
-      <h2>Schede informative</h2>
-      <p>I contenuti per i pazienti saranno pubblicati gradualmente.</p>
+    <article class="card">
+      <span class="tag">Per distretto</span>
+      <h2>Patologie</h2>
+      <p>Che cosa sono, come si riconoscono e come si curano le principali patologie muscolo-scheletriche, divise per distretto del corpo.</p>
+      <div class="btns"><a class="btn" href="patologie.html">Vedi le patologie</a></div>
+    </article>
+    <article class="card">
+      <span class="tag">Cosa aspettarsi</span>
+      <h2>Procedure</h2>
+      <p>In cosa consistono i trattamenti proposti in ambulatorio, come si svolgono e quali sono i possibili rischi.</p>
+      <div class="btns"><a class="btn" href="procedure.html">Vedi le procedure</a></div>
     </article>
   </div>
   <div class="disc"><strong>Avvertenza.</strong> Le informazioni hanno scopo divulgativo e non sostituiscono la visita medica. In caso di dubbi o sintomi rivolgiti al tuo medico; in caso di emergenza chiama il 112.</div>
