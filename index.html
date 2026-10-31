@@ -3,585 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wizard Osteoporosi — Nota AIFA 79</title>
+<title>iltuofisiatra.it — Strumenti clinici per la prescrizione</title>
+<meta name="description" content="Strumenti di consultazione rapida per il medico: wizard guidati sulle Note AIFA, con principi attivi e posologie.">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,Helvetica,sans-serif;background:#f5f5f3;color:#1a1a1a;font-size:14px;line-height:1.5}
-header{background:#185FA5;color:#fff;padding:12px 18px;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:12px}
-header h1{font-size:15px;font-weight:700;flex:1}
-header span{font-size:10px;opacity:.75}
-.wrap{max-width:660px;margin:0 auto;padding:14px}
-.prog-label{font-size:11px;color:#666;margin-bottom:4px}
-.prog-bar{height:5px;background:#ddd;border-radius:3px;margin-bottom:14px;overflow:hidden}
-.prog-fill{height:100%;background:#185FA5;border-radius:3px;transition:width .3s}
-.step{display:none}.step.active{display:block}
-.card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:14px 16px;margin-bottom:10px}
-.stitle{font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
-.q{font-size:15px;font-weight:600;color:#111;margin-bottom:8px;line-height:1.45}
-.qsub{font-size:12px;color:#666;margin-bottom:10px;line-height:1.4}
-.opts{display:flex;flex-direction:column;gap:6px}
-.opt{background:#f0f4fa;border:1px solid #c5d5e8;border-radius:8px;padding:10px 13px;font-size:13px;color:#1a3a5c;cursor:pointer;text-align:left;transition:background .12s;line-height:1.4}
-.opt:hover{background:#d8eaf8;border-color:#378ADD}
-.back{background:none;border:none;color:#888;font-size:12px;cursor:pointer;padding:6px 0 0;text-decoration:underline}
-.back:hover{color:#185FA5}
-.note{background:#E6F1FB;border-left:4px solid #378ADD;padding:8px 11px;font-size:12px;color:#0C447C;border-radius:0 6px 6px 0;margin-top:8px;line-height:1.5}
-.warn{background:#FFF3E0;border-left:4px solid #FFB74D;padding:8px 11px;font-size:12px;color:#633806;border-radius:0 6px 6px 0;margin-top:8px;line-height:1.5}
-.danger{background:#FCEBEB;border-left:4px solid #E24B4A;padding:8px 11px;font-size:12px;color:#791F1F;border-radius:0 6px 6px 0;margin-top:8px;line-height:1.5}
-.rcard{border-radius:9px;padding:11px 14px;margin-bottom:10px}
-.rcard-amber{background:#FFF3E0;border:1px solid #FFB74D}
-.rcard-red{background:#FCEBEB;border:1px solid #F09595}
-.rcard-blue{background:#E6F1FB;border:1px solid #85B7EB}
-.rcard-amber .rt{color:#633806;font-size:13px;font-weight:700;margin-bottom:3px}
-.rcard-red .rt{color:#791F1F;font-size:13px;font-weight:700;margin-bottom:3px}
-.rcard-blue .rt{color:#0C447C;font-size:13px;font-weight:700;margin-bottom:3px}
-.rcard-amber .rb{color:#854F0B;font-size:12px;line-height:1.5}
-.rcard-red .rb{color:#A32D2D;font-size:12px;line-height:1.5}
-.rcard-blue .rb{color:#185FA5;font-size:12px;line-height:1.5}
-
-/* tabella farmaci */
-.dtable{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
-.dtable th{background:#f0f4fa;padding:6px 8px;text-align:left;font-weight:700;border-bottom:1px solid #ccc;color:#444;font-size:11px}
-.dtable td{padding:7px 8px;border-bottom:1px solid #eee;vertical-align:top}
-.dtable tr:last-child td{border-bottom:none}
-
-/* scheda prescrizione */
-.rx-card{background:#fff;border:2px solid #185FA5;border-radius:10px;padding:14px 16px;margin-bottom:10px}
-.rx-title{font-size:13px;font-weight:700;color:#185FA5;margin-bottom:10px;border-bottom:1px solid #ddd;padding-bottom:6px}
-.rx-block{background:#f0f4fa;border-radius:8px;padding:10px 12px;margin-bottom:8px}
-.rx-block:last-child{margin-bottom:0}
-.rx-nome{font-size:14px;font-weight:700;color:#111;margin-bottom:4px}
-.rx-com{font-size:11px;color:#185FA5;font-weight:700;margin-bottom:6px}
-.rx-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px}
-.rx-pill{background:#185FA5;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block}
-.rx-pill-g{background:#27500A;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block}
-.rx-pill-o{background:#633806;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block}
-.rx-detail{font-size:12px;color:#333;line-height:1.6;margin-top:4px}
-.rx-ci{font-size:11px;color:#791F1F;background:#FCEBEB;border-radius:6px;padding:3px 8px;margin-top:4px;display:inline-block}
-.scelta-badge{display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;margin-bottom:4px}
-.sc1{background:#EAF3DE;color:#27500A}
-.sc2{background:#FFF3E0;color:#633806}
-.sc3{background:#f1efe8;color:#444}
-
-.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
-.chip{background:#f0f4fa;border:1px solid #ddd;border-radius:6px;padding:2px 8px;font-size:11px;color:#666}
-.chip span{color:#111;font-weight:700}
-
-/* bottone nuovo paziente — visibile e grande */
-.new-btn{display:block;width:100%;background:#185FA5;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:14px;text-align:center;letter-spacing:.02em}
-.new-btn:hover{background:#0C447C}
-
-label.ci-label{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;cursor:pointer;line-height:1.4;color:#1a1a1a;padding:6px 0;border-bottom:1px solid #f0f0f0}
-label.ci-label:last-child{border-bottom:none}
-label.ci-label input{margin-top:2px;flex-shrink:0;width:16px;height:16px}
-.go-btn{background:#185FA5;color:#fff;border:none;border-radius:8px;padding:11px 14px;font-size:13px;font-weight:700;cursor:pointer;margin-top:10px;width:100%}
-.go-btn:hover{background:#0C447C}
+:root{--ink:#14212b;--mut:#5b6b78;--bg:#f4f7f9;--card:#fff;--pri:#0f3d5e;--acc:#1b8a6b;--line:#dbe3e9}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+header{background:var(--pri);color:#fff;padding:36px 20px 40px;text-align:center}
+header h1{margin:0 0 8px;font-size:1.9rem;letter-spacing:-.5px}
+header h1 span{color:#7fe0bf}
+header p{margin:0 auto;max-width:560px;opacity:.9}
+main{max-width:860px;margin:-22px auto 40px;padding:0 16px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(15,61,94,.06)}
+.card h2{margin:6px 0 6px;font-size:1.1rem}
+.card p{margin:0 0 14px;color:var(--mut);font-size:.92rem;flex:1}
+.tag{align-self:flex-start;font-size:.72rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--acc);background:#e3f5ee;padding:3px 8px;border-radius:10px}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{display:inline-block;padding:9px 14px;border-radius:9px;background:var(--pri);color:#fff;text-decoration:none;font-weight:600;font-size:.9rem}
+.btn.sec{background:#fff;color:var(--pri);border:1px solid var(--pri)}
+.soon{opacity:.6;border-style:dashed}
+.soon .tag{color:var(--mut);background:#eceff2}
+h3{margin:34px 0 12px;font-size:.85rem;text-transform:uppercase;letter-spacing:.6px;color:var(--mut)}
+.disc{background:#fff8e6;border:1px solid #f0d58c;border-radius:12px;padding:14px 16px;font-size:.88rem;color:#5a4a12;margin-top:28px}
+footer{text-align:center;color:var(--mut);font-size:.82rem;padding:0 16px 32px}
 </style>
 </head>
 <body>
-<a href="../../" style="position:fixed;top:6px;right:8px;z-index:9999;background:#0f3d5e;color:#fff;font:600 12px system-ui,sans-serif;padding:6px 10px;border-radius:14px;text-decoration:none;opacity:.9">← iltuofisiatra.it</a>
-
 <header>
-  <h1>&#9889; Wizard Osteoporosi — Nota AIFA 79</h1>
-  <span>Agg. 23 feb. 2025</span>
+  <h1>il<span>tuo</span>fisiatra.it</h1>
+  <p>Strumenti di consultazione rapida per l'ambulatorio: percorsi guidati passo-passo fino alla prescrizione, con principi attivi e posologie.</p>
 </header>
-<div class="wrap">
-
-<div class="prog-label" id="prog-label">Passo 1 di 9</div>
-<div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:11%"></div></div>
-
-<!-- STEP 1 -->
-<div id="step1" class="step active">
-  <div class="card">
-    <div class="stitle">Dati paziente — passo 1 di 9</div>
-    <p class="q">Sesso del paziente?</p>
-    <div class="opts">
-      <button class="opt" onclick="set('sex','F');go(2)">Femmina</button>
-      <button class="opt" onclick="set('sex','M');go(2)">Maschio</button>
-    </div>
+<main>
+  <h3>Strumenti disponibili</h3>
+  <div class="grid">
+    <!-- TOOL: osteoporosi -->
+    <article class="card">
+      <span class="tag">Nota AIFA 79</span>
+      <h2>Osteoporosi: terapia farmacologica</h2>
+      <p>Wizard in 9 passaggi: rischio, pazienti in nota, scelta del farmaco, piano terapeutico, farmaci con posologia.</p>
+      <div class="btns"><a class="btn" href="nota79.html">Apri wizard</a><a class="btn sec" href="algoritmo-nota79.pdf">Algoritmo PDF</a></div>
+    </article>
+    <!-- TOOL: vitamina D -->
+    <article class="card">
+      <span class="tag">Nota AIFA 96</span>
+      <h2>Vitamina D e analoghi</h2>
+      <p>Wizard in 5 passaggi: gruppo A/B, dosaggio 25(OH)D, prescrizione in nota e fuori nota con posologie.</p>
+      <div class="btns"><a class="btn" href="nota96.html">Apri wizard</a><a class="btn sec" href="algoritmo-nota96.pdf">Algoritmo PDF</a></div>
+    </article>
+    <!-- NUOVI TOOL: copiare un blocco <article> qui sopra -->
+    <article class="card soon">
+      <span class="tag">In arrivo</span>
+      <h2>Altri strumenti</h2>
+      <p>Nuovi percorsi clinici verranno aggiunti gradualmente.</p>
+    </article>
   </div>
-</div>
-
-<!-- STEP 2 -->
-<div id="step2" class="step">
-  <div class="card">
-    <div class="stitle">Dati paziente — passo 2 di 9</div>
-    <p class="q" id="q2">Stato menopausale?</p>
-    <div class="opts" id="opts2"></div>
-    <button class="back" onclick="go(1)">&#8592; Indietro</button>
-  </div>
-</div>
-
-<!-- STEP 3 -->
-<div id="step3" class="step">
-  <div class="card">
-    <div class="stitle">Anamnesi fratturativa — passo 3 di 9</div>
-    <p class="q">Fratture da fragilità documentate?</p>
-    <p class="qsub">Include: vertebrali (criterio Genant: riduzione &#8805;20% di almeno una altezza vertebrale), femorali, polso, omero, costola, tibia, sacro, pelvi</p>
-    <div class="opts">
-      <button class="opt" onclick="set('frat','si');go(4)">&#10003; S&#236; — ha fratture pregresse</button>
-      <button class="opt" onclick="set('frat','no');go(7)">&#10007; No — nessuna frattura pregressa</button>
-    </div>
-    <button class="back" onclick="go(2)">&#8592; Indietro</button>
-  </div>
-</div>
-
-<!-- STEP 4 -->
-<div id="step4" class="step">
-  <div class="card">
-    <div class="stitle">Sede fratture — passo 4 di 9</div>
-    <p class="q">Sede delle fratture da fragilit&#224;?</p>
-    <div class="opts">
-      <button class="opt" onclick="set('fsede','vf');go(5)">Vertebrale o di femore (anche entrambe)</button>
-      <button class="opt" onclick="set('fsede','nv');go('5b')">Non vertebrale e non femorale<br><small style="color:#666">polso, omero, costola, tibia, sacro, pelvi</small></button>
-    </div>
-    <button class="back" onclick="go(3)">&#8592; Indietro</button>
-  </div>
-</div>
-
-<!-- STEP 5 -->
-<div id="step5" class="step">
-  <div class="card">
-    <div class="stitle">Numero fratture vert./femorali — passo 5 di 9</div>
-    <p class="q">Quante fratture vertebrali o di femore?</p>
-    <div class="opts">
-      <button class="opt" onclick="set('fn','12');go(6)">1&#8211;2 fratture</button>
-      <button class="opt" onclick="set('fn','3p');go(6)">&#8805;3 fratture</button>
-    </div>
-    <button class="back" onclick="go(4)">&#8592; Indietro</button>
-  </div>
-</div>
-
-<!-- STEP 5b -->
-<div id="step5b" class="step">
-  <div class="card">
-    <div class="stitle">Numero fratture non vert./non fem. — passo 5 di 9</div>
-    <p class="q">Quante fratture non vertebrali e non femorali?</p>
-    <div class="opts">
-      <button class="opt" onclick="set('fn_nv','1');go(6)">1 frattura</button>
-      <button class="opt" onclick="set('fn_nv','2p');go(6)">&#8805;2 fratture</button>
-    </div>
-    <button class="back" onclick="go(4)">&#8592; Indietro</button>
-  </div>
-</div>
-
-<!-- STEP 6 -->
-<div id="step6" class="step">
-  <div class="card">
-    <div class="stitle">Condizioni aggravanti — passo 6 di 9</div>
-    <p class="q">Sono presenti condizioni aggravanti?</p>
-    <p class="qsub">Seleziona la condizione pi&#249; rilevante (o nessuna)</p>
-    <div class="opts">
-      <button class="opt" onclick="set('agg','ts4');go(8)">T-score colonna o femore &#8804; &#8722;4</button>
-      <button class="opt" onclick="set('agg','cort');go(8)">Corticoterapia &gt;12 mesi con prednisone equivalente &#8805;5 mg/die</button>
-      <button class="opt" onclick="set('agg','newfr');go(8)">Nuova frattura vert./fem. nonostante terapia Nota 79 da &#8805;1 anno</button>
-      <button class="opt" onclick="set('agg','no');go(8)">Nessuna condizione aggravante</button>
-    </div>
-    <button class="back" onclick="backFrom6()">&#8592; Indietro</button>
-  </div>
-</div>
-
-<!-- STEP 7 -->
-<div id="step7" class="step">
-  <div class="card">
-    <div class="stitle">Prevenzione primaria — passo 7 di 9</div>
-    <p class="q">Quale condizione di rischio &#232; presente?</p>
-    <div class="opts">
-      <button class="opt" onclick="set('pri','cort');go(8)">Corticoterapia in atto o prevista &gt;3 mesi con prednisone equivalente &#8805;5 mg/die</button>
-      <button class="opt" onclick="set('pri','ormo');go(8)">Blocco ormonale adiuvante<br><small style="color:#666">K mammario: inibitore aromatasi &nbsp;|&nbsp; K prostatico: deprivazione androgenica</small></button>
-      <button class="opt" onclick="set('pri','dexa');go(8)">Solo osteoporosi densitometrica (nessuna delle condizioni sopra)</button>
-    </div>
-    <button class="back" onclick="go(3)">&#8592; Indietro</button>
-  </div>
-</div>
-
-<!-- STEP 8 -->
-<div id="step8" class="step">
-  <div class="card">
-    <div class="stitle">Densitometria — passo 8 di 9</div>
-    <p class="q">T-score peggiore tra colonna lombare e femore (DXA)?</p>
-    <p class="qsub">DXA eseguita presso struttura pubblica o convenzionata SSN</p>
-    <div class="opts" id="opts8"></div>
-    <button class="back" onclick="backFrom8()">&#8592; Indietro</button>
-  </div>
-</div>
-
-<!-- STEP 8b -->
-<div id="step8b" class="step">
-  <div class="card">
-    <div class="stitle">Rischio fratturativo — passo 8b di 9</div>
-    <p class="q">Rischio fratturativo a 10 anni (FRAX o DeFRA)?</p>
-    <p class="qsub">Calcolatori: <strong>shef.ac.uk/FRAX</strong> &nbsp;|&nbsp; <strong>defra-osteoporosi.it</strong></p>
-    <div class="opts">
-      <button class="opt" onclick="set('frax','gE20');go(9)">&#8805;20% per frattura maggiore</button>
-      <button class="opt" onclick="set('frax','lt20');go(9)">&lt;20%</button>
-      <button class="opt" onclick="set('frax','nd');go(9)">Non calcolato / non disponibile</button>
-    </div>
-    <button class="back" onclick="go(8)">&#8592; Indietro</button>
-  </div>
-</div>
-
-<!-- STEP 9 -->
-<div id="step9" class="step">
-  <div class="card">
-    <div class="stitle">Controindicazioni principali — passo 9 di 9</div>
-    <p class="q">Seleziona le condizioni presenti nel paziente:</p>
-    <div id="ci-list"></div>
-    <button class="go-btn" onclick="buildResult();go('result')">&#10132; Vai alla prescrizione</button>
-    <button class="back" onclick="backFrom9()">&#8592; Indietro</button>
-  </div>
-</div>
-
-<!-- RESULT -->
-<div id="step_result" class="step">
-  <div id="result-content"></div>
-  <button class="new-btn" onclick="resetAll()">&#8635; &nbsp; NUOVO PAZIENTE</button>
-  <div style="height:20px"></div>
-</div>
-
-</div>
-<script>
-var P={}, CI=[];
-function set(k,v){P[k]=v;}
-function get(k){return P[k]||'';}
-
-function setProgress(n){
-  var pct=Math.round(n/9*100);
-  document.getElementById('prog-fill').style.width=pct+'%';
-  document.getElementById('prog-label').textContent='Passo '+n+' di 9';
-}
-
-function showStep(id){
-  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
-  var key;
-  if(id==='result') key='step_result';
-  else if(typeof id==='string'&&id.indexOf('step')===0) key=id;
-  else key='step'+id;
-  var el=document.getElementById(key);
-  if(el)el.classList.add('active');
-  window.scrollTo(0,0);
-}
-
-function go(id){
-  if(id===2)buildStep2();
-  if(id===8)buildStep8();
-  if(id===9)buildStep9();
-  var pMap={1:1,2:2,3:3,4:4,5:5,'5b':5,6:6,7:7,8:8,'8b':8,9:9,'result':9};
-  setProgress(pMap[id]||id);
-  showStep(id);
-}
-
-function backFrom6(){go(get('fsede')==='nv'?'5b':5);}
-function backFrom8(){go(get('frat')==='si'?6:7);}
-function backFrom9(){go(get('needFrax')?'8b':8);}
-
-function buildStep2(){
-  if(get('sex')==='F'){
-    document.getElementById('q2').textContent='Stato menopausale?';
-    document.getElementById('opts2').innerHTML=
-      '<button class="opt" onclick="set(\'meno\',\'si\');go(3)">Donna in menopausa</button>'+
-      '<button class="opt" onclick="set(\'meno\',\'no\');go(3)">Donna non ancora in menopausa</button>';
-  } else {
-    document.getElementById('q2').textContent='Et\u00e0 del paziente?';
-    document.getElementById('opts2').innerHTML=
-      '<button class="opt" onclick="set(\'eta\',\'50p\');go(3)">\u226550 anni</button>'+
-      '<button class="opt" onclick="set(\'eta\',\'lt50\');go(3)">&lt;50 anni</button>';
-  }
-}
-
-function buildStep8(){
-  var ctx=get('fsede')||get('pri')||'';
-  var h='';
-  if(ctx==='nv'){
-    h='<button class="opt" onclick="set(\'ts\',\'le3\');set(\'needFrax\',false);go(9)">\u2264 \u22123</button>'+
-       '<button class="opt" onclick="set(\'ts\',\'lt25\');set(\'needFrax\',true);go(\'8b\')">Tra \u22122,5 e \u22123</button>'+
-       '<button class="opt" onclick="set(\'ts\',\'ok\');set(\'needFrax\',false);go(9)">Migliore di \u22122,5</button>';
-  } else if(ctx==='dexa'){
-    h='<button class="opt" onclick="set(\'ts\',\'le4\');set(\'needFrax\',false);go(9)">\u2264 \u22124</button>'+
-       '<button class="opt" onclick="set(\'ts\',\'3to4\');set(\'needFrax\',false);go(9)">Tra \u22123 e \u22124</button>'+
-       '<button class="opt" onclick="set(\'ts\',\'25to3\');set(\'needFrax\',false);go(9)">Tra \u22122,5 e \u22123</button>'+
-       '<button class="opt" onclick="set(\'ts\',\'ok\');set(\'needFrax\',false);go(9)">Migliore di \u22122,5</button>';
-  } else {
-    h='<button class="opt" onclick="set(\'ts\',\'le4\');set(\'needFrax\',false);go(9)">\u2264 \u22124 (osteoporosi severa)</button>'+
-       '<button class="opt" onclick="set(\'ts\',\'3to4\');set(\'needFrax\',false);go(9)">Tra \u22123 e \u22124</button>'+
-       '<button class="opt" onclick="set(\'ts\',\'lt25\');set(\'needFrax\',true);go(\'8b\')">Tra \u22122,5 e \u22123 (calcolare FRAX)</button>'+
-       '<button class="opt" onclick="set(\'ts\',\'ok\');set(\'needFrax\',false);go(9)">Migliore di \u22122,5</button>';
-  }
-  document.getElementById('opts8').innerHTML=h;
-}
-
-function buildStep9(){
-  var items=[
-    {id:'ir',  txt:'Insufficienza renale grave (ClCr &lt;30 ml/min) \u2014 controindicazione assoluta ai bifosfonati'},
-    {id:'tvp', txt:'Storia di TVP o embolia polmonare \u2014 controindicazione a raloxifene e bazedoxifene'},
-    {id:'cv',  txt:'Pregresso evento cardiovascolare (IMA, ictus) o rischio CV \u226520% \u2014 controindicazione a romosozumab'},
-    {id:'rge', txt:'Reflusso gastroesofageo severo / esofagite \u2014 difficolt\u00e0 con bifosfonati orali'},
-    {id:'onj', txt:'Osteonecrosi della mandibola/mascella (ONJ) in atto'},
-    {id:'ipo', txt:'Ipocalcemia \u2014 correggere prima di qualsiasi trattamento'},
-  ];
-  if(get('sex')==='M') items.push({id:'male',txt:'Sesso maschile (promemoria: romosozumab, abaloparatide, raloxifene, bazedoxifene NON indicati nell\u2019uomo)'});
-  var h='';
-  items.forEach(function(it){
-    h+='<label class="ci-label"><input type="checkbox" id="ci_'+it.id+'"> <span>'+it.txt+'</span></label>';
-  });
-  document.getElementById('ci-list').innerHTML=h;
-}
-
-function getCI(){
-  CI=[];
-  ['ir','tvp','cv','rge','onj','ipo','male'].forEach(function(k){
-    var el=document.getElementById('ci_'+k);
-    if(el&&el.checked)CI.push(k);
-  });
-}
-function hasCI(k){return CI.indexOf(k)>=0;}
-
-/* ======================== FARMACI ======================== */
-
-// oggetti farmaco: {scelta, nome, commerciale, dose, via, freq, durata, pt, note, ci}
-function rxBlock(f){
-  var scLabel={'1':'I scelta','2':'II scelta','3':'III scelta'}[f.scelta]||f.scelta;
-  var scClass={'1':'sc1','2':'sc2','3':'sc3'}[f.scelta]||'sc3';
-  var h='<div class="rx-block">';
-  h+='<div><span class="scelta-badge '+scClass+'">'+scLabel+'</span></div>';
-  h+='<div class="rx-nome">'+f.nome+'</div>';
-  if(f.commerciale) h+='<div class="rx-com">'+f.commerciale+'</div>';
-  h+='<div class="rx-row">';
-  h+='<span class="rx-pill-g">'+f.dose+'</span>';
-  h+='<span class="rx-pill-g">'+f.via+'</span>';
-  h+='<span class="rx-pill-g">'+f.freq+'</span>';
-  if(f.durata) h+='<span class="rx-pill">'+f.durata+'</span>';
-  if(f.pt) h+='<span class="rx-pill-o">'+f.pt+'</span>';
-  h+='</div>';
-  if(f.detail) h+='<div class="rx-detail">'+f.detail+'</div>';
-  if(f.ciNote) h+='<div class="rx-ci">&#9888; '+f.ciNote+'</div>';
-  h+='</div>';
-  return h;
-}
-
-var FARMACI={
-  alendronato:{scelta:'1',nome:'Alendronato (&#177;Vit.D)',commerciale:'Fosamax, Adronat, generici',dose:'70 mg',via:'per os',freq:'1 volta/settimana',durata:'Rivalutare dopo 5 anni',pt:'No PT — anche MMG',detail:'Assumere a digiuno con abbondante acqua, rimanere in posizione eretta/seduta per almeno 30 min. Disponibile anche in associazione con vitamina D3.'},
-  risedronato:{scelta:'1',nome:'Risedronato',commerciale:'Actonel, Optinate, generici',dose:'35 mg',via:'per os',freq:'1 volta/settimana',durata:'Rivalutare dopo 5 anni',pt:'No PT — anche MMG',detail:'Stesse avvertenze posologiche dell\'alendronato. Formulazione mensile (150 mg) disponibile.'},
-  zoledronato:{scelta:'1',nome:'Zoledronato',commerciale:'Aclasta',dose:'5 mg',via:'e.v.',freq:'1 volta/anno',durata:'Rivalutare dopo 3&#8211;5 anni',pt:'Solo struttura ospedaliera / convenzionata',detail:'Infusione in 15 minuti almeno. Pre-idratare il paziente. Pu&#242; causare sindrome acuta similinfluenzale (febbre, mialgie) nelle prime 24&#8211;72h: paracetamolo preventivo. Assicurare adeguata funzionalit&#224; renale (ClCr &ge;35 ml/min).'},
-  ibandronato:{scelta:'2',nome:'Ibandronato',commerciale:'Bonviva, generici',dose:'150 mg',via:'per os',freq:'1 volta/mese',durata:'Rivalutare dopo 5 anni',pt:'No PT — anche MMG',detail:'Assumere a digiuno con abbondante acqua, rimanere in posizione eretta/seduta per almeno 60 min.'},
-  denosumab:{scelta:'2',nome:'Denosumab',commerciale:'Prolia',dose:'60 mg',via:'s.c.',freq:'ogni 6 mesi',durata:'PT 12 mesi rinnovabile',pt:'PT specialistico o prescrizione MMG (regime RR)',detail:'Monitorare calcemia prima di ogni dose (e a 2 settimane dalla prima nei pazienti a rischio). Fondamentale l\'aderenza: l\'interruzione brusca causa rapido rimbalzo del riassorbimento osseo con rischio di fratture vertebrali multiple. Non interrompere senza pianificare il farmaco successivo.'},
-  raloxifene:{scelta:'2',nome:'Raloxifene',commerciale:'Evista, generici',dose:'60 mg',via:'per os',freq:'1 volta/die',durata:'Trattamento cronico',pt:'No PT — anche MMG',detail:'Solo donne in postmenopausa. Riduce il rischio di frattura vertebrale ma non femorale. Riduce il rischio di K mammario ER+. NON usare se storia di TVP/embolia, immobilit&#224; prolungata, gravidanza.'},
-  bazedoxifene:{scelta:'2',nome:'Bazedoxifene',commerciale:'Conbriza, generici',dose:'20 mg',via:'per os',freq:'1 volta/die',durata:'Trattamento cronico',pt:'No PT — anche MMG',detail:'Solo donne in postmenopausa. Profilo simile al raloxifene. NON usare se storia di TVP/embolia.'},
-  teriparatide:{scelta:'1',nome:'Teriparatide',commerciale:'Forsteo, Terrosa (biosimilare)',dose:'20 \u03bcg',via:'s.c.',freq:'1 volta/die',durata:'PT 6 mesi, rinnovabile \u00d73 = max 24 mesi totali',pt:'PT obbligatorio — specialista (fisiatra \u2713, internista, reumatologo, endocrinologo, ginecologo, geriatra, ortopedico, nefrologo)',detail:'Farmaco anabolico (PTH 1-34). Conservare in frigorifero (2\u20138\u00b0C); dopo primo utilizzo pu\u00f2 restare a temperatura ambiente fino a 28 giorni. SEQUENZA OBBLIGATORIA: al termine \u2192 antiriassorbitivo (bifosfonato o denosumab) per consolidare il guadagno osseo.'},
-  abaloparatide:{scelta:'1',nome:'Abaloparatide',commerciale:'Eladynos',dose:'80 \u03bcg',via:'s.c.',freq:'1 volta/die',durata:'PT 6 mesi, rinnovabile \u00d72 = max 18 mesi totali',pt:'PT obbligatorio — specialista (fisiatra \u2713, internista, reumatologo, endocrinologo, ginecologo, geriatra, ortopedico, nefrologo)',detail:'Analogo PTHrP (1-34). Solo donne postmenopausali. SEQUENZA OBBLIGATORIA: al termine \u2192 antiriassorbitivo. Conservare in frigorifero.'},
-  romosozumab:{scelta:'1',nome:'Romosozumab',commerciale:'Evenity',dose:'210 mg (2 iniezioni da 105 mg)',via:'s.c.',freq:'1 volta/mese',durata:'Max 12 mesi — NON rinnovabile',pt:'PT obbligatorio — specialista (fisiatra \u2713, internista, reumatologo, endocrinologo, ginecologo, geriatra, ortopedico, nefrologo)',detail:'Anticorpo anti-sclerostina: effetto anabolico + antiriassorbitivo. Solo donne. CONTROINDICATO se pregresso evento CV o rischio CV \u226520%. SEQUENZA OBBLIGATORIA: al termine 12 mesi \u2192 antiriassorbitivo (bifosfonato o denosumab).'},
-};
-
-function addCI(f, key){
-  var ciMap={
-    ir:'Controindicato/cautela: IR grave. Preferire denosumab o teriparatide.',
-    rge:'Reflusso severo: preferire formulazione e.v. o denosumab.',
-    tvp:'TVP/embolia: CONTROINDICATO.',
-    cv:'Evento CV o rischio \u226520%: CONTROINDICATO.',
-  };
-  if(ciMap[key]) f.ciNote=ciMap[key];
-  return f;
-}
-
-function buildRxSection(farmaci_list){
-  var h='<div class="rx-card"><div class="rx-title">&#9998; Prescrizione — farmaci indicati</div>';
-  farmaci_list.forEach(function(f){ h+=rxBlock(f); });
-  h+='</div>';
-  return h;
-}
-
-/* ======================== LOGICA ======================== */
-function buildResult(){
-  getCI();
-  var sex=get('sex'), meno=get('meno'), eta=get('eta');
-  var frat=get('frat'), fsede=get('fsede'), fn=get('fn'), fn_nv=get('fn_nv');
-  var agg=get('agg'), pri=get('pri'), ts=get('ts'), frax=get('frax');
-  var isFemPost=(sex==='F'&&meno==='si');
-  var isEligible=isFemPost||(sex==='M'&&eta==='50p');
-
-  var h='';
-
-  // riepilogo
-  h+='<div class="card"><div class="stitle">Riepilogo paziente</div><div class="chips">';
-  h+=chip('Sesso',sex==='F'?'Femmina':'Maschio');
-  if(sex==='F') h+=chip('Menopausa',meno==='si'?'S\u00ec':'No');
-  if(sex==='M') h+=chip('Et\u00e0',eta==='50p'?'\u226550 aa':'&lt;50 aa');
-  h+=chip('Fratture',frat==='si'?'S\u00ec':'No');
-  if(frat==='si'){
-    if(fsede) h+=chip('Sede',{vf:'Vert./Femore',nv:'Non vert./non fem.'}[fsede]||fsede);
-    if(fn)    h+=chip('N vert./fem.',{12:'1\u20132','3p':'\u22653'}[fn]||fn);
-    if(fn_nv) h+=chip('N non-vert.',{'1':'1','2p':'\u22652'}[fn_nv]||fn_nv);
-    if(agg&&agg!=='no') h+=chip('Aggravante',{ts4:'T-score \u22644',cort:'Cortisone >12m',newfr:'Nuova frat. in terapia'}[agg]||agg);
-  } else {
-    if(pri) h+=chip('Condizione',{cort:'Cortisone cronico',ormo:'Blocco ormonale',dexa:'Solo DXA'}[pri]||pri);
-  }
-  if(ts) h+=chip('T-score',{le4:'\u22644','3to4':'\u22123/\u22124',le3:'\u2264\u22123',lt25:'\u22122,5/\u22123','25to3':'\u22122,5/\u22123',ok:'&gt;\u22122,5'}[ts]||ts);
-  if(frax) h+=chip('FRAX',{gE20:'\u226520%',lt20:'&lt;20%',nd:'N.D.'}[frax]||frax);
-  if(CI.length) h+='<div class="chip" style="background:#FCEBEB;border-color:#F09595;color:#791F1F">Controindicazioni: <span>'+CI.length+'</span></div>';
-  h+='</div></div>';
-
-  if(hasCI('onj')) h+='<div class="danger"><strong>ONJ in atto:</strong> rivalutare opportunit\u00e0 di qualsiasi terapia antiriassorbitiva o anabolica. Consultare odontoiatra specializzato prima di procedere.</div>';
-  if(hasCI('ipo')) h+='<div class="danger"><strong>Ipocalcemia:</strong> correggere prima di qualsiasi trattamento antiosteoporotico.</div>';
-
-  if(!isEligible&&frat==='no'){
-    h+='<div class="rcard rcard-blue"><div class="rt">&#8505; Non in target per prevenzione primaria Nota 79</div>';
-    h+='<div class="rb">La prevenzione primaria \u00e8 riservata a donne in menopausa o uomini \u226550 anni. Questo paziente non soddisfa i criteri anagrafici.</div></div>';
-    h+=nonFarma(); document.getElementById('result-content').innerHTML=h; return;
-  }
-
-  var farmList=[];
-
-  if(frat==='si'){
-    if(fsede==='vf'){
-      var highRisk=(fn==='3p')||(agg&&agg!=='no');
-      if(highRisk){
-        var motivo=fn==='3p'?'\u22653 fratture vertebrali/femorali':
-          agg==='ts4'?'\u22651 frattura + T-score \u2264\u22124':
-          agg==='cort'?'\u22651 frattura + corticoterapia >12 mesi \u22655 mg/die prednisone equiv.':
-          '\u22651 frattura + nuova frattura nonostante terapia Nota 79 da \u22651 anno';
-        h+='<div class="rcard rcard-red"><div class="rt">&#9888; Rischio molto elevato \u2014 prevenzione secondaria</div><div class="rb">'+motivo+'</div></div>';
-        // I scelta: teriparatide
-        var t=Object.assign({},FARMACI.teriparatide);
-        if(agg==='cort') t.detail+=' In osteoporosi da glucocorticoidi (GIOP) \u00e8 superiore ad alendronato (evidenza RCT).';
-        farmList.push(t);
-        // II scelta: denosumab
-        var d=Object.assign({},FARMACI.denosumab); d.scelta='2';
-        if(hasCI('ir')) d.ciNote='IR grave: cautela con denosumab (monitorare ipocalcemia), ma \u00e8 l\'alternativa ai bifosfonati.';
-        farmList.push(d);
-        // II scelta: zoledronato (se non IR grave)
-        if(!hasCI('ir')){var z=Object.assign({},FARMACI.zoledronato);z.scelta='2';farmList.push(z);}
-        // III scelta
-        if(!hasCI('ir')){
-          var a=Object.assign({},FARMACI.alendronato);a.scelta='3';
-          if(hasCI('rge'))a.ciNote='Reflusso severo: evitare bifosfonati orali.';
-          farmList.push(a);
-        }
-        // abaloparatide
-        if(isFemPost){
-          h+='<div class="note"><strong>Abaloparatide</strong> (alternativa a teriparatide, solo donne postmenopausali): T-score tra \u22122,5/\u22125,0 (o \u22122,0/\u22125,0 se &gt;65aa) + \u22652 frat.vert.lievi o \u22651 moderata o frattura avambraccio/omero/sacro/pelvi/anca/femore/tibia ultimi 5 anni \u2192 se soddisfatti, sostituire teriparatide con abaloparatide (vedi scheda sotto).</div>';
-          var ab=Object.assign({},FARMACI.abaloparatide);ab.scelta='alt.';
-          farmList.push(ab);
-        }
-        // romosozumab
-        if(isFemPost&&!hasCI('cv')){
-          if(frax==='gE20'){
-            h+='<div class="warn"><strong>Romosozumab</strong> (FRAX \u226520%, impossibilit\u00e0 ad altri trattamenti): indicazione verificata. Vedi scheda sotto.</div>';
-            var ro=Object.assign({},FARMACI.romosozumab);ro.scelta='alt.';farmList.push(ro);
-          } else {
-            h+='<div class="note">Romosozumab valutabile se FRAX \u226520%: calcolare su shef.ac.uk/FRAX o defra-osteoporosi.it.</div>';
-          }
-        }
-      } else {
-        h+='<div class="rcard rcard-amber"><div class="rt">&#10003; Prevenzione secondaria \u2014 1\u20132 fratture vertebrali o di femore</div><div class="rb">Indicazione rimborsata SSN (Nota 79)</div></div>';
-        var a1=Object.assign({},FARMACI.alendronato);
-        if(hasCI('ir'))a1.ciNote='IR grave: controindicato. Usare denosumab o zoledronato e.v. con cautela.';
-        if(hasCI('rge'))a1.ciNote=(a1.ciNote?a1.ciNote+' ':'')+'Reflusso: preferire zoledronato e.v.';
-        farmList.push(a1);
-        var r1=Object.assign({},FARMACI.risedronato);
-        if(hasCI('ir'))r1.ciNote='IR grave: controindicato.';
-        farmList.push(r1);
-        if(!hasCI('ir')){var z1=Object.assign({},FARMACI.zoledronato);farmList.push(z1);}
-        var deno=Object.assign({},FARMACI.denosumab);farmList.push(deno);
-        if(!hasCI('ir')){farmList.push(Object.assign({},FARMACI.ibandronato));}
-        if(isFemPost&&!hasCI('tvp')){farmList.push(Object.assign({},FARMACI.raloxifene));farmList.push(Object.assign({},FARMACI.bazedoxifene));}
-        if(isFemPost&&hasCI('tvp')){h+='<div class="warn">TVP/embolia: raloxifene e bazedoxifene controindicati \u2014 esclusi dalla lista.</div>';}
-      }
-    } else {
-      // non-vert
-      if(ts==='le3'){
-        h+='<div class="rcard rcard-amber"><div class="rt">&#10003; Prevenzione secondaria \u2014 frattura non vert./non fem. + T-score \u2264\u22123</div><div class="rb">Indicazione rimborsata SSN</div></div>';
-        if(!hasCI('ir')){var a2=Object.assign({},FARMACI.alendronato);if(hasCI('rge'))a2.ciNote='Reflusso: preferire zoledronato e.v.';farmList.push(a2);farmList.push(Object.assign({},FARMACI.risedronato));farmList.push(Object.assign({},FARMACI.zoledronato));}
-        else{h+='<div class="warn">IR grave: bifosfonati orali controindicati. I scelta: denosumab.</div>';}
-        farmList.push(Object.assign({},FARMACI.denosumab));
-        if(!hasCI('ir'))farmList.push(Object.assign({},FARMACI.ibandronato));
-        if(isFemPost&&!hasCI('tvp')){farmList.push(Object.assign({},FARMACI.raloxifene));farmList.push(Object.assign({},FARMACI.bazedoxifene));}
-      } else if(ts==='lt25'&&fn_nv==='2p'&&isFemPost&&frax==='gE20'&&!hasCI('cv')){
-        h+='<div class="rcard rcard-amber"><div class="rt">&#10003; Romosozumab indicato \u2014 \u22652 fratture non vertebrali + criteri completi</div><div class="rb">T-score &lt;\u22122,5 + \u22652 fratture non vert. + FRAX \u226520% + impossibilit\u00e0 altri trattamenti</div></div>';
-        farmList.push(Object.assign({},FARMACI.romosozumab));
-      } else if(ts==='lt25'&&fn_nv==='2p'&&isFemPost&&frax!=='gE20'){
-        h+='<div class="rcard rcard-blue"><div class="rt">&#8505; FRAX non calcolato o &lt;20% \u2014 romosozumab non ancora rimborsabile</div><div class="rb">Calcolare FRAX su shef.ac.uk/FRAX o defra-osteoporosi.it. Se \u226520%, romosozumab pu\u00f2 essere indicato.</div></div>';
-      } else {
-        h+='<div class="rcard rcard-blue"><div class="rt">&#8505; Non in Nota 79 per questa indicazione</div><div class="rb">Frattura non vert./non fem. senza T-score \u2264\u22123. Farmaci non rimborsabili SSN.</div></div>';
-        h+='<div class="note">Calcolare FRAX/DeFRA. Verificare condizioni di prevenzione primaria. Ca++ e Vit.D. Rivalutare tra 1\u20132 anni.</div>';
-      }
-    }
-  } else {
-    // prevenzione primaria
-    if(pri==='cort'){
-      h+='<div class="rcard rcard-amber"><div class="rt">&#10003; Prevenzione primaria \u2014 corticoterapia cronica</div><div class="rb">Prednisone equiv. \u22655 mg/die per &gt;3 mesi \u2014 indicazione rimborsata SSN</div></div>';
-      if(!hasCI('ir')){var ac=Object.assign({},FARMACI.alendronato);if(hasCI('rge'))ac.ciNote='Reflusso: preferire zoledronato e.v.';farmList.push(ac);farmList.push(Object.assign({},FARMACI.risedronato));farmList.push(Object.assign({},FARMACI.zoledronato));}
-      else{h+='<div class="warn">IR grave: bifosfonati controindicati. Usare denosumab (II scelta).</div>';}
-      var dc=Object.assign({},FARMACI.denosumab);dc.scelta='2';farmList.push(dc);
-    } else if(pri==='ormo'){
-      h+='<div class="rcard rcard-amber"><div class="rt">&#10003; Prevenzione primaria \u2014 blocco ormonale adiuvante</div><div class="rb">Indicazione rimborsata SSN. Denosumab ha evidenze specifiche in entrambe le popolazioni oncologiche.</div></div>';
-      if(!hasCI('ir')){var ao=Object.assign({},FARMACI.alendronato);if(hasCI('rge'))ao.ciNote='Reflusso: preferire zoledronato e.v.';farmList.push(ao);farmList.push(Object.assign({},FARMACI.risedronato));farmList.push(Object.assign({},FARMACI.zoledronato));}
-      else{h+='<div class="warn">IR grave: bifosfonati controindicati. Usare denosumab (II scelta).</div>';}
-      var dor=Object.assign({},FARMACI.denosumab);dor.scelta='2';
-      dor.detail+=' Evidenza specifica nella prevenzione della perdita ossea da inibitori aromatasi e da deprivazione androgenica.';
-      farmList.push(dor);
-      h+='<div class="note">Nota 79: per questa indicazione nessuna III scelta prevista.</div>';
-    } else if(pri==='dexa'){
-      if(ts==='le4'){
-        h+='<div class="rcard rcard-red"><div class="rt">&#10003; Prevenzione primaria \u2014 T-score \u2264\u22124 isolato</div><div class="rb">Equiparato a soggetto con frattura pregressa \u2014 indicazione rimborsata SSN</div></div>';
-        if(!hasCI('ir')){var ad=Object.assign({},FARMACI.alendronato);if(hasCI('rge'))ad.ciNote='Reflusso: evitare bifosfonati orali.';farmList.push(ad);farmList.push(Object.assign({},FARMACI.risedronato));}
-        var dd=Object.assign({},FARMACI.denosumab);dd.scelta='2';farmList.push(dd);
-        if(!hasCI('ir'))farmList.push(Object.assign({},FARMACI.zoledronato,{scelta:'2'}));
-        if(!hasCI('ir'))farmList.push(Object.assign({},FARMACI.ibandronato,{scelta:'2'}));
-        if(isFemPost&&!hasCI('tvp')){farmList.push(Object.assign({},FARMACI.raloxifene,{scelta:'2'}));farmList.push(Object.assign({},FARMACI.bazedoxifene,{scelta:'2'}));}
-      } else if(ts==='3to4'){
-        h+='<div class="rcard rcard-amber"><div class="rt">&#10003;/&#10007; Prevenzione primaria \u2014 T-score tra \u22123 e \u22124</div><div class="rb">Rimborsabile SOLO se presente almeno un fattore di rischio aggiuntivo</div></div>';
-        h+='<div class="warn"><strong>Fattori qualificanti (almeno 1):</strong><br>\u2022 Familiarit\u00e0 per frattura vertebrale o femorale (genitore o fratello)<br>\u2022 Comorbilità a rischio: AR o connettivite, diabete, BPCO, IBD, AIDS, Parkinson, sclerosi multipla, grave disabilit\u00e0 motoria</div>';
-        if(!hasCI('ir')){var at=Object.assign({},FARMACI.alendronato);if(hasCI('rge'))at.ciNote='Reflusso: evitare bifosfonati orali.';farmList.push(at);farmList.push(Object.assign({},FARMACI.risedronato));}
-        var dt=Object.assign({},FARMACI.denosumab);dt.scelta='2';farmList.push(dt);
-        if(!hasCI('ir')){farmList.push(Object.assign({},FARMACI.zoledronato,{scelta:'2'}));farmList.push(Object.assign({},FARMACI.ibandronato,{scelta:'2'}));}
-        if(isFemPost&&!hasCI('tvp')){farmList.push(Object.assign({},FARMACI.raloxifene,{scelta:'2'}));farmList.push(Object.assign({},FARMACI.bazedoxifene,{scelta:'2'}));}
-      } else if(ts==='25to3'){
-        h+='<div class="rcard rcard-blue"><div class="rt">&#8505; Non in Nota 79 \u2014 T-score tra \u22122,5 e \u22123 senza altri fattori</div><div class="rb">Farmaci non rimborsabili SSN.</div></div>';
-        h+='<div class="note">Calcolare FRAX/DeFRA (\u226520%). Ca++ + Vit.D. Rivalutare DXA tra 1\u20132 anni.</div>';
-      } else {
-        h+='<div class="rcard rcard-blue"><div class="rt">&#8505; Non in Nota 79 \u2014 densit\u00e0 ossea nella norma o osteopenia lieve</div><div class="rb">Farmaci non rimborsabili SSN.</div></div>';
-        h+='<div class="note">Profilassi non farmacologica: Ca++, Vit.D, esercizio fisico, stop fumo, prevenzione cadute.</div>';
-      }
-    }
-  }
-
-  if(farmList.length){
-    h+=buildRxSection(farmList);
-  }
-
-  // avvisi CI
-  if(hasCI('ir')) h+='<div class="warn"><strong>IR grave (ClCr &lt;30 ml/min):</strong> bifosfonati controindicati. Opzioni: denosumab (monitorare ipocalcemia) o teriparatide/abaloparatide.</div>';
-  if(hasCI('tvp')) h+='<div class="warn"><strong>TVP/embolia pregressa:</strong> raloxifene e bazedoxifene controindicati.</div>';
-  if(hasCI('cv')) h+='<div class="warn"><strong>Evento CV pregresso o rischio \u226520%:</strong> romosozumab controindicato.</div>';
-  if(hasCI('rge')) h+='<div class="warn"><strong>Reflusso/esofagite severa:</strong> bifosfonati orali da evitare. Preferire zoledronato e.v. o denosumab.</div>';
-
-  h+=nonFarma();
-  document.getElementById('result-content').innerHTML=h;
-}
-
-function chip(label,val){return '<div class="chip">'+label+': <span>'+val+'</span></div>';}
-
-function nonFarma(){
-  return '<div class="card"><div class="stitle">Misure non farmacologiche (sempre)</div>'+
-    '<div style="font-size:12px;color:#444;line-height:1.7">'+
-    '&#8226; <strong>Calcio:</strong> 1000&#8211;1200 mg/die (dieta + supplemento se necessario)<br>'+
-    '&#8226; <strong>Vitamina D:</strong> \u22658\u20300 UI/die (colecalciferolo o calcifediolo; nei nefropatici valutare metaboliti 25-OH)<br>'+
-    '&#8226; <strong>Monitorare calcemia</strong> prima di ogni dose di denosumab<br>'+
-    '&#8226; <strong>Visita odontoiatrica</strong> prima di avviare bifosfonati, denosumab, romosozumab (rischio ONJ)<br>'+
-    '&#8226; Esercizio fisico, prevenzione cadute, stop fumo, no abuso alcol</div></div>'+
-    '<div style="font-size:10px;color:#aaa;text-align:center;margin:10px 0 4px;padding-top:8px;border-top:1px solid #eee">'+
-    'Nota AIFA 79 \u2014 Determina AIFA DG/225/2025 (GU n.44 del 22/02/2025) \u2014 Strumento di supporto clinico: non sostituisce il giudizio medico individuale</div>';
-}
-
-function resetAll(){
-  P={};CI=[];
-  document.querySelectorAll('input[type=checkbox]').forEach(function(cb){cb.checked=false;});
-  document.getElementById('result-content').innerHTML='';
-  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
-  document.getElementById('step1').classList.add('active');
-  document.getElementById('prog-fill').style.width='11%';
-  document.getElementById('prog-label').textContent='Passo 1 di 9';
-  window.scrollTo(0,0);
-}
-</script>
+  <div class="disc"><strong>Avvertenza.</strong> Gli strumenti sono ausili di consultazione basati sul testo delle Note AIFA e sulle linee guida disponibili alla data di redazione; non sostituiscono il giudizio clinico né la consultazione dei testi ufficiali (Gazzetta Ufficiale, AIFA, scheda tecnica). Verificare sempre la versione vigente della Nota. Nessun dato del paziente viene inviato o salvato.</div>
+</main>
+<footer>© iltuofisiatra.it — a cura di Flavio Mignone, medico fisiatra</footer>
 </body>
 </html>

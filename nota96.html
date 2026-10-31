@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wizard Vitamina D — Nota AIFA 96</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#f5f5f3;color:#1a1a1a;font-size:14px;line-height:1.5}
+header{background:#2E7D32;color:#fff;padding:12px 18px;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:12px}
+header h1{font-size:15px;font-weight:700;flex:1}
+header span{font-size:10px;opacity:.75}
+.wrap{max-width:660px;margin:0 auto;padding:14px}
+.prog-label{font-size:11px;color:#666;margin-bottom:4px}
+.prog-bar{height:5px;background:#ddd;border-radius:3px;margin-bottom:14px;overflow:hidden}
+.prog-fill{height:100%;background:#2E7D32;border-radius:3px;transition:width .3s}
+.step{display:none}.step.active{display:block}
+.card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.stitle{font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.q{font-size:15px;font-weight:600;color:#111;margin-bottom:8px;line-height:1.45}
+.qsub{font-size:12px;color:#666;margin-bottom:10px;line-height:1.4}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{background:#f0f7f0;border:1px solid #a5c8a5;border-radius:8px;padding:10px 13px;font-size:13px;color:#1a3a1a;cursor:pointer;text-align:left;transition:background .12s;line-height:1.4}
+.opt:hover{background:#c8e6c9;border-color:#2E7D32}
+.back{background:none;border:none;color:#888;font-size:12px;cursor:pointer;padding:6px 0 0;text-decoration:underline}
+.back:hover{color:#2E7D32}
+.note{background:#E8F5E9;border-left:4px solid #4CAF50;padding:8px 11px;font-size:12px;color:#1B5E20;border-radius:0 6px 6px 0;margin-top:8px;line-height:1.5}
+.warn{background:#FFF8E1;border-left:4px solid #FFC107;padding:8px 11px;font-size:12px;color:#7B4F00;border-radius:0 6px 6px 0;margin-top:8px;line-height:1.5}
+.danger{background:#FFEBEE;border-left:4px solid #F44336;padding:8px 11px;font-size:12px;color:#7B1E1E;border-radius:0 6px 6px 0;margin-top:8px;line-height:1.5}
+/* result cards */
+.rcard{border-radius:9px;padding:11px 14px;margin-bottom:10px}
+.rcard-green{background:#E8F5E9;border:1.5px solid #66BB6A}
+.rcard-amber{background:#FFF8E1;border:1.5px solid #FFD54F}
+.rcard-red{background:#FFEBEE;border:1.5px solid #EF9A9A}
+.rcard-blue{background:#E3F2FD;border:1.5px solid #90CAF9}
+.rcard-green .rt{color:#1B5E20;font-size:13px;font-weight:700;margin-bottom:3px}
+.rcard-amber .rt{color:#7B4F00;font-size:13px;font-weight:700;margin-bottom:3px}
+.rcard-red .rt{color:#7B1E1E;font-size:13px;font-weight:700;margin-bottom:3px}
+.rcard-blue .rt{color:#0D47A1;font-size:13px;font-weight:700;margin-bottom:3px}
+.rcard-green .rb{color:#2E7D32;font-size:12px;line-height:1.5}
+.rcard-amber .rb{color:#7B4F00;font-size:12px;line-height:1.5}
+.rcard-red .rb{color:#C62828;font-size:12px;line-height:1.5}
+.rcard-blue .rb{color:#1565C0;font-size:12px;line-height:1.5}
+/* scheda RX */
+.rx-card{background:#fff;border:2px solid #2E7D32;border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.rx-title{font-size:13px;font-weight:700;color:#2E7D32;margin-bottom:10px;border-bottom:1px solid #c8e6c9;padding-bottom:6px}
+.rx-block{background:#F1F8E9;border-radius:8px;padding:11px 13px;margin-bottom:8px;border-left:4px solid #66BB6A}
+.rx-block.fuori{background:#FFF8E1;border-left-color:#FFC107}
+.rx-block:last-child{margin-bottom:0}
+.rx-nome{font-size:14px;font-weight:700;color:#111;margin-bottom:2px}
+.rx-com{font-size:11px;color:#2E7D32;font-weight:700;margin-bottom:6px}
+.rx-com.fuori{color:#7B4F00}
+.rx-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px}
+.pill-g{background:#2E7D32;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block}
+.pill-a{background:#558B2F;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block}
+.pill-o{background:#F57F17;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;display:inline-block}
+.rx-detail{font-size:12px;color:#333;line-height:1.6;margin-top:4px}
+.rx-target{font-size:12px;color:#1B5E20;background:#DCEDC8;border-radius:6px;padding:4px 9px;margin-top:5px;display:inline-block;font-weight:700}
+.rx-target.amber{background:#FFF9C4;color:#7B4F00}
+.rx-warn{font-size:11px;color:#7B1E1E;background:#FFEBEE;border-radius:6px;padding:3px 8px;margin-top:4px;display:block}
+.rx-fuori-nota{font-size:11px;color:#7B4F00;background:#FFF8E1;border:1px solid #FFD54F;border-radius:6px;padding:4px 9px;margin-bottom:6px;display:block;font-weight:700}
+/* chips riepilogo */
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.chip{background:#f0f7f0;border:1px solid #c8e6c9;border-radius:6px;padding:2px 8px;font-size:11px;color:#2E7D32}
+.chip span{color:#111;font-weight:700}
+/* bottone reset */
+.new-btn{display:block;width:100%;background:#2E7D32;color:#fff;border:none;border-radius:10px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:14px;text-align:center}
+.new-btn:hover{background:#1B5E20}
+label.ci-label{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;cursor:pointer;line-height:1.4;color:#1a1a1a;padding:7px 0;border-bottom:1px solid #f0f0f0}
+label.ci-label:last-child{border-bottom:none}
+label.ci-label input{margin-top:2px;flex-shrink:0;width:16px;height:16px}
+.go-btn{background:#2E7D32;color:#fff;border:none;border-radius:8px;padding:11px 14px;font-size:13px;font-weight:700;cursor:pointer;margin-top:10px;width:100%}
+.go-btn:hover{background:#1B5E20}
+.soglie-box{background:#fff;border:1.5px solid #81C784;border-radius:8px;padding:10px 13px;font-size:12.5px;line-height:1.9;margin-bottom:10px}
+</style>
+</head>
+<body>
+<a href="./" style="position:fixed;top:6px;right:8px;z-index:9999;background:#0f3d5e;color:#fff;font:600 12px system-ui,sans-serif;padding:6px 10px;border-radius:14px;text-decoration:none;opacity:.9">← iltuofisiatra.it</a>
+
+<header>
+  <h1>&#9651; Wizard Vitamina D — Nota AIFA 96</h1>
+  <span>Determina AIFA n.48/2023 — GU n.43 del 20/02/2023</span>
+</header>
+<div class="wrap">
+
+<div class="prog-label" id="prog-label">Passo 1 di 5</div>
+<div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:20%"></div></div>
+
+<!-- STEP 1: Gruppo A -->
+<div id="step1" class="step active">
+  <div class="card">
+    <div class="stitle">Gruppo A — Prescrizione senza dosaggio 25(OH)D — passo 1 di 5</div>
+    <p class="q">Il paziente rientra in una di queste categorie?</p>
+    <p class="qsub">In queste condizioni la vitamina D è rimborsata SSN <strong>senza bisogno del dosaggio della 25(OH)D</strong></p>
+    <div class="opts">
+      <button class="opt" onclick="set('gruppoA','istituz');go('result')">Persona <strong>istituzionalizzata</strong> (RSA, lungodegenza, casa di riposo)</button>
+      <button class="opt" onclick="set('gruppoA','allettata');go('result')">Gravi <strong>deficit motori o allettata</strong> al proprio domicilio</button>
+      <button class="opt" onclick="set('gruppoA','gravid');go('result')">Donna in <strong>gravidanza o in allattamento</strong></button>
+      <button class="opt" onclick="set('gruppoA','osteo_nonrem');go('result')">Osteoporosi da qualsiasi causa <strong>non candidata</strong> a terapia remineralizzante (Nota 79)</button>
+      <button class="opt" onclick="set('gruppoA','no');go(2)">Nessuna delle condizioni sopra &#8594; valutare Gruppo B</button>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2: dosaggio disponibile? -->
+<div id="step2" class="step">
+  <div class="card">
+    <div class="stitle">Gruppo B — passo 2 di 5</div>
+    <p class="q">È disponibile il valore di 25(OH)D sierica?</p>
+    <p class="qsub">Il dosaggio va eseguito solo in presenza di sintomi o fattori di rischio specifici — non è un esame di routine</p>
+    <div class="opts">
+      <button class="opt" onclick="set('dosagg','si');go(3)">Sì — ho il valore numerico</button>
+      <button class="opt" onclick="set('dosagg','no');go('no_dosagg')">No — dosaggio non eseguito</button>
+    </div>
+    <button class="back" onclick="go(1)">&#8592; Indietro</button>
+  </div>
+</div>
+
+<!-- STEP no_dosagg -->
+<div id="step_no_dosagg" class="step">
+  <div class="card">
+    <div class="stitle">Dosaggio non disponibile — passo 2b di 5</div>
+    <p class="q">Sono presenti sintomi o fattori di rischio per carenza di vitamina D?</p>
+    <div class="opts">
+      <button class="opt" onclick="set('sintomi_risk','si');go(4_nd)">Sì — presente almeno una condizione</button>
+      <button class="opt" onclick="set('sintomi_risk','no');go('result')">No — paziente asintomatico senza fattori di rischio</button>
+    </div>
+    <div class="note">
+      <strong>Sintomi:</strong> astenia intensa, mialgie, dolori ossei diffusi o localizzati, frequenti cadute immotivate<br>
+      <strong>Fattori di rischio che indicano il dosaggio:</strong> candidati a terapia remineralizzante (Nota 79) • malassorbimento intestinale • farmaci interferenti cronici (antiepilettici, glucocorticoidi, antiretrovirali, antimicotici, colestiramina, orlistat) • PTH elevato / iperparatiroidismo
+    </div>
+    <button class="back" onclick="go(2)">&#8592; Indietro</button>
+  </div>
+</div>
+
+<!-- STEP 3: valore 25(OH)D -->
+<div id="step3" class="step">
+  <div class="card">
+    <div class="stitle">Valore 25(OH)D sierica — passo 3 di 5</div>
+    <p class="q">Qual è il valore di 25(OH)D?</p>
+    <div class="soglie-box">
+      <strong style="color:#1B5E20">Soglie Nota 96 (agg. 2023):</strong><br>
+      <span style="color:#C62828;font-weight:700">&lt;12 ng/mL</span> (&lt;30 nmol/L) — carenza grave: indicazione in qualsiasi condizione<br>
+      <span style="color:#7B4F00;font-weight:700">12–20 ng/mL</span> (30–50 nmol/L) — carenza moderata: indicazione solo con sintomi, farmaci interferenti o malassorbimento<br>
+      <span style="color:#7B4F00;font-weight:700">20–30 ng/mL</span> (50–75 nmol/L) — "insufficienza": indicazione solo con iperparatiroidismo o osteoporosi in remineralizzante<br>
+      <span style="color:#1B5E20;font-weight:700">&gt;30 ng/mL</span> (&gt;75 nmol/L) — livelli adeguati: nessuna indicazione
+    </div>
+    <div class="opts">
+      <button class="opt" onclick="set('val','lt12');go(4)">&lt;12 ng/mL (o &lt;30 nmol/L) — carenza grave</button>
+      <button class="opt" onclick="set('val','12_20');go(4)">12–20 ng/mL (30–50 nmol/L) — carenza moderata</button>
+      <button class="opt" onclick="set('val','20_30');go(4)">20–30 ng/mL (50–75 nmol/L) — cosiddetta "insufficienza"</button>
+      <button class="opt" onclick="set('val','gt30');go('result')">&gt;30 ng/mL (&gt;75 nmol/L) — livelli adeguati</button>
+    </div>
+    <button class="back" onclick="go(2)">&#8592; Indietro</button>
+  </div>
+</div>
+
+<!-- STEP 4: condizione clinica (con dosaggio) -->
+<div id="step4" class="step">
+  <div class="card">
+    <div class="stitle">Condizione clinica — passo 4 di 5</div>
+    <p class="q" id="q4">Quale condizione clinica è presente?</p>
+    <div class="opts" id="opts4"></div>
+    <button class="back" onclick="go(3)">&#8592; Indietro</button>
+  </div>
+</div>
+
+<!-- STEP 4nd: condizione clinica (senza dosaggio, sintomi presenti) -->
+<div id="step4_nd" class="step">
+  <div class="card">
+    <div class="stitle">Condizione clinica — passo 3b di 5</div>
+    <p class="q">Quale condizione è presente?</p>
+    <div class="opts">
+      <button class="opt" onclick="set('cond','sintomi_nd');go('result')">Sintomi da ipovitaminosi (astenia, mialgie, dolori ossei, cadute)</button>
+      <button class="opt" onclick="set('cond','farmaci_nd');go('result')">Farmaci interferenti cronici (antiepilettici, GCS, antiretrovirali, antimicotici, colestiramina, orlistat)</button>
+      <button class="opt" onclick="set('cond','malassorbimento_nd');go('result')">Malassorbimento intestinale (celiachia, IBD, bypass gastrico, ecc.)</button>
+      <button class="opt" onclick="set('cond','iperPTH_nd');go('result')">Iperparatiroidismo (primario o secondario)</button>
+      <button class="opt" onclick="set('cond','osteo_rem_nd');go('result')">Osteoporosi candidata a terapia remineralizzante (Nota 79)</button>
+    </div>
+    <button class="back" onclick="go('no_dosagg')">&#8592; Indietro</button>
+  </div>
+</div>
+
+<!-- STEP 5: modificatori dose -->
+<div id="step5" class="step">
+  <div class="card">
+    <div class="stitle">Fattori modificatori della dose — passo 5 di 5</div>
+    <p class="q">Sono presenti condizioni che richiedono dosi maggiori o una formulazione diversa?</p>
+    <div class="opts">
+      <button class="opt" onclick="set('dosemod','malass');go('result')">Malassorbimento intestinale grave (celiachia attiva, bypass gastrico, IBD grave, resezione intestinale)</button>
+      <button class="opt" onclick="set('dosemod','obeso');go('result')">Obesità (BMI &gt;30) — maggiore sequestro nel tessuto adiposo</button>
+      <button class="opt" onclick="set('dosemod','farmaci_int');go('result')">Farmaci interferenti (antiepilettici, glucocorticoidi, antiretrovirali, antimicotici, colestiramina, orlistat)</button>
+      <button class="opt" onclick="set('dosemod','no');go('result')">Nessuna delle condizioni sopra</button>
+    </div>
+    <button class="back" onclick="go(4)">&#8592; Indietro</button>
+  </div>
+</div>
+
+<!-- RESULT -->
+<div id="step_result" class="step">
+  <div id="result-content"></div>
+  <button class="new-btn" onclick="resetAll()">&#8635; &nbsp; NUOVO PAZIENTE</button>
+  <div style="height:20px"></div>
+</div>
+
+</div>
+<script>
+var P={};
+function set(k,v){P[k]=v;}
+function get(k){return P[k]||'';}
+
+function setProgress(n,tot){
+  tot=tot||5;
+  document.getElementById('prog-fill').style.width=Math.round(n/tot*100)+'%';
+  document.getElementById('prog-label').textContent='Passo '+n+' di '+tot;
+}
+
+function showStep(id){
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
+  var key;
+  if(id==='result') key='step_result';
+  else if(typeof id==='number') key='step'+id;
+  else if(id==='4_nd'||id===4) key=(id===4)?'step4':'step4_nd';
+  else if(typeof id==='string'&&id.indexOf('step')===0) key=id;
+  else key='step_'+id;
+  var el=document.getElementById(key);
+  if(el) el.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function go(id){
+  var pMap={1:1,2:2,'no_dosagg':2,3:3,4:4,'4_nd':3,5:5,'result':5,'result_nd':5};
+  // build step4 options when needed
+  if(id===4) buildStep4();
+  setProgress(pMap[id]||id);
+  showStep(id);
+  if(id==='result') buildResult();
+}
+
+function buildStep4(){
+  var val=get('val');
+  var opts='';
+  if(val==='lt12'){
+    opts='<button class="opt" onclick="set(\'cond\',\'sintomi\');go(5)">Sintomi attribuibili a ipovitaminosi (astenia, mialgie, dolori, cadute)</button>'+
+         '<button class="opt" onclick="set(\'cond\',\'farmaci\');go(5)">Farmaci interferenti cronici (antiepilettici, GCS, antiretrovirali, antimicotici, colestiramina, orlistat)</button>'+
+         '<button class="opt" onclick="set(\'cond\',\'malassorbimento\');go(5)">Malassorbimento intestinale (celiachia, IBD, bypass gastrico, ecc.)</button>'+
+         '<button class="opt" onclick="set(\'cond\',\'iperPTH\');go(5)">Iperparatiroidismo (primario o secondario)</button>'+
+         '<button class="opt" onclick="set(\'cond\',\'osteo_rem\');go(5)">Osteoporosi candidata a terapia remineralizzante (Nota 79)</button>'+
+         '<button class="opt" onclick="set(\'cond\',\'nessuna\');go(5)">Nessuna condizione specifica — riscontro occasionale</button>';
+  } else if(val==='12_20'){
+    opts='<button class="opt" onclick="set(\'cond\',\'sintomi\');go(5)">Sintomi attribuibili a ipovitaminosi (astenia intensa, mialgie, dolori ossei, cadute)</button>'+
+         '<button class="opt" onclick="set(\'cond\',\'farmaci\');go(5)">Farmaci interferenti cronici</button>'+
+         '<button class="opt" onclick="set(\'cond\',\'malassorbimento\');go(5)">Malassorbimento intestinale</button>'+
+         '<button class="opt" onclick="set(\'cond\',\'nessuna\');go(5)">Riscontro occasionale senza sintomi né condizioni specifiche</button>';
+  } else if(val==='20_30'){
+    opts='<button class="opt" onclick="set(\'cond\',\'iperPTH\');go(5)">Iperparatiroidismo (primario o secondario)</button>'+
+         '<button class="opt" onclick="set(\'cond\',\'osteo_rem\');go(5)">Osteoporosi o osteopatia candidata a terapia remineralizzante (Nota 79)</button>'+
+         '<button class="opt" onclick="set(\'cond\',\'nessuna\');go(5)">Nessuna delle due — riscontro occasionale o sintomi generici</button>';
+  }
+  document.getElementById('opts4').innerHTML=opts;
+}
+
+/* ==================== BUILD RESULT ==================== */
+function buildResult(){
+  var ga=get('gruppoA'), val=get('val'), cond=get('cond'), dm=get('dosemod');
+  var sintRisk=get('sintomi_risk'), dosagg=get('dosagg');
+  var h='';
+
+  // riepilogo
+  h+='<div class="card"><div class="stitle">Riepilogo valutazione</div><div class="chips">';
+  if(ga&&ga!=='no') h+=chip('Gruppo A',{istituz:'Istituzionalizzato',allettata:'Deficit motori/allettato',gravid:'Gravidanza/allattamento',osteo_nonrem:'Osteoporosi non remineralizzante'}[ga]);
+  if(val) h+=chip('25(OH)D',{'lt12':'&lt;12 ng/mL','12_20':'12–20 ng/mL','20_30':'20–30 ng/mL','gt30':'&gt;30 ng/mL'}[val]);
+  if(cond) h+=chip('Condizione',{sintomi:'Sintomatico',farmaci:'Farmaci interferenti',malassorbimento:'Malassorbimento',iperPTH:'Iperparatiroidismo',osteo_rem:'Osteoporosi remineralizzante',nessuna:'Riscontro occasionale',sintomi_nd:'Sintomi (no dosagg.)',farmaci_nd:'Farmaci interferenti (no dosagg.)',malassorbimento_nd:'Malassorbimento (no dosagg.)',iperPTH_nd:'IperPTH (no dosagg.)',osteo_rem_nd:'Osteoporosi remineralizzante (no dosagg.)'}[cond]||cond);
+  if(dm&&dm!=='no') h+=chip('Mod. dose',{malass:'Malassorbimento grave',obeso:'Obesit\u00e0',farmaci_int:'Farmaci interferenti'}[dm]);
+  if(sintRisk) h+=chip('Sintomi/rischio',sintRisk==='si'?'S\u00ec':'No');
+  h+='</div></div>';
+
+  // CASI SPECIALI
+  // no dosaggio, no sintomi
+  if(dosagg==='no'&&sintRisk==='no'){
+    h+='<div class="rcard rcard-red"><div class="rt">&#10007; Dosaggio non indicato — non in Nota 96</div>';
+    h+='<div class="rb">Paziente asintomatico senza fattori di rischio: n\u00e9 il dosaggio n\u00e9 la prescrizione di vitamina D a carico SSN sono appropriati.</div></div>';
+    h+='<div class="warn"><strong>Nota 96:</strong> lo screening nella popolazione generale \u00e8 esplicitamente inappropriato. Lo studio VITAL (25.871 soggetti, 5,3 anni) ha dimostrato che 2000 UI/die di vitamina D non riducono il rischio di frattura nemmeno nei soggetti con 25(OH)D &lt;12 ng/mL. La prescrizione rimane possibile ma <strong>a carico del paziente (classe C).</strong></div>';
+    h+=avvertenze_generali();
+    document.getElementById('result-content').innerHTML=h; return;
+  }
+
+  // valore >30
+  if(val==='gt30'){
+    h+='<div class="rcard rcard-red"><div class="rt">&#10007; Nessuna indicazione — 25(OH)D &gt;30 ng/mL</div>';
+    h+='<div class="rb">Livelli gi\u00e0 adeguati. Il trattamento non \u00e8 indicato n\u00e9 rimborsato SSN.</div></div>';
+    h+='<div class="danger"><strong>Curva a V (Nota 96):</strong> livelli elevati di 25(OH)D (oltre 40–45 ng/mL) si associano ad aumento di mortalit\u00e0, rischio di cancro prostatico e pancreatico. Non perseguire livelli superiori al range fisiologico. Evitare sovradosaggi.</div>';
+    h+=avvertenze_generali();
+    document.getElementById('result-content').innerHTML=h; return;
+  }
+
+  // GRUPPO A
+  if(ga&&ga!=='no'){
+    var titoli={istituz:'Persona istituzionalizzata',allettata:'Gravi deficit motori o allettata al domicilio',gravid:'Donna in gravidanza o in allattamento',osteo_nonrem:'Osteoporosi non candidata a terapia remineralizzante'};
+    h+='<div class="rcard rcard-green"><div class="rt">&#10003; Prescrizione SSN rimborsabile — Gruppo A (senza dosaggio 25(OH)D)</div>';
+    h+='<div class="rb">'+titoli[ga]+'</div></div>';
+    h+=buildRxGruppoA(ga);
+    h+=avvertenze_generali();
+    document.getElementById('result-content').innerHTML=h; return;
+  }
+
+  // GRUPPO B — con dosaggio
+  var rimborsabile=false, motivazione='';
+  if(val==='lt12'){
+    rimborsabile=true;
+    motivazione='25(OH)D &lt;12 ng/mL: carenza grave. Indicazione al trattamento <strong>con o senza sintomi</strong>, in qualsiasi condizione clinica.';
+  } else if(val==='12_20'){
+    if(cond==='sintomi'||cond==='farmaci'||cond==='malassorbimento'){
+      rimborsabile=true;
+      var mmap={sintomi:'25(OH)D &lt;20 ng/mL + sintomi attribuibili a ipovitaminosi',farmaci:'25(OH)D &lt;20 ng/mL + terapia cronica con farmaci interferenti',malassorbimento:'25(OH)D &lt;20 ng/mL + malattia con malassorbimento intestinale'};
+      motivazione=mmap[cond];
+    } else {
+      rimborsabile=false;
+      motivazione='25(OH)D 12–20 ng/mL senza sintomi n\u00e9 condizioni specifiche. La Nota 96 (agg. 2023) ha abbassato la soglia di rimborso da 20 a 12 ng/mL per il riscontro occasionale asintomatico.';
+    }
+  } else if(val==='20_30'){
+    if(cond==='iperPTH'||cond==='osteo_rem'){
+      rimborsabile=true;
+      var mmap2={iperPTH:'25(OH)D &lt;30 ng/mL + iperparatiroidismo (primario o secondario)',osteo_rem:'25(OH)D &lt;30 ng/mL + osteoporosi/osteopatia candidata a terapia remineralizzante (Nota 79)'};
+      motivazione=mmap2[cond];
+    } else {
+      rimborsabile=false;
+      motivazione='25(OH)D 20–30 ng/mL senza iperparatiroidismo n\u00e9 osteoporosi in terapia remineralizzante. La cosiddetta "insufficienza" in questa fascia NON \u00e8 un\'indicazione di trattamento: la Nota 96 afferma esplicitamente che questa definizione "non \u00e8 scientificamente accettabile" come base per trattamenti routinari.';
+    }
+  }
+
+  // GRUPPO B — senza dosaggio ma con sintomi/rischio
+  var nd=(dosagg==='no'&&sintRisk==='si');
+  if(nd){
+    rimborsabile=false; // non possiamo confermare senza valore
+    h+='<div class="rcard rcard-amber"><div class="rt">&#8505; Eseguire il dosaggio di 25(OH)D prima di prescrivere</div>';
+    h+='<div class="rb">Sintomi o fattori di rischio presenti: il dosaggio \u00e8 appropriato e necessario per definire la rimborsabilit\u00e0 SSN.</div></div>';
+    h+=buildRxNoDosagg(cond);
+    h+=avvertenze_generali();
+    document.getElementById('result-content').innerHTML=h; return;
+  }
+
+  if(rimborsabile){
+    h+='<div class="rcard rcard-green"><div class="rt">&#10003; Prescrizione SSN rimborsabile — Gruppo B</div><div class="rb">'+motivazione+'</div></div>';
+    h+=buildRxGruppoB(val,cond,dm);
+  } else {
+    h+='<div class="rcard rcard-red"><div class="rt">&#10007; Non rimborsabile SSN — fuori dai criteri della Nota 96</div><div class="rb">'+motivazione+'</div></div>';
+    h+=buildRxFuoriNota(val,cond,dm);
+  }
+
+  h+=avvertenze_generali();
+  document.getElementById('result-content').innerHTML=h;
+}
+
+/* ==================== SCHEDE FARMACO ==================== */
+
+function buildRxGruppoA(ga){
+  var h='<div class="rx-card"><div class="rx-title">&#9998; Prescrizione — Gruppo A (senza dosaggio 25(OH)D)</div>';
+
+  if(ga==='gravid'){
+    h+=rxBlock({
+      nome:'Colecalciferolo — Vitamina D3',
+      com:'Dibase gocce/fiale, D-Cure, Isovit D3, Juvit D3, Colecalciferolo EG, Nativa-D',
+      dose:'600–1000 UI/die', via:'per os', freq:'giornaliero',
+      detail:'La somministrazione giornaliera è quella con le migliori evidenze. Evitare boli elevati in gravidanza. Monitorare calcemia se supplementazione calcica concomitante.',
+      target:'Target 25(OH)D: ≥30 ng/mL (target più elevato in gravidanza)',
+      warn:''
+    });
+  } else if(ga==='osteo_nonrem'){
+    h+=rxBlock({
+      nome:'Colecalciferolo — Vitamina D3',
+      com:'Dibase gocce/fiale, D-Cure, Isovit D3, Colecalciferolo EG, Nativa-D',
+      dose:'800–1000 UI/die', via:'per os', freq:'giornaliero (o equivalente)',
+      detail:'Schemi alternativi per l\'aderenza: 5600 UI/settimana (Dibase 5600) oppure 25.000 UI/mese. Pausa estiva possibile in soggetti con adeguata esposizione solare.',
+      target:'Target 25(OH)D: ≥20 ng/mL',
+      warn:'Non superare 100.000 UI per singola somministrazione'
+    });
+    h+=rxBlock({
+      nome:'Colecalciferolo + Sali di calcio',
+      com:'Cacit D3, Calcium-D3 Nycomed, Calcioral D3 Sandoz',
+      dose:'D3 400–800 UI + Ca 500–1000 mg', via:'per os', freq:'1–2 volte/die',
+      detail:'Indicato se apporto dietetico di calcio insufficiente (&lt;800 mg/die). Attenzione al rischio di ipercalciuria con apporti elevati di calcio.',
+      target:'',warn:''
+    });
+  } else {
+    // istituzionalizzato / allettato
+    h+=rxBlock({
+      nome:'Colecalciferolo — Vitamina D3',
+      com:'Dibase gocce/fiale, D-Cure, Isovit D3, Colecalciferolo EG, Nativa-D',
+      dose:'800–1000 UI/die', via:'per os', freq:'giornaliero (preferito)',
+      detail:'Schemi alternativi per l\'aderenza: 5600 UI/settimana oppure 25.000 UI/mese. La somministrazione giornaliera ha le maggiori evidenze di efficacia antifratturativa nelle strutture protette (meta-analisi Bischoff-Ferrari).',
+      target:'Target 25(OH)D: ≥20 ng/mL',
+      warn:'Non superare 100.000 UI per singola somministrazione (bolo): dosi superiori aumentano paradossalmente il rischio di cadute e fratture (studi Sanders 2010, Smith 2007)'
+    });
+    h+=rxBlock({
+      nome:'Colecalciferolo + Sali di calcio',
+      com:'Cacit D3, Calcium-D3 Nycomed, Calcioral D3 Sandoz',
+      dose:'D3 400–800 UI + Ca 500–1000 mg', via:'per os', freq:'1–2 volte/die',
+      detail:'Se apporto dietetico di calcio &lt;800 mg/die. Utile negli anziani istituzionalizzati con dieta povera di latticini.',
+      target:'',warn:''
+    });
+  }
+  h+='</div>';
+  return h;
+}
+
+function buildRxGruppoB(val, cond, dm){
+  var h='<div class="rx-card"><div class="rx-title">&#9998; Prescrizione — Gruppo B (con dosaggio 25(OH)D)</div>';
+  var malass=(cond==='malassorbimento'||dm==='malass');
+  var farmaci_int=(cond==='farmaci'||dm==='farmaci_int');
+  var obeso=(dm==='obeso');
+
+  // definisco schema attacco
+  var doseAttacco='', schemaAttacco='', doseMan='800–1000 UI/die', target='≥20 ng/mL';
+
+  if(val==='lt12'||cond==='sintomi'){
+    if(malass){doseAttacco='10.000–50.000 UI/settimana';schemaAttacco='Dosi elevate per malassorbimento. Preferire calcifediolo se risposta inadeguata.';}
+    else if(obeso){doseAttacco='2000–3000 UI/die';schemaAttacco='Dosi aumentate per sequestro nel tessuto adiposo. Monitorare 25(OH)D dopo 3 mesi.';}
+    else if(farmaci_int){doseAttacco='1000–2000 UI/die (dosi maggiori per interferenza enzimatica)';schemaAttacco='Oppure 50.000 UI/settimana × 8 settimane se deficit importante.';}
+    else{doseAttacco='50.000 UI/settimana × 8 settimane';schemaAttacco='Oppure 1000–2000 UI/die in alternativa.';}
+  } else if(val==='12_20'){
+    if(malass){doseAttacco='10.000–50.000 UI/settimana';schemaAttacco='Preferire calcifediolo se malassorbimento grave.';}
+    else if(farmaci_int){doseAttacco='1000–2000 UI/die';schemaAttacco='Dosi maggiori rispetto allo standard per compensare l\'interferenza enzimatica.';}
+    else{doseAttacco='50.000 UI/settimana × 6–8 settimane';schemaAttacco='Oppure 1000–2000 UI/die continuativamente.';}
+  } else if(val==='20_30'){
+    doseAttacco='1000–2000 UI/die';
+    schemaAttacco='Oppure equivalente settimanale (7000–14.000 UI/settimana).';
+    target='≥30 ng/mL';
+    doseMan='1000–1500 UI/die (mantenimento più alto per raggiungere ≥30 ng/mL)';
+  }
+
+  if(cond==='osteo_rem') target='≥30 ng/mL (obbligatorio prima di avviare la terapia remineralizzante)';
+  if(cond==='iperPTH') target='≥30 ng/mL (necessario per adeguato controllo PTH)';
+
+  h+=rxBlock({
+    nome:'Colecalciferolo — Vitamina D3 (molecola di riferimento)',
+    com:'Dibase gocce/fiale, D-Cure, Isovit D3, Juvit D3, Colecalciferolo EG, Nativa-D',
+    dose:doseAttacco, via:'per os', freq:'fase di attacco',
+    detail:'<strong>Schema di attacco:</strong> '+schemaAttacco+'<br><strong>Mantenimento (dopo raggiungimento del target):</strong> '+doseMan+' — oppure 5600 UI/settimana o 25.000 UI/mese per l\'aderenza.',
+    target:'Target 25(OH)D: '+target,
+    warn:'Non superare 100.000 UI per singola somministrazione'
+  });
+
+  if(malass){
+    h+=rxBlock({
+      nome:'Calcifediolo — 25-OH Vitamina D (alternativa nel malassorbimento)',
+      com:'Didrogyl soluzione orale, Calcifediolo EG generici',
+      dose:'0,266 mg (266 mcg) ogni 2 settimane', via:'per os', freq:'ogni 2 settimane → poi mensile in mantenimento',
+      detail:'Il calcifediolo non richiede la prima idrossilazione epatica ed ha biodisponibilità superiore in caso di malassorbimento intestinale o epatopatia grave. Monitorare 25(OH)D ogni 2–3 mesi per aggiustare la dose. In caso di malassorbimento grave non responsivo a dosi orali: valutare somministrazione i.m. (&lt;100.000 UI/dose).',
+      target:'Target 25(OH)D: '+target,
+      warn:''
+    });
+  }
+
+  if(cond==='iperPTH'){
+    h+='<div class="note" style="margin-top:8px">Nell\'iperparatiroidismo secondario da insufficienza renale cronica: valutare il ricorso ai metaboliti idrossilati (calcifediolo o calcitriolo) su indicazione specialistica nefrologica. Monitorare PTH e calcemia ogni 3–6 mesi.</div>';
+  }
+  if(cond==='osteo_rem'){
+    h+='<div class="warn" style="margin-top:8px"><strong>Sequenza obbligatoria (Nota 96 + Nota 79):</strong> raggiungere 25(OH)D ≥30 ng/mL <em>prima</em> di avviare bifosfonati, denosumab, teriparatide, abaloparatide o romosozumab. La carenza di vitamina D può vanificare in gran parte l\'effetto dei farmaci antiosteoporotici.</div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function buildRxFuoriNota(val, cond, dm){
+  var h='<div class="rx-card"><div class="rx-title" style="color:#7B4F00;border-color:#FFD54F">&#9998; Opzione terapeutica — <span style="font-weight:400">farmaco a carico del paziente (classe C)</span></div>';
+  h+='<span class="rx-fuori-nota">&#9888; Questa prescrizione NON è rimborsata SSN. Può essere prescritta a carico del paziente (ricetta bianca). Spiegare al paziente la motivazione.</span>';
+
+  var doseMan='800–1000 UI/die';
+  var detail='';
+  if(val==='12_20'&&cond==='nessuna'){
+    detail='Carenza moderata senza sintomi né condizioni specifiche: la Nota 96 (agg. 2023) ha alzato la soglia di rimborsabilità per il riscontro occasionale asintomatico a &lt;12 ng/mL. Tuttavia dal punto di vista clinico, valori 12–20 ng/mL possono giustificare un trattamento, a carico del paziente. Considerare attentamente il rapporto costo/beneficio.';
+  } else if(val==='20_30'&&cond==='nessuna'){
+    detail='I valori 20–30 ng/mL non costituiscono una vera "insufficienza" in senso clinico secondo la Nota 96. La supplementazione è possibile ma non giustificata dalla letteratura recente in soggetti senza fattori di rischio. Se si decide di trattare, usare dosi minime.';
+    doseMan='800–1000 UI/die (dose minima prudente)';
+  }
+
+  h+=rxBlock({
+    nome:'Colecalciferolo — Vitamina D3',
+    com:'Dibase, D-Cure, Colecalciferolo EG — disponibili anche senza ricetta (OTC)',
+    dose:'800–1000 UI/die', via:'per os', freq:'giornaliero',
+    detail:detail||'Dose minima raccomandata dalla letteratura. Non è necessaria una fase di attacco in assenza di carenza grave.',
+    target:'Target 25(OH)D: 20–30 ng/mL (non perseguire valori più elevati)',
+    warn:'Evitare supplementi OTC ad alte dosi senza controllo medico. Rischio di ipercalcemia e ipercalciuria con dosi eccessive.'
+  },true);
+  h+='</div>';
+  return h;
+}
+
+function buildRxNoDosagg(cond){
+  var h='<div class="rx-card"><div class="rx-title">&#9998; Indicazione: eseguire il dosaggio prima di prescrivere</div>';
+  h+='<div class="rx-block">';
+  h+='<div class="rx-nome">25-OH Vitamina D sierica (calcidiolo)</div>';
+  h+='<div class="rx-detail">Prescrivere il dosaggio di 25(OH)D. Una volta ottenuto il valore, ripetere la valutazione nel wizard inserendo il risultato.<br><br>';
+  var condmap={
+    sintomi_nd:'Con <strong>sintomi</strong>: il risultato atteso orienterà sulla dose (se &lt;12 → attacco con 50.000 UI/sett; se 12–20 → attacco con 1000–2000 UI/die).',
+    farmaci_nd:'Con <strong>farmaci interferenti</strong>: valori attesi frequentemente &lt;20 ng/mL. Se confermato, indicazione rimborsata SSN con dosi maggiorate (1000–2000 UI/die).',
+    malassorbimento_nd:'Con <strong>malassorbimento</strong>: valori spesso &lt;12 ng/mL. Se confermato, indicazione rimborsata con calcifediolo in prima scelta.',
+    iperPTH_nd:'Con <strong>iperparatiroidismo</strong>: se valore &lt;30 ng/mL → indicazione rimborsata (1000–2000 UI/die, target ≥30 ng/mL).',
+    osteo_rem_nd:'Con <strong>osteoporosi candidata a remineralizzante</strong>: se valore &lt;30 ng/mL → indicazione rimborsata. Non avviare la terapia Nota 79 prima di aver normalizzato la vitamina D.'
+  };
+  h+=(condmap[cond]||'Atteso probabile deficit: se confermato dal dosaggio, l\'indicazione alla prescrizione SSN dipenderà dal valore e dalla condizione clinica specifica.')+'</div></div>';
+  h+='</div>';
+  return h;
+}
+
+function rxBlock(f, fuori){
+  var cls=fuori?'rx-block fuori':'rx-block';
+  var nomeCls=fuori?'rx-com fuori':'rx-com';
+  var h='<div class="'+cls+'">';
+  h+='<div class="rx-nome">'+f.nome+'</div>';
+  if(f.com) h+='<div class="'+nomeCls+'">'+f.com+'</div>';
+  h+='<div class="rx-row">';
+  h+='<span class="pill-g">'+f.dose+'</span>';
+  h+='<span class="pill-a">'+f.via+'</span>';
+  h+='<span class="pill-a">'+f.freq+'</span>';
+  h+='</div>';
+  if(f.detail) h+='<div class="rx-detail">'+f.detail+'</div>';
+  if(f.target) h+='<div class="rx-target'+(fuori?' amber':'')+'">'+f.target+'</div>';
+  if(f.warn) h+='<div class="rx-warn">&#9888; '+f.warn+'</div>';
+  h+='</div>';
+  return h;
+}
+
+function avvertenze_generali(){
+  return '<div class="card"><div class="stitle">Avvertenze generali (Nota 96)</div>'+
+    '<div style="font-size:12px;color:#333;line-height:1.7">'+
+    '&#8226; <strong>Dose massima per bolo:</strong> non superare 100.000 UI per singola somministrazione<br>'+
+    '&#8226; <strong>Schema preferenziale:</strong> somministrazione giornaliera (migliori evidenze); settimanale o mensile per l\'aderenza<br>'+
+    '&#8226; <strong>Curva a V:</strong> sia carenza che eccesso di 25(OH)D aumentano mortalit\u00e0 ed eventi. Range ottimale: 20–45 ng/mL<br>'+
+    '&#8226; <strong>Molecola di riferimento:</strong> colecalciferolo. Calcifediolo preferibile in malassorbimento/epatopatia grave. Calcitriolo: rischio ipercalcemia<br>'+
+    '&#8226; <strong>Controllo dopo attacco:</strong> dosare 25(OH)D a 3 mesi per verificare il raggiungimento del target<br>'+
+    '&#8226; <strong>Pausa estiva:</strong> considerabile in soggetti con buona esposizione solare (giugno–settembre)'+
+    '</div></div>'+
+    '<div style="font-size:10px;color:#aaa;text-align:center;margin:10px 0 4px;padding-top:8px;border-top:1px solid #eee">'+
+    'Nota AIFA 96 &#8212; Determina AIFA n.48/2023 (GU n.43 del 20/02/2023) &#8212; Strumento di supporto clinico: non sostituisce il giudizio medico individuale</div>';
+}
+
+function chip(label,val){return '<div class="chip">'+label+': <span>'+val+'</span></div>';}
+
+function resetAll(){
+  P={};
+  document.getElementById('result-content').innerHTML='';
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('step1').classList.add('active');
+  document.getElementById('prog-fill').style.width='20%';
+  document.getElementById('prog-label').textContent='Passo 1 di 5';
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
