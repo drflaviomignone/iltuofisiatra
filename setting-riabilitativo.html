@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Setting riabilitativo — iltuofisiatra.it</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: una domanda per schermata, dalla situazione del paziente al setting; traccia delle risposte in alto, esito come scheda di valutazione. */
+:root{
+  --bg:#f3f5f6; --surface:#ffffff; --ink:#15212b; --muted:#5a6872; --line:#d5dde2; --field:#f8fafb;
+  --accent:#0f5e78; --accent-soft:#e2eff4; --ok:#1d7a4f; --ok-soft:#e3f2ea; --warn:#9a5b00; --warn-soft:#fbf0dc; --no:#a33a2c; --no-soft:#f8e4e0;
+  --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f161b; --surface:#172129; --ink:#e4ecf0; --muted:#97a6b0; --line:#2b3a45; --field:#121b21;
+  --accent:#6cc1dc; --accent-soft:#16323d; --ok:#6dd2a0; --ok-soft:#173326; --warn:#e8b45e; --warn-soft:#3a2c14; --no:#f0897a; --no-soft:#3d1f1b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f161b; --surface:#172129; --ink:#e4ecf0; --muted:#97a6b0; --line:#2b3a45; --field:#121b21;
+  --accent:#6cc1dc; --accent-soft:#16323d; --ok:#6dd2a0; --ok-soft:#173326; --warn:#e8b45e; --warn-soft:#3a2c14; --no:#f0897a; --no-soft:#3d1f1b; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.5}
+.wrap{max-width:780px;margin:0 auto;padding-block:26px 60px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:18px}
+header{display:flex;flex-direction:column;gap:6px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(26px,5vw,34px);line-height:1.1;margin:0;text-wrap:balance}
+.lede{color:var(--muted);margin:0;max-width:64ch}
+.banner{background:var(--warn-soft);border-radius:8px;padding:12px 14px;font-size:14px;display:flex;flex-direction:column;gap:4px}
+.banner b{color:var(--warn)}
+.priv{font-size:13px;color:var(--muted);margin:0}
+.res{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow:auto}
+.resrow{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:6px;padding:6px 10px;background:var(--field);font-size:14px}
+.resrow code{font-family:var(--f-mono);font-size:12.5px;color:var(--accent);margin-right:8px}
+.resrow .btn{padding:4px 10px;font-size:13px}
+.devgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px 16px}
+.phase{display:flex;gap:6px;flex-wrap:wrap}
+.phase span{font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);background:var(--surface)}
+.phase span.on{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.phase span.done{color:var(--ink)}
+.trail{display:flex;flex-wrap:wrap;gap:6px}
+.crumb{font-size:13px;border:1px solid var(--line);border-radius:6px;padding:3px 9px;color:var(--muted);background:var(--surface)}
+.crumb b{color:var(--ink);font-weight:700}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px}
+.qnum{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.q{font-family:var(--f-display);font-weight:700;font-size:21px;line-height:1.25;margin:0;text-wrap:balance}
+.help{color:var(--muted);font-size:14.5px;margin:0;max-width:66ch}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:2px;border:1.5px solid var(--line);border-radius:8px;padding:12px 14px;background:var(--field)}
+.opt:hover{border-color:var(--accent);background:var(--accent-soft)}
+.opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.opt strong{font-size:16px}
+.opt span{font-size:13.5px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 16px}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f label,.lbl{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+input[type=text],input[type=number],input[type=date],select,textarea{font:inherit;font-size:15px;color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:6px;padding:8px 10px;width:100%;box-sizing:border-box}
+textarea{font-family:var(--f-mono);font-size:14px;min-height:60px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;cursor:pointer}
+.chk input{margin-top:3px;width:17px;height:17px;accent-color:var(--accent);flex:none}
+.chk small{display:block;color:var(--muted);font-size:13px}
+.hint{font-size:13px;color:var(--muted);margin:0}
+.calc{font-family:var(--f-mono);font-size:13.5px;background:var(--accent-soft);color:var(--ink);border-radius:6px;padding:8px 10px;overflow-wrap:anywhere}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--f-mono);font-size:12.5px;border:1px solid var(--line);border-radius:4px;padding:2px 6px;background:var(--field);display:inline-flex;gap:6px;align-items:center}
+.chip .t{font-family:var(--f-body);font-size:11px;font-weight:700;padding:0 5px;border-radius:3px;background:var(--accent-soft);color:var(--accent)}
+.chip .t.x{background:var(--no-soft);color:var(--no)}
+.chip .t.f{background:var(--warn-soft);color:var(--warn)}
+.chip.dp{border-color:var(--accent)}
+details.scale{border:1px solid var(--line);border-radius:8px;background:var(--field)}
+details.scale summary{cursor:pointer;padding:10px 12px;font-weight:700;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+details.scale summary span{font-family:var(--f-mono);font-weight:500;color:var(--accent)}
+details.scale .body{padding:0 12px 12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px 14px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.btn{all:unset;cursor:pointer;font-size:14px;font-weight:700;padding:9px 16px;border-radius:6px;border:1.5px solid var(--line);color:var(--ink);background:var(--surface)}
+.btn:hover{border-color:var(--accent)}
+.btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.summary{display:flex;gap:18px;align-items:center;flex-wrap:wrap;border-left:6px solid var(--line);padding:4px 0 4px 16px}
+.summary.ok{border-left-color:var(--ok)}.summary.q{border-left-color:var(--warn)}.summary.no{border-left-color:var(--no)}
+.summary .code{font-family:var(--f-mono);font-size:36px;color:var(--accent);line-height:1;min-width:60px}
+.summary .txt{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1}
+.summary .txt b{font-family:var(--f-display);font-size:21px;line-height:1.2}
+.summary .txt span.s{color:var(--muted);font-size:14px}
+.pill{font-family:var(--f-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:4px;align-self:flex-start}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}.pill.q{background:var(--warn-soft);color:var(--warn)}.pill.no{background:var(--no-soft);color:var(--no)}
+dl{display:grid;grid-template-columns:140px 1fr;gap:8px 16px;margin:0;font-size:14.5px}
+dt{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding-top:2px}
+dd{margin:0;min-width:0}
+@media (max-width:520px){dl{grid-template-columns:1fr}}
+.cards{display:flex;flex-direction:column;gap:10px}
+.card{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.card.best{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.card .hd{display:flex;gap:12px;align-items:center;padding:9px 14px;background:var(--field);flex-wrap:wrap}
+.card .hd .c{font-family:var(--f-mono);font-size:17px;color:var(--accent);min-width:40px}
+.card .hd .nm{font-weight:700;flex:1;min-width:0}
+ul.cr{list-style:none;margin:0;padding:8px 14px 12px;display:flex;flex-direction:column;gap:6px}
+ul.cr li{display:grid;grid-template-columns:22px 1fr;gap:8px;font-size:14px}
+.ic{font-weight:700;text-align:center;border-radius:4px;font-size:12px;line-height:20px;height:20px}
+.ic.ok{background:var(--ok-soft);color:var(--ok)}.ic.no{background:var(--no-soft);color:var(--no)}.ic.q{background:var(--warn-soft);color:var(--warn)}
+ul.cr li small{display:block;color:var(--muted);font-size:12.5px;font-family:var(--f-mono);overflow-wrap:anywhere}
+.note{font-size:13.5px;background:var(--warn-soft);border-radius:6px;padding:10px 12px;margin:0}
+.note b{color:var(--warn)}
+pre.copy{font-family:var(--f-mono);font-size:12.5px;white-space:pre-wrap;background:var(--field);border:1px solid var(--line);border-radius:6px;padding:10px;margin:0;max-height:240px;overflow:auto}
+.h3{font-family:var(--f-display);font-weight:700;font-size:16px;margin:4px 0 0}
+details.ref{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+details.ref>summary{cursor:pointer;padding:14px 18px;font-family:var(--f-display);font-weight:700}
+details.ref .in{padding:0 18px 18px;display:flex;flex-direction:column;gap:12px}
+.map{overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;min-width:540px;font-size:13.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+tr.grp td{background:var(--accent-soft);font-weight:700;color:var(--accent);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+td.c{font-family:var(--f-mono);white-space:nowrap}
+.foot{font-size:13px;color:var(--muted);display:flex;flex-direction:column;gap:8px}
+.foot p{margin:0}
+a{color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.panel{animation:in .18s ease-out}@keyframes in{from{transform:translateY(4px)}to{transform:none}}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <a href="operatori.html" style="font-size:14px;text-decoration:none">← Area operatori · iltuofisiatra.it</a>
+  <header>
+    <div class="eyebrow">DM 5/08/2021 · DPCM LEA 12/01/2017</div>
+    <h1>Quale setting riabilitativo?</h1>
+    <p class="lede">Si parte da dove si trova il paziente. Le domande successive raccolgono le sue caratteristiche e applicano i criteri di inclusione, esclusione e appropriatezza, fino al setting e a una bozza di richiesta di trasferimento.</p>
+  </header>
+  <div class="banner" role="note"><span><b>Criteri in sperimentazione.</b> Il DM 5/08/2021 è in sperimentazione dal 1° gennaio 2024 e la fase non è conclusa (art. 6–7). I livelli 56a, 56b e 56c non sono ancora vincolanti: per le finalità amministrative valgono le norme nazionali e regionali vigenti. Usa l'esito come guida all'appropriatezza, non come regola d'accesso.</span></div>
+  <p class="priv">Non inserire nome, codice fiscale o altri dati che identificano il paziente. La pagina non salva nulla, ma il riepilogo finale si copia altrove.</p>
+  <div class="phase" id="phase"></div>
+  <div class="trail" id="trail" aria-label="Risposte date"></div>
+  <section class="panel" id="stage" aria-live="polite"></section>
+  <div class="nav"><button class="btn" id="back" type="button">← Indietro</button><button class="btn" id="reset" type="button">Ricomincia</button></div>
+
+  <details class="ref"><summary>Mappa dei setting, regole di calcolo e limiti</summary><div class="in">
+    <div class="map"><table>
+      <thead><tr><th>Setting</th><th>Codice</th><th>Fonte</th><th>Criterio chiave</th></tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="4">Ospedale · post-acuzie</td></tr>
+        <tr><td>Unità spinale</td><td class="c">28</td><td>DM 5/8/2021 art. 3 c.3, art. 4 c.3; All. 2</td><td>Mielolesione; con evento acuto MDC 1 ed entro All. 5</td></tr>
+        <tr><td>Neuroriabilitazione / GCA</td><td class="c">75</td><td>DM art. 2 c.8, art. 3 c.2, art. 4 c.2; All. 1</td><td>MDC 1, GCA</td></tr>
+        <tr><td>Intensiva alta complessità</td><td class="c">56a</td><td>DM art. 3 c.1 b, art. 4 c.1 a-b; All. 3</td><td>≥ 3 codici All. 3, ≥ 2 All. 2 (art. 4), eccezioni</td></tr>
+        <tr><td>Intensiva minore complessità</td><td class="c">56b</td><td>DM art. 3 c.1 c, art. 4 c.1 c</td><td>2 codici All. 3</td></tr>
+        <tr><td>Estensiva ospedaliera</td><td class="c">56c</td><td>DM art. 3 c.1 a, art. 4 c.1 d; All. 4</td><td>Correlazione All. 4, o DP + 1 codice All. 3</td></tr>
+        <tr><td>Day Hospital</td><td class="c">DH</td><td>DM art. 1; DPCM LEA art. 44</td><td>Stessi criteri, senza tutela h24</td></tr>
+        <tr><td>Lungodegenza</td><td class="c">60</td><td>DM 70/2015</td><td>Bisogno prevalente clinico-assistenziale</td></tr>
+        <tr class="grp"><td colspan="4">Territorio</td></tr>
+        <tr><td>Ambulatoriale specialistica</td><td class="c">—</td><td>DPCM LEA art. 15, All. 4</td><td>Menomazione circoscritta</td></tr>
+        <tr><td>Domiciliare / ADI</td><td class="c">—</td><td>DPCM LEA art. 22; DM 77/2022</td><td>Non trasportabile</td></tr>
+        <tr><td>Disabilità: ambulatorio e domicilio</td><td class="c">—</td><td>DPCM LEA art. 27</td><td>Disabilità complessa con PRI</td></tr>
+        <tr><td>Disabilità: residenziale e diurno</td><td class="c">—</td><td>DPCM LEA art. 34</td><td>Intensivo ≥ 3 h/die, estensivo ≥ 1 h/die, mantenimento</td></tr>
+        <tr><td>RSA</td><td class="c">—</td><td>DPCM LEA art. 30</td><td>Non autosufficienza stabilizzata</td></tr>
+        <tr><td>Età evolutiva</td><td class="c">—</td><td>DPCM LEA art. 25, 32</td><td>Minori con disturbi neuropsichiatrici</td></tr>
+      </tbody></table></div>
+    <div class="foot">
+      <p><b>Regole di calcolo.</b> Gli Allegati 1, 2 e 3 sono trascritti per intero; un codice a tre o quattro cifre include le sottocodifiche. Dal conteggio dell'All. 3 sono esclusi i 438.2x/438.5x quando c'è già un 342.xx o 344.0x, il 518.84 conta solo con 93.96 o una polmonite 480–487.0, il 491.20 solo se associato ad altri codici. Le eccezioni per il 56a sono applicate automaticamente.</p>
+      <p><b>Stato delle norme.</b> La sperimentazione del DM 5/08/2021 è partita il 1° gennaio 2024 e non è conclusa: lo riporta la relazione allo <a href="https://simfer.it/wp-content/uploads/2026/07/tariffe-riabilitazione-1-1.pdf" target="_blank" rel="noopener">schema di decreto sulle tariffe di riabilitazione e lungodegenza</a> (2026, non ancora in Gazzetta). Lo stesso schema mantiene le soglie di durata dei ricoveri ordinari (MDC 1 60 giorni, MDC 8 40, altre MDC 30, cod. 60 60 giorni) e prevede tariffe specifiche per il cod. 75 e per il cod. 28 con ASIA A–C.</p>
+      <p><b>Limiti.</b> L'All. 4 è incompleto (manca la parte finale e mancano 4.1 e 4.2) e i codici segnati * e ** hanno una nota non disponibile: una mancata corrispondenza resta «da verificare». Per il Day Hospital l'All. 4 ha un elenco distinto, non incluso: in DH la correlazione clinica resta sempre da verificare. La checklist delle condizioni e la ricerca per descrizione coprono una selezione di codici dell'All. 3. I giorni dell'All. 5 e le soglie delle scale del protocollo sperimentale non sono inclusi. Il Barthel calcolato è la versione modificata di Shah: confrontalo con la scheda italiana 2015 in uso.</p>
+      <p><b>Bisogno prevalente.</b> La domanda applica tre dimensioni del Piano d'indirizzo 2011 (sez. 4): modificabilità della disabilità, partecipazione al programma (intensiva ≥ 3 h/die, estensiva ≥ 1 h/die), stabilità clinica e carico assistenziale. Il profilo si misura con la <a href="https://www.kcl.ac.uk/nmpc/assets/rehab/rcs-e-v13.pdf" target="_blank" rel="noopener">RCS-E v13</a>. Le regole di decisione sono una proposta operativa, non una norma: M4 → non trasferibile; disabilità non modificabile con M ≥ 2 o N ≥ 3 → cod. 60, altrimenti mantenimento territoriale; modificabile ma sotto 1 h/die → cod. 60 con rivalutazione; modificabile e ≥ 1 h/die → riabilitativo. Le soglie M ≥ 2 e N ≥ 3 vanno condivise con il team. Le dimensioni trovano riscontro nel consenso Delphi di <a href="https://nyp.org/advances-rehabilitation/stroke-recovery-factors-determining-post-discharge-destinations" target="_blank" rel="noopener">Stein et al. (Stroke 2022)</a>: beneficio atteso 97%, competenze specialistiche 94%, bisogno medico 84%, tolleranza 74%; caregiver e rientro a domicilio 39%.</p>
+      <p><b>Prima dell'uso clinico.</b> Conviene una verifica retrospettiva su 20–30 trasferimenti recenti, misurando la concordanza tra esito dello strumento e decisione effettiva, per tarare le soglie della RCS-E.</p>
+      <p><b>Art. 4.</b> «DP e almeno 3» è letto come DP nell'All. 3 più 3 altri codici; l'esito segnala quando l'altra lettura lo cambierebbe.</p>
+      <p><b>Applicazione.</b> Per gli art. 6–7, fino alla fine della sperimentazione valgono le norme nazionali e regionali vigenti. I numeri degli articoli sociosanitari del DPCM LEA vanno confermati in Gazzetta Ufficiale.</p>
+      <p>Fonti: <a href="https://regione.lazio.it/sites/default/files/documentazione/2024/SAN-DM-05-08-2021.pdf" target="_blank" rel="noopener">DM 5/08/2021 con allegati</a> · <a href="https://regione.lazio.it/sites/default/files/2024-02/12-Acuti-Formazione-Regionale-Riabilitazione-11-11-2023.pdf" target="_blank" rel="noopener">Scale SDO-R (Regione Lazio)</a> · <a href="https://www.salute.gov.it/new/it/news-e-media/notizie/criteri-di-appropriatezza-dellaccesso-ai-ricoveri-di-riabilitazione/" target="_blank" rel="noopener">Ministero della Salute</a></p>
+    </div>
+  </div></details>
+</div>
+
+<script>
+// ===== Dati degli allegati DM 5/8/2021 (trascritti dal testo; prefisso = include le sottocodifiche) =====
+const A1 = (() => {
+  const s = ["320","321","322","323","324","325","3320","3321","33520","33521","33522","33523","33524","33529","3359","3358","3570","340","34481","3481","430","431","432","4320","4321","4329","43301","43311","43321","43331","43381","43391","43401","43411","80095","8504","99702"];
+  const add = (base, xs) => xs.forEach(x => { s.push(base + x + "4", base + x + "5"); });
+  add("801", ["1","2","3","4","6","7","8","9"]);
+  add("803", ["1","2","3","4","6","7","8","9"]);
+  add("804", ["1","2","3","4","6","7","8","9"]);
+  add("851", ["0","1","2","3","4","5","6","7","8","9"]);
+  add("852", ["0","1","2","3","4","5"]);
+  add("853", ["0","1"]);
+  add("854", ["0","1"]);
+  return s;
+})();
+const A2 = ["3361","3362","3363","3368","3369","3410","34120","34121","34122","3419","3440","3441","3442","3446","7211","72141","72142","72270","74100","74101","74102","74103","74190","74191","74192","74193","806","9072","952"];
+const A3D = ("00324 038 07421 07422 07423 1124 11281 1140 11503 11505 11515 11594 11595 1304 138 1390 261 2630 29212 3100 320 321 322 323 32720 32721 32723 32724 32725 32726 32727 32729 3313 3314 3319 3320 3321 3340 3341 3342 3343 3344 3348 3349 3350 33510 33511 33519 33520 33521 33522 33523 33524 33529 3358 3359 3361 3363 33821 33822 33828 33829 3384 340 34200 34201 34202 34211 34212 34281 34282 34290 34291 34292 34400 34401 34402 34403 34404 34409 3441 34461 34510 3453 3481 3564 3570 3571 3572 3573 3574 35782 35800 35801 3590 3591 3592 3682 3684 3910 3911 3912 3920 393 3940 3942 3950 3951 3952 3960 3961 3962 3963 3970 3971 3980 39891 4010 40201 40211 410 4110 4111 41181 41189 412 41400 41401 41403 41406 41410 41411 41412 4148 4150 41511 41519 4160 4168 4169 4171 4200 42091 4210 42291 42292 42293 4230 4231 4232 4250 4251 4252 4253 4254 4255 4257 4260 4271 42741 4280 4281 42821 42822 42823 42831 42832 42833 42841 42842 42843 4291 4294 42979 430 431 4320 4321 4329 43301 43311 43321 43331 43381 43391 43401 43411 43491 4371 4380 43810 43811 43819 43820 43821 43822 43830 43831 43832 43840 43841 43842 43850 43851 43852 43853 4386 43881 43882 44021 44022 44023 44024 44029 4408 44101 44102 44103 4411 4412 4413 4414 4415 4416 4417 4419 44321 44322 44329 4440 4441 44421 44422 44481 44501 44502 4471 4472 4475 451 46619 481 485 486 4870 4911 49120 49121 49122 49312 49321 49322 4941 500 501 505 5070 5071 5109 5111 5118 5120 5130 515 5163 5168 5172 5178 5180 5181 5185 51881 51882 51883 51884 51900 5194 56481 5854 5855 59654 59655 6960 70702 70703 70704 70705 70706 70707 70709 7071 7078 7100 7101 7102 7103 7104 7105 7108 7109 71105 71106 71107 71109 7140 7141 7142 7143 71430 7144 7148 7149 7200 7208 7209 7211 72141 72191 72281 72282 72283 73005 73006 73007 73015 73016 73017 73313 73314 73315 73316 7337 78009 7810 7813 7818 78192 78551 78552 78559 7872 7876 7882 82000 82001 82002 82003 82009 82010 82011 82012 82013 82019 82020 82021 82022 82030 82031 82032 8208 8209 82100 82101 82110 82111 82120 82121 82122 82123 82129 82130 82131 82132 82133 82139 9053 99640 99641 99642 99643 99644 99645 99646 99647 99649 99666 99667 99760 99761 99762 99769 9983 99859 V402 V421 V422 V426 V43 V4321 V4322 V433 V434 V4364 V4365 V4366 V437 V440 V441 V4581 V4582 V481 V521 V5417 V5427").split(" ");
+const A3P = ("311 3121 3129 313 3141 3142 3194 3321 3322 3323 3421 3422 3428 3485 3491 3893 4311 5631 5717 573 5732 5972 598 5995 8441 8442 8445 8446 8447 8774 8843 8844 8917 8918 8938 8954 8961 8962 8964 8968 9325 9329 9390 9391 9393 9396 9601 9602 9604 9605 9625 966 967 9670 9671 9672 9702 9703 9737 9741 9742 9744 9749 9751 9752 990 9904 9960 9961 9962 9963 9984").split(" ");
+// Allegato 4 (regime ordinario) — parte disponibile; * e ** = codici con nota del decreto non disponibile
+const A4 = (() => {
+  const m = {};
+  const put = (str, flag) => str.split(" ").forEach(c => { if (c) m[c] = flag; });
+  put("048 064 03282 0310 00321 00322 0360 0361 03640 03641 03642 03643 0391 045 0461 0462 0463 0468 0469 0470 0471 0478 0479 0490 0491 0498 0499 0520 0521 0530 0543 05472 0550 0551 05601 0620 0621 0622 0623 0624 0625 0628 0629 0630 0631 0632 0638 0639 0662 0721 0722 0730 07420 07421 07422 07423 0830 1124 1140 1142 1144 1145 1300 1303 1304 1363 138 1390 1622 1623 1624 1625 1628 1629 191 1920 1921 1922 1923 1928 1929 2312 3200 3201 3202 3203 3207 3208 3209 3210 3211 3212 3213 3214 3218 3220 3221 3222 3229 3230 3231 3232 3234 3235 3236 3237 3238 3239 3240 3241 3249 325 326 3300 3301 3302 3303 3308 3309 3313 3314 3317 3319 3320 3321 3330 3331 3332 3334 3335 3336 3337 3340 3341 3342 3343 3344 3348 3349 3350 3358 3359 3360 3361 3362 3363 3368 3369 3370 3371 3373 3379 3380 3383 3384 340 3410 3411 3418 3419 3420 3421 3429 3430 3431 3432 3433 3434 3438 3439 3440 3441 3442 3443 3444 3445 3448 3449 347 3480 3481 3482 3483 3484 3485 3488 3489 3492 3499 3501 3502 3508 3509 3511 3518 3519 3520 3521 3522 3523 3524 3525 3526 3529 3530 3531 3532 3533 3534 3535 3536 3538 3539 3541 3542 3543 3544 3545 3548 3549 3550 3551 3552 3553 3554 3555 3556 3557 3558 3559 3560 3561 3562 3563 3564 3568 3569 3570 3571 3572 3573 3574 3576 3577 3578 3579 3580 3581 3582 3588 3589 3590 3591 3592 3593 3594 3595 3596 3598 3599 3910 3911 3912 3918 3919 3920 393 3940 3941 3942 3949 3950 3951 3952 3959 3960 3961 3962 3963 3968 3969 3970 3971 3979 3980 412 430 431 436 438 410 4110 4111 4118 4130 4131 4139 4140 4148 4149 4150 4151 4160 4161 4168 4169 4170 4171 4178 4179 4200 4210 4211 4219 4220 4230 4231 4232 4238 4239 4240 4241 4242 4243 4250 4251 4252 4253 4254 4257 4258 4259 4280 4281 4289 4290 4320 4321 4329 4330 4331 4332 4333 4338 4339 4340 4341 4349 4370 4371 4373 4374 4375 4376 4377 4378 4379 4380 4386 4387 4389 4800 4801 4802 4803 4808 4809 481 4820 4821 4822 4823 4824 4828 4829 483 4830 4831 4838 4841 4843 4845 4846 4847 4848 485 486 490 4910 4911 4912 4918 4919 4920 4928 494 4940 4941 496 505 5100 5109 5110 5111 5118 5119 5120 5128 5130 5171 5173 5180 5181 5182 5185 7800 7810 7811 7812 7813 7814 7817 7818 7820 7843 7845 7991 8052 8053 8055 8057 8059 8064 8065 8068 8069 8073 8080 8081 8082 8083 8088 8089 8208 8209 8220 8221 8240 8241 8242 8243 8244 8245 8246 8247 8248 8249 8250 8251 8271 8280 8281 8291 8500 8501 8502 8503 8504 8505 8509 9051 9054 9055 9070 9072 9522 9523 9524 9528 9529", "");
+  put("2100 2101 2102 2103 2104 2105 2106 2107 2108 2109 2110 2114 2119 2120 2122 2123 2124 2128 2129 2133 2134 2135 2136 2137 2138 2250 2251 2252 2253 2254 2258 2259 3490 3491 4010 4030 4031 4039 4040 4041 4049 4260 4262 4263 4264 4266 4267 4269 4270 4271 4272 4279 4291 4292 4293 4294 4295 4296 4299 5121 5187 5190 5642 5643 5644 5696 5793 7450 7452 7453 7454 7455 7457 7459 7461 7462 7463 7464 7465 7466 7467 7469 7470 7473 7475 7476 7479 9093 9954 9961 9962 9964 9966 9967 9970 9971 9972 9973 9974 9975 9979 9980 9981", "**");
+  put("4400 4401 4402 4408 4409 4410 4412 4413 4414 4415 4416 4417 4419 4420 4421 4422 4423 4429 4439 4440 4441 4449 5579", "*");
+  return m;
+})();
+const NM = ["33520", "3590", "3591", "3592", "340"];
+
+// ===== Utilità =====
+function parseCodes(txt) {
+  return (txt || "").toUpperCase().split(/[\s,;]+/).map(c => c.replace(/[^0-9A-Z]/g, "")).filter(Boolean)
+    .filter((c, i, a) => a.indexOf(c) === i);
+}
+function inList(code, list) {
+  let best = null;
+  for (const e of list) if (code.startsWith(e) && (!best || e.length > best.length)) best = e;
+  return best;
+}
+function inA4(code) {
+  let best = null;
+  for (const e of Object.keys(A4)) if (code.startsWith(e) && (!best || e.length > best.length)) best = e;
+  return best ? { entry: best, flag: A4[best] } : null;
+}
+const famA = c => c.startsWith("342") || c.startsWith("3440");
+const famB = c => c.startsWith("4382") || c.startsWith("4385");
+const isPneumo = c => /^48[0-6]/.test(c) || c.startsWith("4870");
+
+// Conteggio Allegato 3 sulla SDO riabilitativa con le regole del decreto
+function countA3(diag, proc) {
+  const items = [], dropped = [];
+  diag.forEach((c, i) => { const e = inList(c, A3D); if (e) items.push({ code: c, kind: "D", dp: i === 0 }); });
+  proc.forEach(c => { const e = inList(c, A3P); if (e) items.push({ code: c, kind: "P", dp: false }); });
+  let valid = items.filter(it => {
+    if (it.code.startsWith("51884")) {
+      const ok = proc.some(p => p.startsWith("9396")) || diag.some(isPneumo);
+      if (!ok) dropped.push({ code: it.code, why: "conta solo con 93.96 o con una polmonite 480–487.0" });
+      return ok;
+    }
+    return true;
+  });
+  // 342.xx / 344.0x non si associano a 438.2x / 438.5x (condizioni analoghe): conta una sola famiglia
+  if (valid.some(it => famA(it.code)) && valid.some(it => famB(it.code))) {
+    valid = valid.filter(it => { if (famB(it.code)) { dropped.push({ code: it.code, why: "analogo a un codice 342/344 già presente" }); return false; } return true; });
+  }
+  const b = valid.find(it => it.code.startsWith("49120"));
+  if (b && valid.length < 2) { valid = valid.filter(it => it !== b); dropped.push({ code: b.code, why: "49120 conta solo se associato ad altri codici dell'All. 3" }); }
+  const dpIn = valid.some(it => it.dp);
+  return { valid, dropped, total: valid.length, dpIn, others: valid.filter(it => !it.dp).length };
+}
+
+function exceptions(diag, a3, art) {
+  const dp = diag[0] || "", sec = diag.slice(1), out = [];
+  const secHas = re => sec.some(c => re.test(c));
+  if (dp.startsWith("5178") && sec.some(c => NM.some(n => c.startsWith(n)))) out.push("Complicanze polmonari (517.8) in DP con malattia neuromuscolare");
+  if (art === 4 && diag.some(c => NM.some(n => c.startsWith(n))) && a3.dpIn && a3.others >= 2) out.push("Malattia neuromuscolare non conseguente ad evento acuto: DP + 2 codici All. 3");
+  if (dp.startsWith("V426")) out.push("Trapianto di polmone (V42.6) in DP");
+  if (dp.startsWith("V421")) out.push("Trapianto di cuore (V42.1) in DP");
+  if (dp.startsWith("808") && secHas(/^82[0-7]/)) out.push("Politrauma: frattura di bacino in DP + frattura di arto inferiore");
+  if (dp.startsWith("8280") || dp.startsWith("8281")) out.push("Politrauma: fratture multiple (828.0/828.1) in DP");
+  if (dp.startsWith("808") && secHas(/^80[5-7]/)) out.push("Politrauma: bacino in DP + vertebre o coste amieliche");
+  if (/^80[5-7]/.test(dp) && secHas(/^808/) && a3.total >= 1) out.push("Politrauma: vertebre/coste in DP + bacino + un codice All. 3");
+  return out;
+}
+
+function monthsBetweenOk(d1, d2) { // d2 entro 12 mesi da d1
+  const lim = new Date(d1); lim.setFullYear(lim.getFullYear() + 1);
+  return d2 >= d1 && d2 <= lim;
+}
+
+// ===== Motore di valutazione =====
+// s: stato del modulo. Ritorna inclusione + valutazione per setting.
+function evaluate(s) {
+  const C = (label, st, det) => ({ label, st, det: det || "" }); // st: ok | no | q
+  const incl = [];
+  incl.push(C("Età ≥ 18 anni", s.eta === "" ? "q" : (+s.eta >= 18 ? "ok" : "no"), s.eta === "" ? "Inserisci l'età" : (+s.eta >= 18 ? "" : "0–17 anni esclusi (art. 1 c.1)")));
+  incl.push(C("MDC 1, 4, 5 o 8", !s.mdc ? "q" : (s.mdc === "altra" ? "no" : "ok"), s.mdc === "altra" ? "Il decreto non fissa criteri per le altre MDC" : ""));
+  incl.push(C("Interventi non erogabili in regimi alternativi", s.nonAlt ? "ok" : "q", s.nonAlt ? "" : "Da documentare (art. 3 c.1 e art. 4 c.1)"));
+  if (s.regime === "ord") incl.push(C("Tutela medica e assistenziale h24", s.h24 ? "ok" : "no", s.h24 ? "" : "Senza tutela h24 il regime appropriato è il Day Hospital (art. 1 c.1)"));
+  incl.push(C("Bisogno prevalente riabilitativo (PRI)", s.riab ? (s.bMod === "incerto" ? "q" : "ok") : "q", s.riabDet || (s.riab ? "" : "Se prevale il bisogno clinico-assistenziale: lungodegenza cod. 60")));
+  if (s.dimissione && s.dimissione !== "na") incl.push(C("Modalità di dimissione", ["dec", "tra", "vol"].includes(s.dimissione) ? "no" : "ok", ["dec", "tra", "vol"].includes(s.dimissione) ? "Deceduto, trasferito in acuti o dimesso volontariamente: ricovero escluso dalla valutazione" : ""));
+  const excluded = incl.some(c => c.st === "no");
+
+  const acDiag = parseCodes(s.acDiag), rDiag = parseCodes((s.rDiag || "") + "," + (s.devD || "")), rProc = parseCodes((s.rProc || "") + "," + (s.devP || ""));
+  // evento acuto
+  let days = null, within12 = null;
+  if (s.dAc && s.dIn) {
+    const d1 = new Date(s.dAc), d2 = new Date(s.dIn);
+    days = Math.round((d2 - d1) / 86400000);
+    within12 = monthsBetweenOk(d1, d2);
+  }
+  const acute = s.noAcute ? false : (within12 === null ? null : within12);
+  const lim = s.lim5 === "" || s.lim5 == null ? null : +s.lim5;
+  const intOk = (acute && days !== null && lim !== null) ? days <= lim : null;
+  const scaleOk = k => s.soglie[k] ? "ok" : "q";
+  const mdc1 = s.mdc === "1";
+
+  const a3 = countA3(rDiag, rProc);
+  const a1Ac = acDiag.filter(c => inList(c, A1)), a1R = rDiag.filter(c => inList(c, A1));
+  const a2Ac = acDiag.filter(c => inList(c, A2)), a2R = rDiag.filter(c => inList(c, A2));
+  const a4Ac = acDiag.map(c => ({ c, m: inA4(c) })).filter(x => x.m);
+
+  // articolo applicabile al cod. 56 e 28 (con finestra)
+  let art56;
+  if (s.aggrav) art56 = 4;
+  else if (acute === true) art56 = intOk === false ? 4 : 3;
+  else if (acute === false) art56 = 4;
+  else art56 = null;
+  const art75 = s.aggrav ? 4 : (acute === true ? 3 : acute === false ? 4 : null);
+
+  const out = {};
+  const intCrit = () => acute !== true ? null :
+    C("Intervallo dalla dimissione per acuti entro l'All. 5", intOk === null ? "q" : (intOk ? "ok" : "no"),
+      days === null ? "" : (lim === null ? `${days} giorni; limite dell'All. 5 non inserito` : `${days} giorni su un limite di ${lim}`));
+  const artCrit = a => C(a === 3 ? "Percorso: conseguente ad evento acuto (art. 3)" : a === 4 ? "Percorso: congruenza diagnostica (art. 4)" : "Percorso non determinabile", a ? "ok" : "q",
+    a === 4 && acute === true && !s.aggrav ? "Finestra superata: art. 3 c.6 rimanda all'art. 4" : (s.aggrav ? "Aggravamento entro 12 mesi (art. 3 c.4)" : (a ? "" : "Inserisci le date o indica l'assenza di ricovero in acuzie")));
+
+  // cod 75
+  {
+    const cr = [artCrit(art75)];
+    cr.push(C("MDC 1", mdc1 ? "ok" : (s.mdc ? "no" : "q")));
+    if (art75 === 4) cr.push(C("Condizione dell'All. 1 nella SDO riabilitativa", a1R.length ? "ok" : "no", a1R.join(", ")));
+    else cr.push(C("GCA nella SDO dell'acuzie (All. 1)", a1Ac.length ? "ok" : "no", a1Ac.join(", ")));
+    cr.push(C("Coma con GCS ≤ 8 (definizione clinica di GCA)", s.gcsAcuto === "" ? "q" : (+s.gcsAcuto <= 8 ? "ok" : "q"), s.gcsAcuto === "" ? "Inserisci il peggior GCS della fase acuta" : (+s.gcsAcuto <= 8 ? `GCS ${s.gcsAcuto}` : `GCS ${s.gcsAcuto}: l'art. 2 c.8 ammette in alternativa il codice dell'All. 1 con scale oltre soglia, da verificare`)));
+    cr.push(C("Scale d'ingresso oltre le soglie del protocollo", scaleOk("75")));
+    out["75"] = cr;
+  }
+  // cod 28
+  {
+    const cr = [artCrit(art56)];
+    if (art56 === 3) {
+      cr.push(C("MDC 1", mdc1 ? "ok" : (s.mdc ? "no" : "q")));
+      cr.push(C("Mielolesione nella SDO dell'acuzie (All. 2)", a2Ac.length ? "ok" : "no", a2Ac.join(", ")));
+      const ic = intCrit(); if (ic) cr.push(ic);
+    } else {
+      cr.push(C("Mielolesione nella SDO riabilitativa (All. 2)", a2R.length ? "ok" : "no", a2R.join(", ")));
+      cr.push(C("Almeno un codice dell'All. 3", a3.total >= 1 ? "ok" : "no", a3.valid.map(v => v.code).join(", ")));
+    }
+    cr.push(C("Scale d'ingresso entro le soglie del protocollo", scaleOk("28")));
+    out["28"] = cr;
+  }
+  // cod 56
+  const exc = exceptions(rDiag, a3, art56);
+  const a3det = a3.valid.map(v => v.code + (v.dp ? " (DP)" : "")).join(", ") || "nessuno";
+  const mk = (lvl) => {
+    const cr = [artCrit(art56)];
+    if (art56 === 3) {
+      if (lvl === "56a") cr.push(C("Almeno 3 codici dell'All. 3, o un'eccezione", (a3.total >= 3 || exc.length) ? "ok" : "no", `${a3.total} validi: ${a3det}` + (exc.length ? " · Eccezione: " + exc.join("; ") : "")));
+      if (lvl === "56b") cr.push(C("Almeno 2 codici dell'All. 3", a3.total >= 2 ? "ok" : "no", `${a3.total} validi: ${a3det}`));
+      if (lvl === "56c") {
+        const flagged = a4Ac.filter(x => x.m.flag);
+        if (s.regime === "dh" && !s.a4man) cr.push(C("Diagnosi dell'acuzie correlata (All. 4, regime diurno)", "q", "Per il Day Hospital l'All. 4 ha un elenco distinto, non incluso qui: verifica sul testo ufficiale"));
+        else if (s.a4man && !(a4Ac.length && flagged.length < a4Ac.length)) cr.push(C("Diagnosi dell'acuzie correlata (All. 4)", "ok", "Correlazione verificata sul testo ufficiale"));
+        else cr.push(C("Diagnosi dell'acuzie correlata (All. 4)", a4Ac.length ?(flagged.length === a4Ac.length ? "q" : "ok") : (acDiag.length ? "q" : "no"),
+          a4Ac.length ? a4Ac.map(x => x.c + (x.m.flag ? ` [${x.m.flag} nota da verificare]` : "")).join(", ")
+            : (acDiag.length ? "Nessuna corrispondenza nella parte dell'All. 4 disponibile (elenco incompleto, mancano 4.1 e 4.2): verifica sul testo" : "Inserisci le diagnosi dell'acuzie")));
+      }
+      const ic = intCrit(); if (ic) cr.push(ic);
+    } else {
+      const need = { "56a": 3, "56b": 2, "56c": 1 }[lvl];
+      const a2n = a2R.length;
+      let ok = a3.dpIn && a3.others >= need;
+      let det = `DP ${a3.dpIn ? "nell'All. 3" : "non nell'All. 3"}; altri codici validi: ${a3.others} (${a3det})`;
+      if (lvl === "56a" && !ok && a2n >= 2) { ok = true; det += ` · ${a2n} codici di mielolesione (All. 2)`; }
+      if (lvl === "56a" && !ok && exc.length) { ok = true; det += " · Eccezione: " + exc.join("; "); }
+      cr.push(C(`Diagnosi principale nell'All. 3 + almeno ${need} ${need === 1 ? "altro codice" : "altri codici"}`, ok ? "ok" : "no", det));
+      const alt = a3.dpIn && a3.total >= need;
+      if (alt !== ok && !(lvl === "56a" && (a2n >= 2 || exc.length))) cr.push(C("Lettura alternativa: DP inclusa nel conteggio", alt ? "ok" : "no", "Il testo dell'art. 4 si presta a due letture: verifica quella adottata dalla tua Regione"));
+    }
+    if (s.bToll !== undefined && s.bToll !== "") {
+      const need = lvl === "56c" ? 1 : 3;
+      cr.push(C(`Sostiene almeno ${need} ${need === 1 ? "ora" : "ore"} di trattamento al giorno`, +s.bToll >= need ? "ok" : "no",
+        "Piano d'indirizzo 2011, sez. 4: intensiva ≥ 3 h/die, estensiva ≥ 1 h/die (atto di indirizzo, non requisito del DM)"));
+    }
+    cr.push(C("Scale d'ingresso entro le soglie del protocollo per il " + lvl, scaleOk(lvl)));
+    return cr;
+  };
+  ["56a", "56b", "56c"].forEach(l => out[l] = mk(l));
+
+  const status = cr => cr.filter(c => !c.label.startsWith("Lettura alternativa")).some(c => c.st === "no") ? "no"
+    : cr.some(c => c.st === "q") ? "q" : "ok";
+  const order = ["75", "28", "56a", "56b", "56c"];
+  const res = order.map(k => ({ k, cr: out[k], st: status(out[k]) }));
+  const nq = r => r.cr.reduce((a, c) => a + (c.st === "q" ? (c.label.startsWith("Coma con GCS") ? 10 : 1) : 0), 0); // senza coma documentato il 75 passa in coda
+  const best = res.find(r => r.st === "ok") || res.filter(r => r.st === "q").sort((a, b) => nq(a) - nq(b))[0] || null;
+  return { incl, excluded, res, best, a3, days, acute, art56, exc };
+}
+
+if (typeof module !== "undefined" && module.exports) module.exports = { evaluate, countA3, parseCodes, inList, inA4, A1, A2, A3D, A3P };
+
+</script>
+<script>
+const $ = id => document.getElementById(id);
+const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const BI = [["Igiene personale",[0,1,3,4,5]],["Fare il bagno o la doccia",[0,1,3,4,5]],["Alimentazione",[0,2,5,8,10]],["Uso del WC",[0,2,5,8,10]],["Salire e scendere le scale",[0,2,5,8,10]],["Vestirsi",[0,2,5,8,10]],["Controllo intestinale",[0,2,5,8,10]],["Controllo vescicale",[0,2,5,8,10]],["Deambulazione",[0,3,8,12,15]],["Trasferimento letto-sedia",[0,3,8,12,15]]];
+const LV = ["incapace","aiuto massimo","aiuto moderato","aiuto minimo","indipendente"];
+const fresh = () => ({ luogo:"", eta:"", mdc:"", regime:"ord", dimissione:"na", h24:false, nonAlt:false, riab:false, dAc:"", dIn:"", lim5:"", noAcute:false, aggrav:false,
+  acDiag:"", rDiag:"", rProc:"", a4man:false, gE:"", gV:"", gM:"", gcsAcuto:"", rankin:"", rcs:"", bd:"", mwt:"", lcf:"", gose:"", drs:"", asia:"", scim:"", biWc:false,
+  bi0:"",bi1:"",bi2:"",bi3:"",bi4:"",bi5:"",bi6:"",bi7:"",bi8:"",bi9:"", soglie:{},
+  bMod:"", bToll:"", rC:"", rR:"", rN:"", rM:"", rTD:"", rTI:"", rE:"", riabDet:"" });
+let S = fresh(), cur = "luogo", hist = [];
+const PHASES = [["Situazione","sit"],["Caratteristiche","car"],["Codici","cod"],["Scale","sca"],["Setting","set"]];
+const today = () => new Date().toISOString().slice(0,10);
+const acutePath = () => !S.noAcute && !S.aggrav;
+
+// ===== Passi =====
+// tipo choice: o = [etichetta, sotto, funzione(S) -> id successivo]
+const STEPS = {
+  luogo:{ph:"sit", t:"choice", short:"Dove si trova", q:"Dove si trova il paziente adesso?", help:"Il punto di partenza decide quale criterio si applica: con un ricovero per acuti negli ultimi 12 mesi vale la correlazione clinica (art. 3), altrimenti la congruenza diagnostica (art. 4).",
+    o:[["In un reparto per acuti, verso la dimissione","Richiesta di trasferimento in post-acuzie",s=>{s.luogo="acuti";s.noAcute=false;s.aggrav=false;s.dAc=s.dAc||today();return "eta"}],
+       ["A domicilio, dopo un ricovero per acuti","Dimesso negli ultimi 12 mesi",s=>{s.luogo="dompost";s.noAcute=false;s.aggrav=false;return "eta"}],
+       ["A domicilio, con aggravamento dopo un ciclo riabilitativo","Es. aumento della spasticità o dolore neurogeno entro 12 mesi dall'acuzie",s=>{s.luogo="aggrav";s.aggrav=true;s.noAcute=false;return "eta"}],
+       ["A domicilio, senza ricoveri per acuti negli ultimi 12 mesi","Disabilità cronica o progressiva",s=>{s.luogo="dom";s.noAcute=true;s.aggrav=false;return "eta"}],
+       ["In un reparto di riabilitazione","Richiesta di trasferimento ad altra U.O.",s=>{s.luogo="riab";return "trasf"}],
+       ["In una RSA o struttura territoriale","Valutazione di un accesso ospedaliero o di un cambio di setting",s=>{s.luogo="terr";return "terr12"}]]},
+  terr12:{ph:"sit", t:"choice", short:"Acuzie 12 mesi", q:"C'è stato un ricovero per acuti negli ultimi 12 mesi?", help:"Serve a scegliere tra art. 3 e art. 4.",
+    o:[["Sì","",s=>{s.noAcute=false;s.aggrav=false;return "eta"}],["No","",s=>{s.noAcute=true;return "eta"}]]},
+  trasf:{ph:"sit", t:"choice", short:"Trasferimento", q:"Verso quale U.O. e per quale motivo?", help:"Art. 4 c.4 del DM 5/8/2021.",
+    o:[["Da cod. 28 a un'altra U.O. cod. 28","Completamento del trattamento",()=>"R_trasf_ok"],["Da cod. 75 a un'altra U.O. cod. 75","Completamento del trattamento",()=>"R_trasf_ok"],
+       ["Tra U.O. cod. 56, per avvicinamento alla residenza","",()=>"trasf56"],["Altro passaggio di setting","Es. da 56 a 75, o da 75 a 56",s=>{s.noAcute=false;return "terr12"}]]},
+  trasf56:{ph:"sit", t:"form", short:"Durata", q:"La durata complessiva del ricovero resta entro il valore soglia?",
+    help:"Il trasferimento tra U.O. cod. 56 per avvicinamento alla residenza è appropriato se la durata complessiva rientra nel valore soglia (art. 4 c.4). Soglie dei ricoveri ordinari: 60 giorni per la MDC 1, 40 per la MDC 8, 30 per le altre MDC.",
+    html:()=>`<div class="grid"><div class="f"><label for="t_mdc">MDC</label><select id="t_mdc" data-k="mdc"><option value="">—</option><option value="1">MDC 1 · Sistema nervoso</option><option value="4">MDC 4 · Respiratorio</option><option value="5">MDC 5 · Cardiocircolatorio</option><option value="8">MDC 8 · Muscolo-scheletrico</option><option value="altra">Altra MDC</option></select></div>
+      <div class="f"><label for="t_g1">Giorni già trascorsi</label><input type="number" id="t_g1" min="0" data-k="gg1"></div>
+      <div class="f"><label for="t_g2">Giorni previsti nella nuova U.O.</label><input type="number" id="t_g2" min="0" data-k="gg2"></div></div><div class="calc" id="live"></div>
+      <p class="hint">Soglie dello schema di decreto sulle tariffe di riabilitazione (2026), che mantiene l'impianto del DM 18/10/2012.</p>`,
+    live:s=>{ if(!s.mdc) return "Scegli la MDC"; const so=sogliaDurata(s.mdc), t=(+s.gg1||0)+(+s.gg2||0); return `Totale ${t} giorni su una soglia di ${so} · ${t<=so?"entro":"oltre"} la soglia`; },
+    ok:s=>s.mdc && s.gg1!=null && s.gg1!=="" && s.gg2!=null && s.gg2!=="", ans:s=>((+s.gg1)+(+s.gg2))+" su "+sogliaDurata(s.mdc)+" giorni", next:s=>((+s.gg1)+(+s.gg2))<=sogliaDurata(s.mdc)?"R_trasf_ok":"R_trasf_no"},
+  eta:{ph:"car", t:"form", short:"Età", q:"Quanti anni ha il paziente?", help:"Il DM esclude i ricoveri dei pazienti tra 0 e 17 anni (art. 1 c.1).",
+    html:()=>`<div class="grid"><div class="f"><label for="i_eta">Età (anni)</label><input type="number" id="i_eta" min="0" max="120" data-k="eta"></div></div>`,
+    ok:s=>s.eta!=="", ans:s=>s.eta+" anni", next:s=> +s.eta<18 ? "R_minori" : "bisogno"},
+  bisogno:{ph:"car", t:"form", short:"Bisogno", q:"Il bisogno prevalente è riabilitativo o clinico-assistenziale?",
+    help:"Tre elementi del Piano d'indirizzo 2011 (modificabilità della disabilità, partecipazione al programma, stabilità clinica e carico assistenziale). Il profilo si misura con i domini della RCS-E v13, la scala di complessità già richiesta nella SDO riabilitativa.",
+    html:()=>bisognoHtml(), live:s=>bisognoLive(s), ok:s=>bisognoOk(s),
+    ans:s=>{const v=bisognoVerdict(s);return v.short}, next:s=>{const v=bisognoVerdict(s); s.riab=v.riab; s.riabDet=v.det; return v.next}},
+  ospedale:{ph:"car", t:"choice", short:"Ospedale", q:"Il progetto richiede interventi valutativi e terapeutici non erogabili fuori dall'ospedale?", help:"È la condizione d'ingresso degli art. 3 e 4. Pensa a monitoraggio medico, gestione di dispositivi, intensità del trattamento, rischio clinico.",
+    o:[["Sì","Serve un setting ospedaliero",s=>{s.nonAlt=true;return "h24"}],["No","Il progetto si può svolgere sul territorio",s=>{s.nonAlt=false;return "t_tipo"}]]},
+  h24:{ph:"car", t:"choice", short:"Tutela h24", q:"Il paziente ha bisogno di tutela medica e infermieristica nelle 24 ore?", help:"Il ricovero ordinario lo richiede (art. 1 c.1). Senza questo bisogno il regime appropriato è il Day Hospital, con gli stessi criteri.",
+    o:[["Sì","Ricovero ordinario",s=>{s.h24=true;s.regime="ord";return "mdc"}],["No","Day Hospital",s=>{s.h24=false;s.regime="dh";return "mdc"}]]},
+  mdc:{ph:"car", t:"choice", short:"MDC", q:"A quale apparato si riferisce il problema riabilitativo principale?", help:"Il decreto fissa criteri solo per quattro Macro Categorie Diagnostiche.",
+    o:[["Sistema nervoso","MDC 1",s=>{s.mdc="1";return nextAfterMdc(s)}],["Apparato respiratorio","MDC 4",s=>{s.mdc="4";return nextAfterMdc(s)}],["Apparato cardiocircolatorio","MDC 5",s=>{s.mdc="5";return nextAfterMdc(s)}],
+       ["Apparato muscolo-scheletrico","MDC 8",s=>{s.mdc="8";return nextAfterMdc(s)}],["Altro","Es. disturbi dell'alimentazione, linfedema",s=>{s.mdc="altra";return "R_altra"}]]},
+  date:{ph:"car", t:"form", short:"Date", q:"Quando avviene il passaggio dall'acuzie alla riabilitazione?",
+    help:"L'intervallo serve per i 12 mesi e per il limite dell'Allegato 5. Se il paziente è ancora in reparto, usa le date previste.",
+    html:s=>`<div class="grid"><div class="f"><label for="i_dAc">${s.luogo==="acuti"?"Dimissione prevista dall'acuzie":"Dimissione dall'acuzie"}</label><input type="date" id="i_dAc" data-k="dAc"></div>
+      <div class="f"><label for="i_dIn">Ingresso ${s.luogo==="acuti"?"previsto ":""}in riabilitazione</label><input type="date" id="i_dIn" data-k="dIn"></div>
+      <div class="f"><label for="i_lim5">Limite dell'All. 5 (giorni)</label><input type="number" id="i_lim5" min="0" placeholder="Dal testo ufficiale" data-k="lim5"></div></div>
+      <div class="calc" id="live"></div><p class="hint">Il limite dell'Allegato 5 varia per disciplina e MDC: inseriscilo dal testo in Gazzetta. Senza limite, l'intervallo resta «da verificare».</p>`,
+    live:s=>{ if(!(s.dAc&&s.dIn)) return "Inserisci le due date"; const d=Math.round((new Date(s.dIn)-new Date(s.dAc))/86400000);
+      if(d<0) return "L'ingresso precede la dimissione: controlla le date";
+      const w=monthsBetweenOk(new Date(s.dAc),new Date(s.dIn));
+      return `${d} giorni · ${w?"entro i 12 mesi: art. 3":"oltre i 12 mesi: art. 4"}`+(s.lim5!==""?` · ${d<=+s.lim5?"entro":"oltre"} il limite di ${s.lim5} giorni${d>+s.lim5?" → art. 4 (art. 3 c.6)":""}`:"");},
+    ok:s=>s.dAc&&s.dIn, ans:s=>{const d=Math.round((new Date(s.dIn)-new Date(s.dAc))/86400000);return d+" giorni"}, next:()=>"codAc"},
+  codAc:{ph:"cod", t:"form", short:"SDO acuti", q:"Quali diagnosi riporta la SDO del ricovero per acuti?",
+    help:"L'U.O. per acuti deve comunicarle prima del trasferimento (art. 3 c.5). Servono per GCA (All. 1), mielolesione (All. 2) e correlazione con la riabilitazione estensiva (All. 4).",
+    html:()=>`<div class="f"><label for="i_ac">Codici ICD-9-CM, separati da virgola</label><textarea id="i_ac" data-k="acDiag" placeholder="es. 434.11, 438.82"></textarea></div><div class="chips" id="chips"></div>
+      <label class="chk"><input type="checkbox" data-k="a4man" id="i_a4"><span>Correlazione con l'All. 4 verificata sul testo ufficiale<small>Per i codici negli Allegati 4.1, 4.2 o nella parte finale dell'All. 4, non inclusi qui</small></span></label>`,
+    live:s=>{chips(parseCodes(s.acDiag),"A");return null}, ok:s=>parseCodes(s.acDiag).length>0, ans:s=>parseCodes(s.acDiag).length+" codici", next:()=>"disp"},
+  disp:{ph:"cod", t:"form", short:"Condizioni", q:"Quali dispositivi e condizioni cliniche ha il paziente?",
+    help:"Ricalca la checklist del modulo unico di trasferimento in post-acuzie. Ogni voce aggiunge il codice corrispondente dell'Allegato 3 alla SDO riabilitativa: li vedrai nel passo successivo e potrai toglierli.",
+    html:()=>`<div class="devgrid">${DEV.map(([k,l,d,p,h])=>`<label class="chk"><input type="checkbox" data-k="d_${k}" id="d_${k}"><span>${l}<small>${[d,p].filter(Boolean).map(x=>x.split(",").join(", ")).join(" · ")||"selezione della sede"}${h?" · "+h:""}</small></span></label>`).join("")}</div>
+      <div class="grid"><div class="f"><label for="d_lpps">Sede della lesione da pressione</label><select id="d_lpps" data-k="lppSede"><option value="">—</option><option value="70702">Dorso, parte superiore (707.02)</option><option value="70703">Dorso, parte inferiore (707.03)</option><option value="70704">Anca (707.04)</option><option value="70705">Natica (707.05)</option><option value="70706">Caviglia (707.06)</option><option value="70707">Tallone (707.07)</option><option value="70709">Altra sede (707.09)</option></select></div></div>
+      <label class="chk"><input type="checkbox" data-k="carico" id="d_carico"><span>Divieto o limitazione del carico<small>Nessun codice: va nel riepilogo</small></span></label>
+      <div class="calc" id="live"></div><p class="hint">Le voci orientano anche la RCS-E: dispositivi come cannula o PEG indicano di norma N ≥ 2, la ventilazione N3 e M ≥ 2.</p>`,
+    live:s=>{ devCodes(s); const n=parseCodes(s.devD).length+parseCodes(s.devP).length; return n ? `Codici aggiunti: ${[...parseCodes(s.devD),...parseCodes(s.devP)].join(", ")}` : "Nessuna voce selezionata"; },
+    ok:()=>true, ans:s=>{devCodes(s);const n=parseCodes(s.devD).length+parseCodes(s.devP).length;return n?n+" codici":"nessuna"}, next:()=>"codR"},
+  codR:{ph:"cod", t:"form", short:"SDO-R", q:"Quali diagnosi e procedure andranno nella SDO riabilitativa?",
+    help:"La prima diagnosi è la principale (sindrome funzionale, postumi o menomazione). Il conteggio dei codici di complessità dell'Allegato 3 decide il livello del cod. 56.",
+    html:()=>`<div class="f"><label for="i_q">Cerca un codice per descrizione</label><input type="text" id="i_q" placeholder="es. disfagia, femore, emiplegia, tracheostomia" autocomplete="off"></div>
+      <div class="res" id="qres"></div><p class="hint">La ricerca copre una selezione dei codici più usati in riabilitazione, tratta dagli allegati del decreto. Gli altri si scrivono a mano.</p>
+      <div class="f"><label for="i_rd">Diagnosi (la prima è la principale)</label><textarea id="i_rd" data-k="rDiag" placeholder="es. 438.21, 438.82, 428.21"></textarea></div><div class="chips" id="chips"></div>
+      <div class="f"><label for="i_rp">Procedure</label><textarea id="i_rp" data-k="rProc" placeholder="es. 43.11"></textarea></div><div class="chips" id="chips2"></div>
+      <div class="f" id="devbox"><span class="lbl">Dalla checklist delle condizioni</span><div class="chips" id="chips3"></div></div><div class="calc" id="live"></div>`,
+    after:(box,upd)=>codeSearch(box,upd),
+    live:s=>{const rd=parseCodes(s.rDiag),rp=parseCodes(s.rProc);chips(rd,"R");chips(rp,"P","chips2");
+      const dv=[...parseCodes(s.devD).filter(c=>!rd.includes(c)),...parseCodes(s.devP).filter(c=>!rp.includes(c))]; chips(dv,"D","chips3"); if($("devbox")) $("devbox").hidden=!dv.length;
+      const a=countA3(parseCodes(s.rDiag+","+(s.devD||"")),parseCodes(s.rProc+","+(s.devP||"")));
+      return `Codici di complessità (All. 3): ${a.total}`+(a.total?` · ${a.valid.map(v=>v.code+(v.dp?" DP":"")).join(", ")}`:"")+` · diagnosi principale ${rd.length?(a.dpIn?"nell'All. 3":"non nell'All. 3"):"non inserita"}`+(a.dropped.length?` · esclusi: ${a.dropped.map(d=>d.code+" ("+d.why+")").join("; ")}`:"");},
+    ok:s=>parseCodes(s.rDiag).length>0, ans:s=>countA3(parseCodes(s.rDiag+","+(s.devD||"")),parseCodes(s.rProc+","+(s.devP||""))).total+" codici All. 3", next:()=>"scale"},
+  scale:{ph:"sca", t:"form", short:"Scale", q:"Valutazione d'ingresso", help:"Le scale della SDO riabilitativa per la disciplina. I punteggi si calcolano qui; le soglie per livello sono nel protocollo sperimentale e vanno confermate in fondo.",
+    html:s=>scaleHtml(s), live:s=>{scaleLive(s);return null}, ok:()=>true, ans:s=>{const b=biTot(s);return b!==null?"Barthel "+b:"compilate"}, next:()=>"R_ospedale"},
+  t_tipo:{ph:"car", t:"choice", short:"Territorio", q:"Che tipo di bisogno riabilitativo ha il paziente?", help:"La distinzione ricalca il DPCM LEA.",
+    o:[["Menomazione circoscritta","Un distretto, prognosi a breve termine",()=>"t_trasp"],["Disabilità complessa","Più funzioni, serve un PRI multiprofessionale",()=>"t_luogo"]]},
+  t_trasp:{ph:"car", t:"choice", short:"Trasportabile", q:"Il paziente può raggiungere l'ambulatorio?", help:"", o:[["Sì","",()=>"R_amb"],["No","Allettato o non trasportabile",()=>"R_dom"]]},
+  t_luogo:{ph:"car", t:"choice", short:"Dove", q:"Dove si può svolgere il progetto?", help:"Art. 27 per ambulatorio e domicilio, art. 34 per diurno e residenziale.",
+    o:[["Ambulatorio o domicilio","Vive a casa, accessi programmati",()=>"R_27"],["Centro diurno","Vive a casa, serve un ciclo diurno",()=>"R_semi"],["Residenza","Non gestibile a domicilio",()=>"t_int"]]},
+  t_int:{ph:"car", t:"choice", short:"Intensità", q:"Quale intensità richiede il trattamento residenziale?", help:"Le ore sono quelle delle applicazioni regionali del DPCM art. 34.",
+    o:[["Intensiva","Disabilità importanti e modificabili, almeno 3 ore al giorno",()=>"R_ri"],["Estensiva","Potenzialità di recupero, almeno 1 ora al giorno",()=>"R_re"],["Mantenimento","Recupero e mantenimento delle abilità residue",()=>"R_rm"]]}
+};
+function nextAfterMdc(s){ return (s.luogo==="acuti"||s.luogo==="dompost"||(s.luogo==="terr"&&!s.noAcute)||(s.luogo==="riab"&&!s.noAcute)) ? "date" : (s.aggrav ? "codAcOpt" : "disp"); }
+STEPS.codAcOpt = Object.assign({}, STEPS.codAc, { short:"SDO acuti", help:"Con aggravamento si applica l'art. 4: la SDO dell'acuzie non decide il livello, ma serve a ricostruire il percorso. Puoi lasciarla vuota.", ok:()=>true, ans:s=>parseCodes(s.acDiag).length? parseCodes(s.acDiag).length+" codici":"non inserita" });
+
+const RES = {
+  R_trasf_ok:["ok","—","Trasferimento appropriato","DM 5/8/2021 art. 4 c.4","Il trasferimento tra U.O. della stessa disciplina è appropriato per completare il trattamento (cod. 28 e 75) o, per il cod. 56, per avvicinamento alla residenza entro la soglia di durata."],
+  R_trasf_no:["no","—","Trasferimento oltre la soglia di durata","DM 5/8/2021 art. 4 c.4; DM 18/10/2012","Oltre il valore soglia complessivo il trasferimento tra cod. 56 non rientra nel criterio. Valuta la prosecuzione sul territorio."],
+  R_minori:["q","—","Età evolutiva: fuori dal DM 2021","DPCM LEA art. 25 e 32 (disturbi neuropsichiatrici), art. 27 e 34 (disabilità)","Il ricovero riabilitativo resta possibile, ma senza i criteri nazionali del decreto. Riferimento alla rete NPIA regionale."],
+  R_acuto:["q","—","Non ancora trasferibile in post-acuzie","Piano d'indirizzo 2011, sez. 4; RCS-E v13, dominio M4","Problema medico o chirurgico acuto che richiede un intervento urgente. Il passaggio alla riabilitazione presuppone la stabilità clinica: rivaluta alla risoluzione."],
+  R_mant:["ok","—","Bisogno di mantenimento: setting territoriale","DPCM LEA art. 34 (socio-riabilitativo di mantenimento) e art. 30 (RSA)","Disabilità non modificabile, con carico medico e infermieristico gestibile fuori dall'ospedale. L'accesso passa dalla valutazione multidimensionale distrettuale."],
+  R_60:["q","60","Lungodegenza post-acuzie","DM 70/2015; fuori dall'ambito del DM 5/8/2021","Paziente non più acuto ma non dimissibile, con bisogno prevalente di stabilizzazione e nursing. Soglia di durata 60 giorni (schema di decreto tariffe 2026). Se emerge un obiettivo funzionale con PRI, rivaluta il cod. 56 (in genere 56c)."],
+  R_60b:["q","60","Lungodegenza post-acuzie, con rivalutazione","DM 70/2015; Piano d'indirizzo 2011, sez. 4","La disabilità è modificabile, ma oggi il paziente non sostiene almeno 1 ora di trattamento al giorno, soglia minima della riabilitazione estensiva. Rivaluta la tolleranza a breve: quando la raggiunge, il setting diventa il cod. 56 (in genere 56c)."],
+  R_altra:["q","56","Riabilitazione ospedaliera fuori dalle MDC del decreto","DPCM LEA art. 44; norme regionali","L'appropriatezza segue le regole regionali e le soglie di durata del DM 18/10/2012."],
+  R_rsa:["ok","—","RSA per non autosufficienti","DPCM LEA art. 30","Non autosufficienza stabilizzata con bisogno prevalente tutelare; componente riabilitativa di mantenimento. Accesso tramite UVM."],
+  R_amb:["ok","—","Riabilitazione ambulatoriale specialistica","DPCM LEA art. 15 e All. 4 (nomenclatore, Medicina fisica e riabilitazione)","Menomazione circoscritta, paziente trasportabile."],
+  R_dom:["ok","—","Riabilitazione domiciliare","DPCM LEA art. 22; DM 77/2022","Paziente non trasportabile; attivazione tramite distretto o COT."],
+  R_27:["ok","—","Presa in carico ambulatoriale o domiciliare per disabilità","DPCM LEA art. 27 (ex art. 26 L. 833/78)","Disabilità complessa con PRI multiprofessionale; modalità intensiva o estensiva secondo la Regione."],
+  R_semi:["ok","—","Semiresidenziale per disabilità","DPCM LEA art. 34","Ciclo diurno, livello estensivo o socio-riabilitativo."],
+  R_ri:["ok","—","Residenziale intensivo per disabilità","DPCM LEA art. 34","Stabilità clinica, disabilità importanti e modificabili, almeno 3 ore al giorno."],
+  R_re:["ok","—","Residenziale estensivo per disabilità","DPCM LEA art. 34","Potenzialità di recupero, almeno 1 ora al giorno. Da non confondere con il cod. 56c ospedaliero."],
+  R_rm:["ok","—","Residenziale socio-riabilitativo di mantenimento","DPCM LEA art. 34","Disabilità stabilizzata; quota sanitaria e sociale ripartite."]
+};
+
+// ===== Durata soglia (schema di decreto tariffe 2026, impianto DM 18/10/2012) =====
+const sogliaDurata = m => m==="1" ? 60 : m==="8" ? 40 : 30;
+const LUOGO = {acuti:"Reparto per acuti", dompost:"Domicilio, dopo un ricovero per acuti", aggrav:"Domicilio, aggravamento dopo un ciclo riabilitativo", dom:"Domicilio, senza ricoveri per acuti negli ultimi 12 mesi", riab:"Reparto di riabilitazione", terr:"RSA o struttura territoriale"};
+
+// ===== Dispositivi e condizioni → codici dell'Allegato 3 =====
+const DEV=[
+ ["trach","Tracheostomia o cannula tracheale","V440","",""],
+ ["vmi","Ventilazione meccanica invasiva","","9670",""],
+ ["niv","Ventilazione non invasiva o CPAP","","9390",""],
+ ["o2","Ossigenoterapia","","9396","rende valido il 518.84"],
+ ["peg","Gastrostomia (PEG)","V441","",""],
+ ["enter","Nutrizione enterale","","966",""],
+ ["disf","Disfagia","7872","","negli esiti di ictus usa 438.82"],
+ ["cvc","Catetere venoso centrale","","3893",""],
+ ["vesc","Vescica neurologica","59654","",""],
+ ["rit","Ritenzione urinaria","7882","",""],
+ ["incf","Incontinenza fecale","7876","",""],
+ ["lpp","Lesione da pressione","","",""],
+ ["mdr","Isolamento per germi multiresistenti","","9984",""],
+ ["trasf","Trasfusioni previste","","990",""],
+ ["ecg","Monitoraggio ECG continuo","","8954",""],
+ ["drain","Drenaggio pleurico da rimuovere","","9741",""],
+ ["sept","Setticemia in trattamento","038","",""],
+ ["pta","Protesi d'anca","V4364","",""],
+ ["ptg","Protesi di ginocchio","V4365","",""]
+];
+function devCodes(s){
+  const d=[],p=[];
+  DEV.forEach(([k,,dc,pc])=>{ if(s["d_"+k]){ if(dc)d.push(dc); if(pc)p.push(pc); } });
+  if(s.d_lpp && s.lppSede) d.push(s.lppSede);
+  if(s.d_disf && s.rDiag && parseCodes(s.rDiag).some(c=>c.startsWith("43882"))) d.splice(d.indexOf("7872"),1);
+  s.devD=d.join(","); s.devP=p.join(",");
+}
+const devList = s => DEV.filter(([k])=>s["d_"+k]).map(([k,l])=>k==="lpp"&&s.lppSede?`${l} (${s.lppSede})`:l).concat(s.carico?["Divieto o limitazione del carico"]:[]);
+
+// Selezione di codici per la ricerca (descrizioni dagli allegati del DM 5/8/2021)
+const CODEDB=[
+ ["43401","Trombosi cerebrale con infarto cerebrale","D"],["43411","Embolia cerebrale con infarto cerebrale","D"],["43491","Occlusione di arteria cerebrale non specificata con infarto","D"],
+ ["431","Emorragia cerebrale","D"],["430","Emorragia subaracnoidea","D"],["4321","Emorragia subdurale non traumatica","D"],
+ ["43820","Emiplegia, esiti di malattia cerebrovascolare, emisfero non specificato","D"],["43821","Emiplegia dell'emisfero dominante, esiti cerebrovascolari","D"],["43822","Emiplegia dell'emisfero non dominante, esiti cerebrovascolari","D"],
+ ["43811","Afasia, esiti cerebrovascolari","D"],["43882","Disfagia, esiti cerebrovascolari","D"],["4380","Deficit cognitivo, esiti cerebrovascolari","D"],["43881","Aprassia, esiti cerebrovascolari","D"],["43853","Altre sindromi paralitiche bilaterali, esiti cerebrovascolari","D"],
+ ["34211","Emiplegia spastica, emisfero dominante","D"],["34212","Emiplegia spastica, emisfero non dominante","D"],["34290","Emiplegia non specificata","D"],
+ ["3441","Paraplegia","D"],["34401","Quadriplegia C1–C4 completa","D"],["34402","Quadriplegia C1–C4 incompleta","D"],["34403","Quadriplegia C5–C7 completa","D"],["34404","Quadriplegia C5–C7 incompleta","D"],["34461","Sindrome della cauda equina con vescica neurologica","D"],
+ ["9072","Postumi di traumatismi del midollo spinale","D"],["7211","Spondilosi cervicale con mielopatia","D"],["3481","Danno encefalico da anossia","D"],
+ ["340","Sclerosi multipla","D"],["3320","Malattia di Parkinson (paralisi agitante)","D"],["33520","Sclerosi laterale amiotrofica","D"],["3570","Polineurite infettiva acuta (Guillain-Barré)","D"],["35782","Polineuropatia della malattia critica","D"],["3572","Polineuropatia diabetica","D"],["35800","Miastenia grave senza esacerbazione","D"],
+ ["82000","Frattura transcervicale chiusa del collo del femore, intracapsulare","D"],["82021","Frattura intertrocanterica chiusa del femore","D"],["82022","Frattura sottotrocanterica chiusa del femore","D"],["8208","Frattura del collo del femore, parte non specificata, chiusa","D"],
+ ["9053","Postumi di frattura del collo del femore","D"],["82101","Frattura chiusa della diafisi femorale","D"],["82123","Frattura sovracondiloidea del femore","D"],
+ ["8080","Frattura chiusa dell'acetabolo","D"],["8244","Frattura bimalleolare chiusa","D"],["8220","Frattura chiusa della rotula","D"],["8280","Fratture multiple di arti inferiori o arto inferiore con superiore, chiuse","D"],
+ ["73313","Frattura patologica delle vertebre","D"],["73314","Frattura patologica del collo del femore","D"],["V5417","Trattamento ulteriore per frattura traumatica di vertebra","D"],
+ ["V4364","Sostituzione di articolazione dell'anca (protesi)","D"],["V4365","Sostituzione di articolazione del ginocchio (protesi)","D"],["V4366","Sostituzione di articolazione della caviglia","D"],
+ ["99641","Allentamento meccanico della protesi articolare","D"],["99642","Lussazione della protesi articolare","D"],["99644","Frattura periprotesica","D"],["99666","Infezione da protesi articolare interna","D"],
+ ["7337","Algoneurodistrofia","D"],["7144","Artropatia cronica post-traumatica","D"],["7140","Artrite reumatoide","D"],["7200","Spondilite anchilosante","D"],["72283","Sindrome postlaminectomia lombare","D"],["3384","Sindrome da dolore cronico","D"],
+ ["99760","Complicazioni tardive del moncone di amputazione","D"],["V521","Collocazione di protesi di gamba","D"],
+ ["4280","Scompenso cardiaco congestizio","D"],["42822","Insufficienza cardiaca sistolica cronica","D"],["42832","Insufficienza cardiaca diastolica cronica","D"],["41071","Infarto subendocardico, episodio iniziale","D"],["412","Infarto miocardico pregresso","D"],
+ ["V4581","Stato dopo bypass aortocoronarico","D"],["V4582","Stato dopo angioplastica coronarica","D"],["V433","Valvola cardiaca sostituita (protesi)","D"],["4294","Disturbi funzionali dopo chirurgia cardiaca","D"],["V421","Cuore sostituito da trapianto","D"],
+ ["44022","Aterosclerosi delle arterie degli arti con dolore a riposo","D"],["44024","Aterosclerosi delle arterie degli arti con gangrena","D"],
+ ["49121","Bronchite cronica ostruttiva con esacerbazione","D"],["51881","Insufficienza respiratoria acuta","D"],["51883","Insufficienza respiratoria cronica","D"],["51884","Insufficienza respiratoria acuta su cronica","D"],
+ ["486","Polmonite, agente non specificato","D"],["5070","Polmonite ab ingestis","D"],["5163","Fibrosi polmonare idiopatica","D"],["32723","Apnee ostruttive nel sonno","D"],["V426","Polmone sostituito da trapianto","D"],
+ ["2630","Malnutrizione di grado moderato","D"],["261","Marasma da denutrizione","D"],["5854","Malattia renale cronica stadio IV","D"],["5855","Malattia renale cronica stadio V","D"],["038","Setticemia","D"],
+ ["7872","Disfagia","D"],["7876","Incontinenza fecale","D"],["7882","Ritenzione urinaria","D"],["59654","Vescica neurologica","D"],["56481","Colon neurogeno","D"],
+ ["70705","Lesione da decubito della natica","D"],["70707","Lesione da decubito del tallone","D"],["70703","Lesione da decubito del dorso, parte inferiore","D"],
+ ["7813","Turbe della coordinazione","D"],["78192","Postura anormale","D"],["7818","Sindrome neurologica da inattenzione (neglect)","D"],
+ ["V440","Presenza di tracheostomia","D"],["V441","Presenza di gastrostomia","D"],
+ ["311","Tracheostomia temporanea","P"],["9737","Rimozione di cannula tracheostomica","P"],["4311","Gastrostomia percutanea endoscopica (PEG)","P"],["9702","Sostituzione del tubo gastrostomico","P"],
+ ["9670","Ventilazione meccanica continua, durata non specificata","P"],["9672","Ventilazione meccanica continua per 96 ore o più","P"],["9390","CPAP, ventilazione a pressione positiva continua","P"],["9396","Ossigenoterapia (arricchimento di ossigeno)","P"],
+ ["966","Nutrizione enterale","P"],["3893","Cateterismo venoso centrale","P"],["990","Trasfusione di sangue ed emocomponenti","P"],["9984","Isolamento","P"],["8954","Monitoraggio elettrocardiografico","P"],
+ ["9741","Rimozione di drenaggio pleurico","P"],["3491","Toracentesi","P"],["8917","Polisonnografia","P"],["9325","Estensione forzata degli arti","P"],
+ ["8445","Adattamento di protesi sopra il ginocchio","P"],["8446","Adattamento di protesi sotto il ginocchio","P"],["3322","Broncoscopia con fibre ottiche","P"]
+];
+const norm = t => t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+function codeSearch(box,upd){
+  const q=box.querySelector("#i_q"), out=box.querySelector("#qres"); if(!q) return;
+  const show=()=>{ const w=norm(q.value).split(/\s+/).filter(Boolean); out.innerHTML="";
+    if(!w.length) return;
+    const hits=CODEDB.filter(([c,d])=>{const h=norm(d)+" "+c; return w.every(x=>h.includes(x.replace(".","")));}).slice(0,12);
+    if(!hits.length){ out.innerHTML=`<p class="hint">Nessun codice nella selezione: scrivilo a mano.</p>`; return; }
+    hits.forEach(([c,d,t])=>{ const r=document.createElement("div"); r.className="resrow";
+      r.innerHTML=`<span><code>${c}</code>${esc(d)}</span><button class="btn" type="button">+ ${t==="D"?"diagnosi":"procedura"}</button>`;
+      r.querySelector("button").onclick=()=>{ const k=t==="D"?"rDiag":"rProc", ta=box.querySelector(t==="D"?"#i_rd":"#i_rp");
+        const cur=parseCodes(S[k]); if(!cur.includes(c)){ S[k]=(S[k]&&S[k].trim()?S[k].replace(/[\s,;]+$/,"")+", ":"")+c; ta.value=S[k]; }
+        upd(); };
+      out.append(r); }); };
+  q.addEventListener("input",show);
+}
+
+// ===== Bisogno prevalente =====
+const RCS = [
+  ["rC","C · Cura di base",["0 · Sostanzialmente autonomo","1 · Aiuto di 1 persona","2 · Aiuto di 2 persone","3 · Aiuto di 3 o più persone","4 · Supervisione costante 1:1"]],
+  ["rR","R · Rischio cognitivo-comportamentale",["0 · Nessun rischio","1 · Basso: precauzioni standard","2 · Medio: misure di sicurezza aggiuntive","3 · Alto: osservazione ogni ½–1 ora","4 · Molto alto: supervisione 1:1 continua"]],
+  ["rN","N · Assistenza infermieristica",["0 · Bastano gli operatori di assistenza","1 · Infermiere generalista (farmaci, medicazioni, ev)","2 · Infermiere formato in riabilitazione","3 · Altamente specialistica (tracheostomia, stati vegetativi)","4 · Alta dipendenza, interventi almeno ogni ora"]],
+  ["rM","M · Bisogni medici",["0 · Nessun intervento attivo, basta il MMG","1 · Monitoraggio e indagini di base","2 · Intervento specialistico (es. dialisi, ventilazione)","3 · Potenzialmente instabile: medico in sede h24","4 · Problema acuto, intervento urgente"]],
+  ["rTD","TD · Discipline terapeutiche previste",["0 · Nessuna","1 · Una","2 · Due o tre","3 · Quattro o cinque","4 · Sei o più"]],
+  ["rTI","TI · Intensità della terapia prevista",["0 · Nessuna o meno di 1 ora a settimana","1 · Bassa: non quotidiana o solo di gruppo","2 · Moderata: individuale quotidiana, 2–3 ore","3 · Alta: quotidiana con assistente, ≥ 25 h a settimana","4 · Molto alta: due terapisti o > 30 h a settimana"]],
+  ["rE","E · Attrezzature",["0 · Nessuna","1 · Di base, in commercio","2 · Altamente specialistiche o personalizzate"]]
+];
+function bisognoHtml(){
+  return `<div class="h3">1 · Modificabilità della disabilità</div>
+  <div class="f"><label for="b_mod">C'è un margine di recupero?</label><select id="b_mod" data-k="bMod"><option value="">—</option>
+    <option value="si">Sì: obiettivi funzionali misurabili, raggiungibili nel ricovero</option>
+    <option value="incerto">Incerto: serve un periodo di valutazione o di prova</option>
+    <option value="no">No: disabilità stabilizzata, obiettivo di mantenimento</option></select></div>
+  <div class="grid"><div class="f"><label for="b_rk0">Rankin premorbosa</label><select id="b_rk0" data-k="rankin"><option value="">—</option>${MRS.map((t,i)=>`<option value="${i}">${i} · ${t}</option>`).join("")}</select></div>
+    <div class="f"><label for="b_rk1">Rankin attuale</label><select id="b_rk1" data-k="mrsNow"><option value="">—</option>${MRS.map((t,i)=>`<option value="${i}">${i} · ${t}</option>`).join("")}</select></div></div>
+  <p class="hint">Lo scarto tra funzione premorbosa e attuale, letto insieme alla prognosi della patologia indice, è la base del giudizio di modificabilità.</p>
+  <div class="h3">2 · Partecipazione al programma</div>
+  <div class="f"><label for="b_toll">Quanto trattamento sostiene oggi il paziente?</label><select id="b_toll" data-k="bToll"><option value="">—</option>
+    <option value="3">Almeno 3 ore al giorno</option><option value="1">Da 1 a 3 ore al giorno</option><option value="0">Meno di 1 ora al giorno, o non collabora</option></select></div>
+  <p class="hint">Considera vigilanza, collaborazione, comprensione, resistenza allo sforzo e dolore. Il Piano d'indirizzo fissa 3 ore al giorno per l'intensiva e 1 ora per l'estensiva.</p>
+  <div class="h3">3 · Stabilità clinica e carico assistenziale (RCS-E v13)</div>
+  <div class="grid">${RCS.map(([k,l,o])=>`<div class="f"><label for="b_${k}">${l}</label><select id="b_${k}" data-k="${k}"><option value="">—</option>${o.map((t,i)=>`<option value="${i}">${t}</option>`).join("")}</select></div>`).join("")}</div>
+  <p class="hint">Per C e R conta il valore più alto dei due. TD e TI si riferiscono al programma che il paziente richiede, non a quello erogato in acuzie.</p>
+  <div class="h3">4 · Contesto per la dimissione</div>
+  <div class="grid"><div class="f"><label for="b_cg">Caregiver</label><select id="b_cg" data-k="cg"><option value="">—</option><option>Disponibile e formabile</option><option>Disponibile solo in parte</option><option>Non disponibile</option></select></div>
+    <div class="f"><label for="b_casa">Rientro a domicilio atteso</label><select id="b_casa" data-k="casa"><option value="">—</option><option>Probabile</option><option>Incerto</option><option>Improbabile</option></select></div></div>
+  <p class="hint">Questi due elementi non decidono il setting: nel Delphi di Stein et al. (Stroke 2022) hanno avuto un consenso basso (39%), contro il 74–97% di beneficio atteso, competenze specialistiche, bisogno medico e tolleranza. Servono al progetto di dimissione e vanno nel riepilogo.</p>
+  <div class="calc" id="live"></div>`;
+}
+const MRS=["Nessun sintomo","Sintomi senza disabilità","Disabilità lieve","Disabilità moderata, cammina da solo","Disabilità moderatamente grave","Disabilità grave, allettato"];
+function scarto(s){ if(s.rankin===""||s.rankin==null||s.mrsNow===""||s.mrsNow==null) return null; return (+s.mrsNow)-(+s.rankin); }
+const rv = (s,k) => s[k]===""||s[k]==null ? null : +s[k];
+function rcsTot(s){ const v=["rC","rR","rN","rM","rTD","rTI","rE"].map(k=>rv(s,k)); if(v.some(x=>x===null)) return null; return Math.max(v[0],v[1])+v[2]+v[3]+v[4]+v[5]+v[6]; }
+function bisognoOk(s){ return s.bMod && s.bToll!=="" && rv(s,"rM")!==null && rv(s,"rN")!==null; }
+function bisognoVerdict(s){
+  const M=rv(s,"rM"), N=rv(s,"rN"), care=(M??0)+(N??0), ther=(rv(s,"rTD")??0)+(rv(s,"rTI")??0);
+  const prof=`carico medico-infermieristico M+N ${care}/8, carico terapeutico TD+TI ${ther}/8`;
+  if(M===4) return {next:"R_acuto",riab:false,short:"ancora acuto (M4)",det:"Problema medico acuto in corso (RCS-E M4): non ancora trasferibile",verdict:"Non ancora trasferibile: problema medico acuto in corso (M4)."};
+  if(s.bMod==="no"){
+    const clin = M>=2 || N>=3;
+    return clin ? {next:"R_60",riab:false,short:"clinico-assistenziale",det:`Disabilità non modificabile con bisogni medici o infermieristici rilevanti (${prof})`,verdict:`Clinico-assistenziale: disabilità non modificabile, con M ≥ 2 o N ≥ 3 → cod. 60.`}
+      : {next:"R_mant",riab:false,short:"mantenimento",det:`Disabilità non modificabile, carico gestibile sul territorio (${prof})`,verdict:"Mantenimento: disabilità non modificabile e carico medico-infermieristico basso → territorio."};
+  }
+  if(s.bToll==="0") return {next:"R_60b",riab:false,short:"clinico-assistenziale, da rivalutare",det:"Modificabile ma oggi non sostiene 1 ora di trattamento al giorno",verdict:"Clinico-assistenziale per ora: modificabile, ma non sostiene 1 ora al giorno → cod. 60 e rivalutazione."};
+  const int = s.bToll==="3" ? "intensiva (≥ 3 h/die)" : "estensiva (1–3 h/die)";
+  const flag = s.bMod==="incerto" ? " · modificabilità da confermare con un periodo di valutazione" : "";
+  return {next:"ospedale",riab:true,short:"riabilitativo, "+(s.bToll==="3"?"intensivo":"estensivo"),det:`Modificabile, indicazione alla riabilitazione ${int}; ${prof}${flag}`,verdict:`Riabilitativo: indicazione alla riabilitazione ${int}${flag}.`};
+}
+function bisognoLive(s){
+  const t=rcsTot(s); if(t!==null) s.rcs=String(t);
+  if(!bisognoOk(s)) return "Compila modificabilità, partecipazione e almeno i domini M e N"+(t!==null?` · RCS-E totale ${t}/22`:"");
+  if(s.bMod==="si" && scarto(s)===0) return bisognoVerdict(s).verdict+" · Attenzione: Rankin attuale uguale al premorboso, verifica il margine di recupero";
+  const v=bisognoVerdict(s), M=rv(s,"rM");
+  let extra = M===3 ? " · M3: serve un medico in sede h24, quindi un setting ospedaliero" : "";
+  const d=scarto(s); const sc = d===null ? "" : ` · Rankin ${s.rankin} → ${s.mrsNow}: ${d>0?`perdita di ${d} ${d===1?"livello":"livelli"} rispetto al premorboso`:"nessuna perdita rispetto al premorboso"}`;
+  return v.verdict + extra + sc + (t!==null?` · RCS-E totale ${t}/22, riportato nelle scale`:"");
+}
+
+// ===== Scale =====
+const biTot = s => { const v=BI.map((_,i)=>s["bi"+i]); return v.every(x=>x!=="") ? v.reduce((a,b)=>a+ +b,0) : null; };
+function biOpts(i,s){ const sc = (i===8&&s.biWc)?[0,1,3,4,5]:BI[i][1]; return `<option value="">—</option>`+sc.map((v,j)=>`<option value="${v}">${v} · ${LV[j]}</option>`).join(""); }
+function scaleHtml(s){
+  const m1=s.mdc==="1";
+  const req=["Rankin premorbosa","Barthel Index","RCS-e"]; if(s.mdc==="4")req.push("Barthel dispnea"); if(s.mdc==="5")req.push("6MWT"); if(m1)req.push("GCS, LCF, GOSE se cod. 75","ASIA, SCIM se cod. 28");
+  return `<p class="hint">Richieste per questo paziente: <b>${req.join(" · ")}</b></p>
+  <details class="scale" open><summary>Barthel Index modificato <span id="biTot">—</span></summary><div class="body">
+    ${BI.map((b,i)=>`<div class="f"><label for="bi${i}">${i===8&&s.biWc?"Uso della carrozzina":b[0]}</label><select id="bi${i}" data-k="bi${i}">${biOpts(i,s)}</select></div>`).join("")}
+    <label class="chk"><input type="checkbox" id="biWc" data-k="biWc" data-rerender="1"><span>Non deambula: usa la carrozzina<small>Sostituisce la deambulazione</small></span></label></div></details>
+  <div class="grid">
+    <div class="f"><label for="rankin">Rankin premorbosa</label><select id="rankin" data-k="rankin"><option value="">—</option>${[0,1,2,3,4,5].map(v=>`<option>${v}</option>`).join("")}</select></div>
+    <div class="f"><label for="rcs">RCS-e v13 (totale 0–22)</label><input type="number" id="rcs" data-k="rcs" min="0" max="22"></div>
+    ${s.mdc==="4"?`<div class="f"><label for="bd">Barthel dispnea (totale)</label><input type="number" id="bd" data-k="bd" min="0" max="100"></div>`:""}
+    ${s.mdc==="5"?`<div class="f"><label for="mwt">6MWT (metri)</label><input type="number" id="mwt" data-k="mwt" min="0"></div>`:""}
+  </div>
+  ${m1?`<div class="h3">Se si valuta il cod. 75</div>
+  <details class="scale" open><summary>Glasgow Coma Scale all'ingresso <span id="gcsTot">—</span></summary><div class="body">
+    <div class="f"><label for="gE">Apertura occhi</label><select id="gE" data-k="gE"><option value="">—</option><option value="4">4 · Spontanea</option><option value="3">3 · Alla voce</option><option value="2">2 · Al dolore</option><option value="1">1 · Nessuna</option></select></div>
+    <div class="f"><label for="gV">Risposta verbale</label><select id="gV" data-k="gV"><option value="">—</option><option value="5">5 · Orientata</option><option value="4">4 · Confusa</option><option value="3">3 · Parole inappropriate</option><option value="2">2 · Suoni incomprensibili</option><option value="1">1 · Nessuna</option></select></div>
+    <div class="f"><label for="gM">Risposta motoria</label><select id="gM" data-k="gM"><option value="">—</option><option value="6">6 · Esegue ordini</option><option value="5">5 · Localizza il dolore</option><option value="4">4 · Retrae al dolore</option><option value="3">3 · Flessione anomala</option><option value="2">2 · Estensione</option><option value="1">1 · Nessuna</option></select></div>
+  </div></details>
+  <div class="grid">
+    <div class="f"><label for="gcsAcuto">Peggior GCS in fase acuta</label><input type="number" id="gcsAcuto" data-k="gcsAcuto" min="3" max="15"></div>
+    <div class="f"><label for="lcf">LCF</label><select id="lcf" data-k="lcf"><option value="">—</option>${["Nessuna risposta","Risposta generalizzata","Risposta localizzata","Confuso, agitato","Confuso, inappropriato","Confuso, appropriato","Automatico, appropriato","Finalizzato, appropriato"].map((t,i)=>`<option value="${i+1}">${["I","II","III","IV","V","VI","VII","VIII"][i]} · ${t}</option>`).join("")}</select></div>
+    <div class="f"><label for="gose">GOSE</label><select id="gose" data-k="gose"><option value="">—</option>${["Morte","Stato vegetativo","Grave disabilità inferiore","Grave disabilità superiore","Disabilità moderata inferiore","Disabilità moderata superiore","Buon recupero inferiore","Buon recupero superiore"].map((t,i)=>`<option value="${i+1}">${i+1} · ${t}</option>`).join("")}</select></div>
+    <div class="f"><label for="drs">DRS (0–29)</label><input type="number" id="drs" data-k="drs" min="0" max="29"></div>
+  </div>
+  <div class="h3">Se si valuta il cod. 28</div>
+  <div class="grid">
+    <div class="f"><label for="asia">ASIA Impairment Scale</label><select id="asia" data-k="asia"><option value="">—</option>${["A","B","C","D","E"].map(v=>`<option>${v}</option>`).join("")}</select></div>
+    <div class="f"><label for="scim">SCIM III (0–100)</label><input type="number" id="scim" data-k="scim" min="0" max="100"></div>
+  </div>`:""}
+  <div class="f"><span class="lbl">I valori d'ingresso rientrano nelle soglie del protocollo sperimentale per</span>
+    <div class="nav">${(m1?["75","28","56a","56b","56c"]:["56a","56b","56c"]).map(k=>`<label class="chk"><input type="checkbox" data-soglia="${k}">${k.length===2?"Cod. "+k:k}</label>`).join("")}</div>
+    <p class="hint">Se non hai il protocollo, lascia vuoto: il criterio resterà «da verificare».</p></div>`;
+}
+function scaleLive(s){
+  const b=biTot(s), part=BI.reduce((a,_,i)=>a+(+s["bi"+i]||0),0), n=BI.filter((_,i)=>s["bi"+i]!=="").length;
+  if($("biTot")) $("biTot").textContent = b!==null ? b+" / 100" : (n?`parziale ${part} · ${n}/10 voci`:"—");
+  if($("gcsTot")) $("gcsTot").textContent = (s.gE&&s.gV&&s.gM) ? `${+s.gE+ +s.gV+ +s.gM} (E${s.gE} V${s.gV} M${s.gM})` : "—";
+}
+
+// ===== Codici =====
+function chips(codes, mode, id){
+  const el=$(id||"chips"); if(!el) return; el.innerHTML="";
+  codes.forEach((c,i)=>{
+    const tags=[];
+    if(mode==="D"){ if(inList(c,A3D)||inList(c,A3P)) tags.push(["All. 3",""]); }
+    else if(mode!=="P"){ if(inList(c,A1))tags.push(["All. 1",""]); if(inList(c,A2))tags.push(["All. 2",""]); if(inList(c,A3D))tags.push(["All. 3",""]);
+      if(mode==="A"){const m=inA4(c); if(m)tags.push(["All. 4"+(m.flag?" "+m.flag:""),m.flag?"f":""]);} }
+    else if(inList(c,A3P)) tags.push(["All. 3",""]);
+    const d=document.createElement("span"); d.className="chip"+(mode==="R"&&i===0?" dp":""); d.textContent=(mode==="R"&&i===0?"DP ":"")+c;
+    if(!tags.length){const t=document.createElement("span");t.className="t x";t.textContent=mode==="A"?"non trovato":"nessun allegato";d.append(t)}
+    tags.forEach(([t,cl])=>{const x=document.createElement("span");x.className="t "+cl;x.textContent=t;d.append(x)});
+    el.append(d);
+  });
+}
+
+// ===== Render =====
+function render(){
+  const st=$("stage"); st.innerHTML=""; st.className="panel";
+  const ph = RES[cur]||cur==="R_ospedale" ? "set" : STEPS[cur].ph;
+  const idx = PHASES.findIndex(p=>p[1]===ph);
+  $("phase").innerHTML = PHASES.map((p,i)=>`<span class="${i===idx?"on":i<idx?"done":""}">${p[0]}</span>`).join("");
+  $("trail").innerHTML = hist.map(h=>`<span class="crumb">${esc(h.short)}: <b>${esc(h.ans)}</b></span>`).join("");
+  $("back").hidden = !hist.length;
+  if(cur==="R_ospedale") return renderEsito(st);
+  if(RES[cur]) return renderRes(st, RES[cur]);
+  const n=STEPS[cur];
+  st.insertAdjacentHTML("beforeend", `<div class="qnum">Domanda ${hist.length+1}</div><h2 class="q">${esc(n.q)}</h2>${n.help?`<p class="help">${esc(n.help)}</p>`:""}`);
+  if(n.t==="choice"){
+    const o=document.createElement("div"); o.className="opts";
+    n.o.forEach(([l,sub,fn])=>{ const b=document.createElement("button"); b.type="button"; b.className="opt"; b.innerHTML=`<strong>${esc(l)}</strong>${sub?`<span>${esc(sub)}</span>`:""}`;
+      b.onclick=()=>{ const snap=JSON.parse(JSON.stringify(S)); const nx=fn(S); hist.push({id:cur,short:n.short,ans:l,snap}); cur=nx; render(); focusFirst(); }; o.append(b); });
+    st.append(o);
+  } else {
+    const box=document.createElement("div"); box.style.cssText="display:flex;flex-direction:column;gap:12px"; box.innerHTML=n.html(S); st.append(box);
+    box.querySelectorAll("[data-k]").forEach(e=>{ const k=e.dataset.k; if(e.type==="checkbox") e.checked=!!S[k]; else e.value=S[k]??"";
+      const h=()=>{ S[k]= e.type==="checkbox"? e.checked : e.value; if(e.dataset.rerender){ if(k==="biWc") S.bi8=""; render(); return; } upd(); };
+      e.addEventListener("input",h); e.addEventListener("change",h); });
+    box.querySelectorAll("[data-soglia]").forEach(e=>{ e.checked=!!S.soglie[e.dataset.soglia]; e.addEventListener("change",()=>{S.soglie[e.dataset.soglia]=e.checked}); });
+    const go=document.createElement("div"); go.className="nav";
+    go.innerHTML=`<button class="btn primary" type="button" id="next">Avanti →</button><span class="hint" id="why"></span>`; st.append(go);
+    const upd=()=>{ const l=n.live?n.live(S):null; if(l!==null&&l!==undefined&&$("live")) $("live").textContent=l; $("next").disabled=!n.ok(S); $("why").textContent=n.ok(S)?"":"Completa i campi per proseguire"; };
+    $("next").onclick=()=>{ if(!n.ok(S)) return; const snap=JSON.parse(JSON.stringify(S)); hist.push({id:cur,short:n.short,ans:n.ans(S),snap}); cur=n.next(S); render(); focusFirst(); };
+    if(n.after) n.after(box, upd);
+    upd();
+  }
+}
+function focusFirst(){ const f=$("stage").querySelector("button,input,select,textarea"); if(f) f.focus({preventScroll:true}); }
+function renderRes(st,[k,code,title,norma,req]){
+  st.innerHTML=`<div class="summary ${k}"><span class="code">${esc(code)}</span><div class="txt"><span class="pill ${k}">${k==="ok"?"Setting indicato":k==="no"?"Non appropriato":"Fuori dai criteri nazionali"}</span><b>${esc(title)}</b></div></div>
+    <dl><dt>Fonte</dt><dd>${esc(norma)}</dd><dt>Criterio</dt><dd>${esc(req)}</dd></dl>`;
+}
+const NAMES={"75":"Neuroriabilitazione · grave cerebrolesione acquisita","28":"Unità spinale","56a":"Riabilitazione intensiva ad alta complessità","56b":"Riabilitazione intensiva a minore complessità","56c":"Riabilitazione estensiva ospedaliera"};
+const ICON={ok:"✓",no:"✕",q:"?"}, STL={ok:"Soddisfatto",no:"Non soddisfatto",q:"Da verificare"};
+const crHtml = c => `<li><span class="ic ${c.st}">${ICON[c.st]}</span><span>${esc(c.label)}${c.det?`<small>${esc(c.det)}</small>`:""}</span></li>`;
+function renderEsito(st){
+  const ev=evaluate(S); const regime=S.regime==="dh"?"Day Hospital":"ricovero ordinario";
+  const excl=ev.incl.find(c=>c.st==="no");
+  let cls,code,title,sub;
+  if(excl){cls="no";code="—";title="Ricovero escluso dalla valutazione";sub=excl.det||excl.label}
+  else if(ev.best){cls=ev.best.st;code=ev.best.k;title=NAMES[ev.best.k];
+    sub = ev.best.st==="ok" ? `Tutti i criteri soddisfatti · ${regime}` : `${regime} · da verificare: ` + ev.best.cr.filter(c=>c.st==="q").map(c=>c.label.toLowerCase()).join("; ");}
+  else {cls="no";code="—";title="Nessun criterio di appropriatezza soddisfatto";sub="Rivedi la codifica della SDO dell'acuzie (art. 3 c.5), oppure valuta il cod. 60 o un setting territoriale."}
+  devCodes(S);
+  const so=sogliaDurata(S.mdc);
+  const durata = S.regime==="dh" ? "In Day Hospital il numero di accessi oltre soglia è fissato dalla Regione." : `Soglia di durata del ricovero ordinario per la MDC ${S.mdc}: ${so} giorni; oltre la soglia la tariffa giornaliera si riduce del 40% (schema di decreto tariffe 2026).`;
+  const rd=parseCodes(S.rDiag), dvD=parseCodes(S.devD).filter(c=>!rd.includes(c)), rp=parseCodes(S.rProc), dvP=parseCodes(S.devP).filter(c=>!rp.includes(c));
+  const sc=[]; const b=biTot(S); if(b!==null)sc.push("Barthel "+b); if(S.gE&&S.gV&&S.gM)sc.push("GCS "+(+S.gE+ +S.gV+ +S.gM));
+  [["rankin","Rankin premorbosa"],["mrsNow","Rankin attuale"],["rcs","RCS-E"],["bd","Barthel dispnea"],["mwt","6MWT m"],["gcsAcuto","GCS peggiore in acuzie"],["lcf","LCF"],["gose","GOSE"],["drs","DRS"],["asia","ASIA"],["scim","SCIM"]].forEach(([k,n])=>{if(S[k]!==""&&S[k]!=null)sc.push(n+" "+S[k])});
+  const MOD={si:"sì, obiettivi funzionali raggiungibili",incerto:"incerta, da confermare con un periodo di valutazione",no:"no, disabilità stabilizzata"}, TOL={"3":"almeno 3 ore al giorno","1":"da 1 a 3 ore al giorno","0":"meno di 1 ora al giorno"};
+  const rcsP=["rC","rR","rN","rM","rTD","rTI","rE"].map(k=>k.slice(1)+" "+(S[k]===""||S[k]==null?"—":S[k])).join(" · ");
+  const recap=[
+    "VALUTAZIONE DEL SETTING RIABILITATIVO",
+    "Riferimenti: DM 5/08/2021 (in sperimentazione), Piano d'indirizzo per la riabilitazione 2011, DPCM LEA 12/01/2017",
+    "",
+    "1. PROVENIENZA E INQUADRAMENTO",
+    `Provenienza: ${LUOGO[S.luogo]||"—"} · età ${S.eta} anni · MDC ${S.mdc} · regime proposto: ${regime}`,
+    `Percorso di appropriatezza: ${ev.art56===3?"art. 3, conseguente ad evento acuto":"art. 4, congruenza diagnostica"}`+(ev.days!==null?` · ${ev.days} giorni dalla dimissione per acuti`:""),
+    "",
+    "2. CONDIZIONI CLINICHE",
+    devList(S).length ? devList(S).map(x=>"- "+x).join("\n") : "- Nessun dispositivo o condizione segnalata",
+    "",
+    "3. BISOGNO RIABILITATIVO",
+    `Modificabilità: ${MOD[S.bMod]||"—"}`+(scarto(S)!==null?` · Rankin ${S.rankin} → ${S.mrsNow}`:""),
+    `Trattamento sostenibile: ${TOL[S.bToll]||"—"}`,
+    `Profilo RCS-E v13: ${rcsP}`+(S.rcs?` · totale ${S.rcs}/22`:""),
+    `Caregiver: ${S.cg||"—"} · rientro a domicilio: ${S.casa||"—"}`,
+    "",
+    "4. CODIFICA",
+    `SDO acuti: ${parseCodes(S.acDiag).join(", ")||"—"}`,
+    `SDO-R diagnosi principale: ${rd[0]||"—"} · altre diagnosi: ${[...rd.slice(1),...dvD].join(", ")||"—"}`,
+    `SDO-R procedure: ${[...rp,...dvP].join(", ")||"—"}`,
+    `Codici di complessità validi (All. 3): ${ev.a3.total}`,
+    "",
+    "5. SCALE D'INGRESSO",
+    sc.join(" · ")||"—",
+    "",
+    "6. SETTING PROPOSTO",
+    `${code} ${title} (${cls==="ok"?"appropriato":cls==="no"?"non appropriato":"da verificare"})`,
+    durata];
+  if(ev.best&&!excl){recap.push("Criteri "+ev.best.k+":");ev.best.cr.forEach(c=>recap.push(`  [${c.st==="ok"?"x":c.st==="no"?" ":"?"}] ${c.label}${c.det?" — "+c.det:""}`))}
+  recap.push("","7. DA COMPLETARE A CURA DEL TEAM","Obiettivi a breve termine: ","Obiettivi a medio termine: ","Professionisti coinvolti e frequenza: ","Tempi previsti: ","","Nota: i livelli 56a/56b/56c del DM 5/08/2021 sono in sperimentazione; valgono le norme regionali vigenti.");
+  st.innerHTML=`<div class="summary ${cls}"><span class="code">${esc(code)}</span><div class="txt"><span class="pill ${cls}">${cls==="ok"?"Appropriato":cls==="no"?"Non appropriato":"Da verificare"}</span><b>${esc(title)}</b><span class="s">${esc(sub)}</span></div></div>
+    <div><div class="h3">Criteri dell'art. 1</div><ul class="cr" style="padding-left:0">${ev.incl.map(crHtml).join("")}</ul></div>
+    <div class="h3">Criteri per ciascun setting</div>
+    <div class="cards">${ev.res.filter(r=>S.mdc==="1"||!["75","28"].includes(r.k)||r.st!=="no").map(r=>`<div class="card${ev.best&&ev.best.k===r.k&&!excl?" best":""}"><div class="hd"><span class="c">${r.k}</span><span class="nm">${NAMES[r.k]}</span><span class="pill ${r.st}">${STL[r.st]}</span></div><ul class="cr">${r.cr.map(crHtml).join("")}</ul></div>`).join("")}</div>
+    <p class="note"><b>Durata.</b> ${esc(durata)}${code==="28"?" Per il cod. 28 con ASIA A–C lo schema prevede una tariffa specifica senza soglia di riduzione.":""}${code==="75"?" Per il cod. 75 lo schema prevede una tariffa specifica senza soglia di riduzione.":""}</p>
+    <p class="note"><b>Trasferimenti (art. 4 c.4).</b> Sono appropriati tra U.O. cod. 28 o cod. 75 per completare il trattamento, e tra U.O. cod. 56 per avvicinamento alla residenza se la durata complessiva resta entro la soglia.</p>
+    <div class="f"><span class="lbl">Bozza di richiesta di trasferimento e di sezione del PRI</span><pre class="copy" id="recap"></pre>
+    <div class="nav"><button class="btn primary" id="copyBtn" type="button">Copia il riepilogo</button><span class="hint" id="copyMsg"></span></div></div>`;
+  $("recap").textContent=recap.join("\n");
+  $("copyBtn").onclick=()=>{navigator.clipboard.writeText($("recap").textContent).then(()=>{$("copyMsg").textContent="Riepilogo copiato"}).catch(()=>{const r=document.createRange();r.selectNodeContents($("recap"));const sl=getSelection();sl.removeAllRanges();sl.addRange(r);$("copyMsg").textContent="Testo selezionato: copialo con Ctrl+C"})};
+}
+$("back").onclick=()=>{ const h=hist.pop(); if(!h) return; S=h.snap; cur=h.id; render(); };
+$("reset").onclick=()=>{ S=fresh(); hist=[]; cur="luogo"; render(); };
+render();
+</script>
+
+</body>
+</html>
