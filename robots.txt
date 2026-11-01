@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /operatori.html
+Disallow: /nota79.html
+Disallow: /nota96.html
+Disallow: /scale.html
+Disallow: /setting-riabilitativo.html
+
+Sitemap: https://iltuofisiatra.it/sitemap.xml
