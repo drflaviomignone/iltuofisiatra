@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Atlante ecoguidato della spasticità — accesso riservato</title>
+<meta name="theme-color" content="#1f5f8b">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" type="image/png" href="icons/icon-64.png">
+<style>
+:root{--bg:#f3f5f7;--panel:#fff;--ink:#18212b;--muted:#5a6672;--line:#d9dfe5;--accent:#1f5f8b;--soft:#e3eef6;--warn:#a65d00;--warn-soft:#fbf1e3;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#0f151b;--panel:#17202a;--ink:#e6ebf0;--muted:#9aa7b4;--line:#2a3644;--accent:#6fb0dc;--soft:#1c2f40;--warn:#e3a54d;--warn-soft:#2e2414;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:680px;margin:0 auto;padding:28px 18px 40px}
+h1{font-size:1.5rem;margin:0 0 4px;line-height:1.2}
+h2{font-size:1.1rem;margin:0 0 8px}
+.sub{color:var(--muted);margin:0 0 20px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:14px}
+label{display:block;font-weight:600;margin-bottom:6px}
+input[type=password]{width:100%;font-size:1.05rem;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+button,.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:10px 18px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font:inherit;font-weight:600;cursor:pointer;text-decoration:none}
+button.sec,.btn.sec{background:transparent;color:var(--accent)}
+button:disabled{opacity:.5;cursor:default}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.err{color:#c0392b;font-weight:600;margin:10px 0 0}
+.small{font-size:.88rem;color:var(--muted)}
+.prog{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:10px}
+.prog i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+.dl{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.dl:first-of-type{border-top:0}
+.dl p{margin:0}
+details{margin-top:6px}
+summary{cursor:pointer;color:var(--accent);font-size:.9rem}
+details ol{margin:6px 0 0;padding-left:20px;font-size:.9rem}
+.avviso{background:var(--warn-soft);border-left:3px solid var(--warn);padding:8px 12px;border-radius:4px;font-size:.9rem}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <h1>Atlante ecoguidato della spasticità</h1>
+  <p class="sub">Tossina botulinica: modello 3D, immagini ecografiche, tecnica e dosi dagli RCP italiani. Area riservata ai medici.</p>
+
+  <section class="panel" id="p-stato"><p id="stato" style="margin:0">Controllo l'app su questo dispositivo…</p><div class="prog" id="prog" hidden><i></i></div></section>
+
+  <section class="panel" id="p-pw" hidden>
+    <div class="avviso" style="margin-bottom:16px;font-size:.95rem"><b>Destinata ai medici formati nel trattamento focale della spasticità con tossina botulinica.</b><br>Non sostituisce la formazione specifica, l'RCP del prodotto né la valutazione clinica del paziente: indicazione, scelta dei muscoli, dosi e tecnica di infiltrazione restano responsabilità del medico che esegue il trattamento. Inserendo la password confermi di rientrare in questa categoria.</div>
+    <form id="f-pw">
+      <label for="pw">Password</label>
+      <input id="pw" type="password" autocomplete="current-password" required>
+      <div class="row"><button type="submit" id="b-pw">Entra</button></div>
+      <p class="err" id="err" hidden>Password errata.</p>
+    </form>
+    <p class="small" style="margin-top:12px">I contenuti sono cifrati: senza la password non si leggono. La password viene chiesta a ogni apertura.</p>
+  </section>
+
+  <div id="p-ok" hidden>
+    <section class="panel">
+      <h2>Si usa da qui, nel browser</h2><p class="small" style="margin:0 0 4px">Funziona su telefono, tablet e computer. Per riaprirla torna a questo indirizzo: la password viene chiesta a ogni apertura.</p>
+      <div class="row" style="margin-top:4px"><a class="btn" href="app/index.html" id="b-apri">Apri l'app</a></div>
+    </section>
+    <p class="small">Versione del <span id="ver"></span>. <button class="sec" id="b-esci" style="min-height:0;padding:4px 10px;font-size:.85rem">Esci</button></p>
+  </div>
+
+  <p class="small">Le dosi riportate sono quelle degli RCP AIFA dei singoli prodotti.</p>
+</main>
+<script>
+(async function(){
+const BASE=new URL("./",location.href), $=id=>document.getElementById(id);
+const META="spasticita-meta", ATT=new URL("__attiva",BASE).href;
+const show=(...ids)=>["p-stato","p-pw","p-ok"].forEach(i=>$(i).hidden=!ids.includes(i));
+const stato=t=>{$("stato").textContent=t;show("p-stato");};
+const MB=n=>(n/1048576).toLocaleString("it-IT",{maximumFractionDigits:1})+" MB";
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+
+if(!("serviceWorker" in navigator)||!window.crypto||!crypto.subtle||!window.caches){stato("Questo browser non supporta l'app: usa una versione recente di Safari, Chrome, Edge o Firefox.");return;}
+try{await navigator.serviceWorker.register("sw.js");}catch(e){}
+
+async function attiva(){const c=await caches.open(META), r=await c.match(ATT);return r?await r.text():null;}
+
+async function deriva(pw,M){
+  const base=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(M.salt),iterations:M.iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+}
+const dec=(k,iv,data)=>crypto.subtle.decrypt({name:"AES-GCM",iv:b64(iv)},k,data);
+async function prova(k,M){try{const t=new TextDecoder().decode(await dec(k,M.check.iv,b64(M.check.ct)));return t==="spasticita";}catch(e){return false;}}
+
+async function scarica(file,size,onp){
+  const r=await fetch(new URL("dati/"+file,BASE),{cache:"no-store"}); if(!r.ok) throw new Error("download "+r.status);
+  if(!r.body||!r.body.getReader){const b=await r.arrayBuffer();onp(1);return b;}
+  const rd=r.body.getReader(), parti=[]; let n=0;
+  for(;;){const {done,value}=await rd.read(); if(done)break; parti.push(value); n+=value.length; onp(Math.min(1,n/size));}
+  const out=new Uint8Array(n); let o=0; for(const p of parti){out.set(p,o);o+=p.length;} return out.buffer;
+}
+const barra=f=>{$("prog").hidden=false;$("prog").firstElementChild.style.width=Math.round(f*100)+"%";};
+
+async function installa(k,M){
+  const BIN="spasticita-bin", ub=new URL("dati/"+M.app.file+"?v="+M.v,BASE).href, cb=await caches.open(BIN);
+  let r=await cb.match(ub), ct;
+  if(r) ct=await r.arrayBuffer();
+  else{ stato("Scarico l'app ("+MB(M.app.size)+")…"); barra(0);
+    ct=await scarica(M.app.file,M.app.size,barra);
+    for(const q of await cb.keys()) await cb.delete(q);
+    await cb.put(ub,new Response(ct)); await cb.put(new URL("dati/manifest.json",BASE).href,new Response(JSON.stringify(M))); }
+  stato("Apro l'app…");
+  const buf=new Uint8Array(await dec(k,M.app.iv,ct));
+  const hl=new DataView(buf.buffer).getUint32(0), idx=JSON.parse(new TextDecoder().decode(buf.subarray(4,4+hl))), off0=4+hl;
+  const nome="spasticita-app-"+M.v, c=await caches.open(nome);
+  for(const [p,[o,l,tipo]] of Object.entries(idx)){
+    await c.put(new URL("app/"+p,BASE).href,new Response(buf.slice(off0+o,off0+o+l),{headers:{"Content-Type":tipo}}));
+  }
+  await (await caches.open(META)).put(ATT,new Response(M.v));
+  for(const n of await caches.keys()) if(n.startsWith("spasticita-app-")&&n!==nome) await caches.delete(n);
+  $("prog").hidden=true;
+}
+
+function sblocca(k,M){
+  show("p-ok"); $("ver").textContent=new Date(M.data).toLocaleDateString("it-IT",{day:"numeric",month:"long",year:"numeric"});
+
+  $("b-esci").onclick=async()=>{try{sessionStorage.removeItem("ats_ok");}catch(e){}await pulisci();location.reload();};
+}
+
+async function pulisci(){for(const n of await caches.keys()) if(n.startsWith("spasticita-app-")||n===META) await caches.delete(n);}
+let M=null; try{const r=await fetch(new URL("dati/manifest.json",BASE),{cache:"no-store"}); if(r.ok) M=await r.json();}catch(e){}
+if(!M){try{const r=await (await caches.open("spasticita-bin")).match(new URL("dati/manifest.json",BASE).href); if(r) M=await r.json();}catch(e){}}
+if(!M){stato("Serve la connessione a internet per il primo accesso.");return;}
+let ses=null; try{ses=sessionStorage.getItem("ats_ok");}catch(e){}
+if(ses===M.v&&(await attiva())===M.v) return sblocca(null,M);
+try{sessionStorage.removeItem("ats_ok");}catch(e){}
+await pulisci();
+show("p-pw"); $("pw").focus();
+$("f-pw").onsubmit=async e=>{e.preventDefault(); $("err").hidden=true; $("b-pw").disabled=true; $("b-pw").textContent="Verifico…";
+  try{const kk=await deriva($("pw").value,M);
+    if(!(await prova(kk,M))){$("err").hidden=false;return;}
+    $("pw").value="";
+    await installa(kk,M);
+    try{sessionStorage.setItem("ats_ok",M.v);}catch(e){}
+    location.replace("app/index.html");
+  }catch(err){console.error(err);stato("Qualcosa non è andato: ricarica la pagina e riprova.");}
+  finally{$("b-pw").disabled=false;$("b-pw").textContent="Entra";}
+};
+})();
+</script>
+</body>
+</html>
