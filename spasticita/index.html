@@ -130,7 +130,9 @@ let ses=null; try{ses=sessionStorage.getItem("ats_ok");}catch(e){}
 if(ses===M.v&&(await attiva())===M.v) return sblocca(null,M);
 try{sessionStorage.removeItem("ats_ok");}catch(e){}
 await pulisci();
-show("p-pw"); $("pw").focus();
+show("p-pw");
+/* arrivando dall'area operatori nella stessa scheda, la password è già pronta: basta leggere l'avvertenza e premere Entra */
+try{const op=sessionStorage.getItem("ltf_pw"); if(op){$("pw").value=op; $("b-pw").focus();} else $("pw").focus();}catch(e){$("pw").focus();}
 $("f-pw").onsubmit=async e=>{e.preventDefault(); $("err").hidden=true; $("b-pw").disabled=true; $("b-pw").textContent="Verifico…";
   try{const kk=await deriva($("pw").value,M);
     if(!(await prova(kk,M))){$("err").hidden=false;return;}
