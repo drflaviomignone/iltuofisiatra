@@ -18,7 +18,7 @@ header h1{margin:0 0 8px;font-size:1.9rem;letter-spacing:-.5px}
 header h1 span{color:#7fe0bf}
 header p{margin:0 auto;max-width:560px;opacity:.9}
 header a.back{display:inline-block;margin-bottom:14px;color:#cfe6f5;font-size:.88rem;text-decoration:none}
-main{max-width:860px;margin:-22px auto 40px;padding:0 16px}
+main{max-width:1180px;margin:10px auto 40px;padding:0 16px}
 .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .card{background:#fff;border:1px solid #dbe3e9;border-radius:14px;padding:22px;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(15,61,94,.06)}
 .card h2{margin:6px 0 6px;font-size:1.15rem}
@@ -36,7 +36,7 @@ footer{text-align:center;color:#5b6b78;font-size:.82rem;padding:0 16px 32px}
 nav.sub{background:#fff;border-bottom:1px solid #dbe3e9;position:sticky;top:0;z-index:5;display:flex;gap:4px;justify-content:center;flex-wrap:wrap;padding:8px}
 nav.sub a{padding:7px 14px;border-radius:18px;text-decoration:none;color:#0f3d5e;font-weight:600;font-size:.9rem}
 nav.sub a.on{background:#0f3d5e;color:#fff}
-.dist{margin:0 0 8px;background:#fff;border:1px solid #dbe3e9;border-radius:12px}
+.dist{margin:0;background:#fff;border:1px solid #dbe3e9;border-radius:12px}
 .dist summary{display:flex;align-items:baseline;gap:8px;cursor:pointer;padding:13px 16px;font-weight:600;color:#0f3d5e;list-style:none;border-radius:12px}
 .dist summary::-webkit-details-marker{display:none}
 .dist summary::before{content:"";width:7px;height:7px;border-right:2px solid #1b8a6b;border-bottom:2px solid #1b8a6b;transform:rotate(-45deg);transition:transform .18s;flex:none;align-self:center}
@@ -46,7 +46,7 @@ nav.sub a.on{background:#0f3d5e;color:#fff}
 .dist .list{padding:0 16px 16px}
 .list{display:flex;flex-wrap:wrap;gap:8px}
 .apri-tutto{background:none;border:0;padding:0;color:#1b8a6b;font:600 .85rem system-ui,-apple-system,Segoe UI,Roboto,sans-serif;cursor:pointer}
-.testa-elenco{display:flex;align-items:baseline;justify-content:space-between;gap:12px;max-width:860px}
+.testa-elenco{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
 .item{background:#fff;border:1px dashed #b9c6d0;border-radius:10px;padding:8px 12px;font-size:.9rem;color:#5b6b78}
 a.item{border:1px solid #0f3d5e;color:#0f3d5e;text-decoration:none;font-weight:600}
 .item small{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.4px;color:#8896a2}
@@ -56,8 +56,8 @@ a.item{border:1px solid #0f3d5e;color:#0f3d5e;text-decoration:none;font-weight:6
 main{margin-top:0;padding-top:28px}
 
 /* Mappa 3D: stessa palette del sito (blu #0f3d5e, verde #1b8a6b / #7fe0bf), corpo come nell'Atlante della spasticità */
-.mappa{max-width:1120px;margin:0 auto;padding:28px 16px 6px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
-.visore{position:sticky;top:62px;height:min(78vh,760px);min-height:440px;background:linear-gradient(180deg,#fff,#eef3f6);border:1px solid #dbe3e9;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(15,61,94,.06)}
+.mappa{max-width:1180px;margin:0 auto;padding:28px 16px 6px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;align-items:start}
+.visore{position:sticky;top:62px;height:min(84vh,860px);min-height:500px;background:linear-gradient(180deg,#fff,#eef3f6);border:1px solid #dbe3e9;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(15,61,94,.06)}
 #v3d{position:absolute;inset:0}
 #v3d canvas{display:block;touch-action:none}
 .v3d-tip{position:absolute;pointer-events:none;background:#0f3d5e;color:#fff;font-size:.82rem;font-weight:600;padding:4px 9px;border-radius:7px;white-space:nowrap;z-index:3}
@@ -70,12 +70,17 @@ main{margin-top:0;padding-top:28px}
 .gruppo button{font:600 .84rem system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#0f3d5e;background:none;border:0;border-radius:15px;padding:7px 11px;cursor:pointer}
 .gruppo button:hover{background:#e3f5ee}
 .gruppo button[aria-pressed="true"]{background:#0f3d5e;color:#fff}
-.pannello{display:grid;gap:14px}
-.zone{display:flex;flex-wrap:wrap;gap:6px}
-.zona{font:600 .88rem system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#0f3d5e;background:#fff;border:1px solid #0f3d5e;border-radius:18px;padding:7px 13px;cursor:pointer}
-.zona small{font-weight:400;color:#5b6b78;margin-left:4px}
-.zona[aria-pressed="true"]{background:#0f3d5e;color:#fff}
-.zona[aria-pressed="true"] small{color:#cfe6f5}
+.pannello{display:grid;gap:8px;align-content:start}
+.pannello .testa-elenco{margin:0 0 4px}
+.pannello h3{margin:0}
+.dist .sotto{margin:0 16px 10px;color:#5b6b78;font-size:.86rem}
+.dist .list{display:grid;gap:7px}
+.voce{display:block;border:1px solid #dbe3e9;border-left:4px solid #1b8a6b;border-radius:10px;padding:9px 11px;text-decoration:none;color:#14212b;background:#f9fbfc}
+.voce:hover{border-color:#0f3d5e;border-left-color:#0f3d5e}
+.voce b{display:block;color:#0f3d5e;font-size:.95rem}
+.voce em{font-style:normal;color:#5b6b78;font-size:.85rem}
+.voce.vuota{border-style:dashed;border-left-style:solid;border-left-color:#b9c6d0;color:#5b6b78}
+.voce .tag{margin-left:6px;vertical-align:1px}
 .sel-dist{background:#fff;border:1px solid #dbe3e9;border-radius:14px;padding:18px 20px;box-shadow:0 2px 8px rgba(15,61,94,.06)}
 .sel-dist h2{margin:0;font-size:1.25rem;color:#0f3d5e}
 .sel-dist .sotto{margin:2px 0 14px;color:#5b6b78;font-size:.9rem}
@@ -89,7 +94,7 @@ main{margin-top:0;padding-top:28px}
 .indietro{background:none;border:0;padding:0;margin:0 0 8px;color:#1b8a6b;font:600 .88rem system-ui,-apple-system,Segoe UI,Roboto,sans-serif;cursor:pointer}
 .aiuto{color:#5b6b78;font-size:.9rem;margin:0}
 h3.elenco{max-width:860px}
-@media (max-width:860px){.mappa{grid-template-columns:1fr}.visore{position:relative;top:0;height:62vh;min-height:400px}}
+@media (max-width:980px){.mappa{grid-template-columns:1fr;gap:16px}.visore{position:relative;top:0;height:68vh;min-height:420px}}
 :focus-visible{outline:3px solid #1b8a6b;outline-offset:2px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -114,23 +119,11 @@ h3.elenco{max-width:860px}
     </div>
   </div>
   <div class="pannello">
-    <div class="zone" id="zone" role="group" aria-label="Distretti"></div>
-    <div class="sel-dist" id="dettaglio" aria-live="polite"></div>
+<div class="testa-elenco"><h3>Scegli il distretto</h3><button type="button" class="apri-tutto" id="apri-tutto" aria-expanded="false">Apri tutto</button></div><details class="dist" id="elenco-collo"><summary><span>Collo</span><small>1 scheda</small></summary><p class="sotto">Colonna cervicale</p><div class="list"><a class="voce" href="spondilosi.html"><b>Spondilosi (cervicale e lombare)</b><em>L&#x27;usura legata all&#x27;età delle vertebre.</em></a></div></details><details class="dist" id="elenco-spalla"><summary><span>Spalla</span><small>8 schede</small></summary><p class="sotto">Spalla e braccio</p><div class="list"><a class="voce" href="conflitto-subacromiale.html"><b>Sindrome da conflitto subacromiale</b><em>Quando la spalla «urta» sotto l&#x27;arco osseo.</em></a><a class="voce" href="tendinopatia-cuffia.html"><b>Tendinopatia della cuffia dei rotatori</b><em>La causa più comune di dolore alla spalla.</em></a><a class="voce" href="tendinopatia-calcifica.html"><b>Tendinopatia calcifica della spalla</b><em>Depositi di calcio nei tendini della cuffia.</em></a><a class="voce" href="tendinopatia-bicipite.html"><b>Tendinopatia del bicipite</b><em>Dolore sul tendine davanti alla spalla.</em></a><a class="voce" href="lesione-labbro-glenoideo.html"><b>Lesione del labbro glenoideo</b><em>Il «bordo» che stabilizza la spalla.</em></a><a class="voce" href="artrosi-gleno-omerale.html"><b>Artrosi della spalla (gleno-omerale)</b><em>Usura dell&#x27;articolazione principale della spalla.</em></a><a class="voce" href="instabilita-spalla.html"><b>Instabilità di spalla</b><em>Quando la spalla tende a «scappare».</em></a><a class="voce" href="capsulite-adesiva.html"><b>Capsulite adesiva (frozen shoulder)</b><em>La «spalla congelata».</em></a></div></details><details class="dist" id="elenco-gomito"><summary><span>Gomito</span><small>6 schede</small></summary><p class="sotto">Gomito e avambraccio</p><div class="list"><a class="voce" href="epicondilite.html"><b>Epicondilite laterale (gomito del tennista)</b><em>Dolore sul lato esterno del gomito.</em></a><a class="voce" href="epitrocleite.html"><b>Epitrocleite (gomito del golfista)</b><em>Dolore sul lato interno del gomito.</em></a><a class="voce" href="tunnel-cubitale.html"><b>Sindrome del tunnel cubitale</b><em>Compressione del nervo ulnare al gomito.</em></a><a class="voce" href="pronatore-rotondo.html"><b>Sindrome del pronatore rotondo</b><em>Compressione del nervo mediano nell&#x27;avambraccio.</em></a><a class="voce" href="interosseo-anteriore.html"><b>Sindrome del nervo interosseo anteriore</b><em>Dolore e debolezza di pollice e indice.</em></a><a class="voce" href="interosseo-posteriore.html"><b>Sindrome del nervo interosseo posteriore (sindrome del supinatore)</b><em>Si può confondere con l&#x27;epicondilite.</em></a></div></details><details class="dist" id="elenco-mano"><summary><span>Polso e mano</span><small>11 schede</small></summary><p class="sotto">Polso, mano e dita</p><div class="list"><a class="voce" href="tunnel-carpale.html"><b>Sindrome del tunnel carpale</b><em>La compressione nervosa più frequente dell&#x27;arto superiore.</em></a><a class="voce" href="canale-guyon.html"><b>Sindrome del canale di Guyon</b><em>Compressione del nervo ulnare al polso.</em></a><a class="voce" href="de-quervain.html"><b>Sindrome di De Quervain</b><em>Dolore sul lato del pollice, al polso.</em></a><a class="voce" href="kienbock.html"><b>Malattia di Kienböck</b><em>Sofferenza dell&#x27;osso semilunare del polso.</em></a><a class="voce" href="deformita-dita.html"><b>Dita a bottoniera e a collo di cigno</b><em>Deformità di un dito dopo una lesione tendinea o un&#x27;artrite.</em></a><a class="voce" href="artrosi-mano.html"><b>Artrosi della mano</b><em>Noduli e rigidità delle dita.</em></a><a class="voce" href="cisti-gangliare.html"><b>Cisti gangliare</b><em>La «bolla» più comune del polso.</em></a><a class="voce" href="pollice-guardiacaccia.html"><b>Pollice del guardiacaccia e pollice dello sciatore</b><em>Lesione del legamento del pollice.</em></a><a class="voce" href="wartenberg.html"><b>Sindrome di Wartenberg (compressione del nervo radiale superficiale)</b><em>Intorpidimento sul dorso della mano.</em></a><a class="voce" href="rizoartrosi.html"><b>Rizoartrosi (artrosi della base del pollice)</b><em>Il dolore alla base del pollice.</em></a><a class="voce" href="dito-a-scatto.html"><b>Dito a scatto</b><em>Il dito che si blocca e scatta quando si flette.</em></a></div></details><details class="dist" id="elenco-dorsale"><summary><span>Schiena alta</span><small>2 schede</small></summary><p class="sotto">Colonna dorsale</p><div class="list"><a class="voce" href="dorsalgia-acuta.html"><b>Dorsalgia (dolore dorsale)</b><em>Il dolore alla schiena tra le scapole e le ultime coste.</em></a><a class="voce" href="spondilosi.html"><b>Spondilosi (cervicale e lombare)</b><em>L&#x27;usura legata all&#x27;età delle vertebre.</em></a></div></details><details class="dist" id="elenco-lombare"><summary><span>Schiena bassa</span><small>5 schede</small></summary><p class="sotto">Colonna lombare e sacro</p><div class="list"><a class="voce" href="lombalgia.html"><b>Lombalgia</b><em>Mal di schiena: che cos&#x27;è, come si cura, quando preoccuparsi.</em></a><a class="voce" href="radicolopatia.html"><b>Radicolopatia lombosacrale (sciatica)</b><em>Il dolore che dalla schiena scende lungo la gamba.</em></a><a class="voce" href="faccette-vertebrali.html"><b>Sindrome delle faccette vertebrali</b><em>Il dolore che nasce dalle piccole articolazioni posteriori della colonna.</em></a><a class="voce" href="stenosi-lombare.html"><b>Stenosi del canale lombare</b><em>Quando il canale che ospita i nervi si restringe.</em></a><a class="voce" href="spondilosi.html"><b>Spondilosi (cervicale e lombare)</b><em>L&#x27;usura legata all&#x27;età delle vertebre.</em></a><span class="voce vuota"><b>Sindrome cellulo-teno-periosteo-mialgica</b><em>Scheda da realizzare</em></span></div></details><details class="dist" id="elenco-anca"><summary><span>Anca e coscia</span><small>4 schede</small></summary><p class="sotto">Anca, bacino e coscia</p><div class="list"><a class="voce" href="piriforme.html"><b>Sindrome del piriforme</b><em>Dolore al gluteo che scende lungo la gamba.</em></a><a class="voce" href="artrosi-anca.html"><b>Artrosi dell&#x27;anca (coxartrosi)</b><em>Usura dell&#x27;articolazione dell&#x27;anca.</em></a><a class="voce" href="dolore-trocanterico.html"><b>Sindrome del dolore trocanterico (tendinite del gluteo medio)</b><em>Dolore sul lato esterno dell&#x27;anca.</em></a><a class="voce" href="impingement-femoro-acetabolare.html"><b>Impingement femoro-acetabolare</b><em>Il «conflitto» tra testa del femore e bordo dell&#x27;acetabolo.</em></a></div></details><details class="dist" id="elenco-ginocchio"><summary><span>Ginocchio</span><small>6 schede</small></summary><p class="sotto">Ginocchio</p><div class="list"><a class="voce" href="tendinite-rotulea.html"><b>Tendinite rotulea (ginocchio del saltatore)</b><em>Dolore sotto la rotula in chi salta o corre.</em></a><a class="voce" href="condromalacia-rotulea.html"><b>Condromalacia rotulea e sindrome femoro-rotulea</b><em>Dolore davanti al ginocchio.</em></a><a class="voce" href="tilt-rotuleo.html"><b>Tilt rotuleo (sindrome da compressione laterale della rotula)</b><em>La rotula inclinata verso l&#x27;esterno.</em></a><a class="voce" href="gonartrosi.html"><b>Gonartrosi (artrosi del ginocchio)</b><em>L&#x27;usura dell&#x27;articolazione del ginocchio.</em></a><a class="voce" href="zampa-oca.html"><b>Borsite della zampa d&#x27;oca</b><em>Il dolore sul lato interno del ginocchio, sotto l&#x27;articolazione.</em></a><a class="voce" href="bandelletta-ileotibiale.html"><b>Sindrome della bandelletta ileotibiale</b><em>Il dolore sul lato esterno del ginocchio di chi corre.</em></a><span class="voce vuota"><b>Borsite calcifica di Voshell</b><em>Scheda da realizzare</em></span></div></details><details class="dist" id="elenco-gamba"><summary><span>Gamba</span><small>2 schede</small></summary><p class="sotto">Gamba e polpaccio</p><div class="list"><a class="voce" href="dolore-tibiale.html"><b>Dolore tibiale da sforzo (sindrome delle logge)</b><em>Il dolore alla gamba di chi corre.</em></a><a class="voce" href="tennis-leg.html"><b>Tennis leg (stiramento del gemello)</b><em>Lo «strappo» al polpaccio.</em></a></div></details><details class="dist" id="elenco-piede"><summary><span>Caviglia e piede</span><small>14 schede</small></summary><p class="sotto">Caviglia e piede</p><div class="list"><a class="voce" href="distorsione-caviglia.html"><b>Distorsione di caviglia</b><em>La lesione dei legamenti esterni.</em></a><a class="voce" href="impingement-anteriore.html"><b>Impingement anteriore della caviglia</b><em>La «caviglia del calciatore».</em></a><a class="voce" href="impingement-posteriore.html"><b>Impingement posteriore della caviglia</b><em>Tipico di ballerini e atleti.</em></a><a class="voce" href="tibiale-posteriore.html"><b>Tendinopatia del tibiale posteriore</b><em>Il tendine che sostiene l&#x27;arco del piede.</em></a><a class="voce" href="tunnel-tarsale.html"><b>Sindrome del tunnel tarsale</b><em>Compressione del nervo tibiale posteriore alla caviglia.</em></a><a class="voce" href="tendine-achille.html"><b>Tendinopatia e rottura del tendine d&#x27;Achille</b><em>Dolore dietro al tallone.</em></a><a class="voce" href="borsite-achillea.html"><b>Borsite del tendine d&#x27;Achille</b><em>Infiammazione della borsa vicino al tallone.</em></a><a class="voce" href="sever.html"><b>Morbo di Sever</b><em>Dolore al tallone nei bambini.</em></a><a class="voce" href="fascite-plantare.html"><b>Fascite plantare e sperone calcaneare</b><em>Una delle cause più comuni di dolore al tallone.</em></a><a class="voce" href="nervo-plantare.html"><b>Intrappolamento dei nervi plantari</b><em>Dolore nella parte interna del tallone.</em></a><a class="voce" href="freiberg.html"><b>Malattia di Freiberg</b><em>Dolore alla pianta, sotto le dita.</em></a><a class="voce" href="morton.html"><b>Neuroma di Morton</b><em>Dolore e bruciore tra le dita del piede.</em></a><a class="voce" href="alluce-tappeto.html"><b>Alluce da tappeto erboso (turf toe)</b><em>Distorsione della base dell&#x27;alluce.</em></a><a class="voce" href="metatarsalgia.html"><b>Metatarsalgia</b><em>Il dolore sotto la parte anteriore del piede.</em></a></div></details><details class="dist" id="elenco-altre"><summary><span>Altre patologie</span><small>1 scheda</small></summary><div class="list"><a class="voce" href="paget.html"><b>Malattia ossea di Paget</b><em>Una malattia del rimodellamento osseo.</em></a></div></details>
   </div>
 </section>
 <main>
-  <div class="testa-elenco"><h3>Tutte le patologie per distretto</h3><button type="button" class="apri-tutto" id="apri-tutto" aria-expanded="false">Apri tutto</button></div>
-  <details class="dist" id="elenco-collo"><summary><span>Collo</span><small>1 scheda</small></summary><div class="list"><a class="item" href="spondilosi.html">Spondilosi (cervicale e lombare)</a></div></details>
-  <details class="dist" id="elenco-spalla"><summary><span>Spalla</span><small>8 schede</small></summary><div class="list"><a class="item" href="conflitto-subacromiale.html">Sindrome da conflitto subacromiale</a><a class="item" href="tendinopatia-cuffia.html">Tendinopatia della cuffia dei rotatori</a><a class="item" href="tendinopatia-calcifica.html">Tendinopatia calcifica della spalla</a><a class="item" href="tendinopatia-bicipite.html">Tendinopatia del bicipite</a><a class="item" href="lesione-labbro-glenoideo.html">Lesione del labbro glenoideo</a><a class="item" href="artrosi-gleno-omerale.html">Artrosi della spalla (gleno-omerale)</a><a class="item" href="instabilita-spalla.html">Instabilità di spalla</a><a class="item" href="capsulite-adesiva.html">Capsulite adesiva (frozen shoulder)</a></div></details>
-  <details class="dist" id="elenco-gomito"><summary><span>Gomito</span><small>6 schede</small></summary><div class="list"><a class="item" href="epicondilite.html">Epicondilite laterale (gomito del tennista)</a><a class="item" href="epitrocleite.html">Epitrocleite (gomito del golfista)</a><a class="item" href="tunnel-cubitale.html">Sindrome del tunnel cubitale</a><a class="item" href="pronatore-rotondo.html">Sindrome del pronatore rotondo</a><a class="item" href="interosseo-anteriore.html">Sindrome del nervo interosseo anteriore</a><a class="item" href="interosseo-posteriore.html">Sindrome del nervo interosseo posteriore (sindrome del supinatore)</a></div></details>
-  <details class="dist" id="elenco-mano"><summary><span>Polso e mano</span><small>11 schede</small></summary><div class="list"><a class="item" href="tunnel-carpale.html">Sindrome del tunnel carpale</a><a class="item" href="canale-guyon.html">Sindrome del canale di Guyon</a><a class="item" href="de-quervain.html">Sindrome di De Quervain</a><a class="item" href="kienbock.html">Malattia di Kienböck</a><a class="item" href="deformita-dita.html">Dita a bottoniera e a collo di cigno</a><a class="item" href="artrosi-mano.html">Artrosi della mano</a><a class="item" href="cisti-gangliare.html">Cisti gangliare</a><a class="item" href="pollice-guardiacaccia.html">Pollice del guardiacaccia e pollice dello sciatore</a><a class="item" href="wartenberg.html">Sindrome di Wartenberg (compressione del nervo radiale superficiale)</a><a class="item" href="rizoartrosi.html">Rizoartrosi (artrosi della base del pollice)</a><a class="item" href="dito-a-scatto.html">Dito a scatto</a></div></details>
-  <details class="dist" id="elenco-dorsale"><summary><span>Schiena alta</span><small>2 schede</small></summary><div class="list"><a class="item" href="dorsalgia-acuta.html">Dorsalgia (dolore dorsale)</a><a class="item" href="spondilosi.html">Spondilosi (cervicale e lombare)</a></div></details>
-  <details class="dist" id="elenco-lombare"><summary><span>Schiena bassa</span><small>6 schede</small></summary><div class="list"><a class="item" href="lombalgia.html">Lombalgia</a><a class="item" href="radicolopatia.html">Radicolopatia lombosacrale (sciatica)</a><a class="item" href="faccette-vertebrali.html">Sindrome delle faccette vertebrali</a><a class="item" href="stenosi-lombare.html">Stenosi del canale lombare</a><a class="item" href="spondilosi.html">Spondilosi (cervicale e lombare)</a><span class="item">Sindrome cellulo-teno-periosteo-mialgica<small>Da realizzare</small></span></div></details>
-  <details class="dist" id="elenco-anca"><summary><span>Anca e coscia</span><small>4 schede</small></summary><div class="list"><a class="item" href="piriforme.html">Sindrome del piriforme</a><a class="item" href="artrosi-anca.html">Artrosi dell&#x27;anca (coxartrosi)</a><a class="item" href="dolore-trocanterico.html">Sindrome del dolore trocanterico (tendinite del gluteo medio)</a><a class="item" href="impingement-femoro-acetabolare.html">Impingement femoro-acetabolare</a></div></details>
-  <details class="dist" id="elenco-ginocchio"><summary><span>Ginocchio</span><small>7 schede</small></summary><div class="list"><a class="item" href="tendinite-rotulea.html">Tendinite rotulea (ginocchio del saltatore)</a><a class="item" href="condromalacia-rotulea.html">Condromalacia rotulea e sindrome femoro-rotulea</a><a class="item" href="tilt-rotuleo.html">Tilt rotuleo (sindrome da compressione laterale della rotula)</a><a class="item" href="gonartrosi.html">Gonartrosi (artrosi del ginocchio)</a><a class="item" href="zampa-oca.html">Borsite della zampa d&#x27;oca</a><a class="item" href="bandelletta-ileotibiale.html">Sindrome della bandelletta ileotibiale</a><span class="item">Borsite calcifica di Voshell<small>Da realizzare</small></span></div></details>
-  <details class="dist" id="elenco-gamba"><summary><span>Gamba</span><small>2 schede</small></summary><div class="list"><a class="item" href="dolore-tibiale.html">Dolore tibiale da sforzo (sindrome delle logge)</a><a class="item" href="tennis-leg.html">Tennis leg (stiramento del gemello)</a></div></details>
-  <details class="dist" id="elenco-piede"><summary><span>Caviglia e piede</span><small>14 schede</small></summary><div class="list"><a class="item" href="distorsione-caviglia.html">Distorsione di caviglia</a><a class="item" href="impingement-anteriore.html">Impingement anteriore della caviglia</a><a class="item" href="impingement-posteriore.html">Impingement posteriore della caviglia</a><a class="item" href="tibiale-posteriore.html">Tendinopatia del tibiale posteriore</a><a class="item" href="tunnel-tarsale.html">Sindrome del tunnel tarsale</a><a class="item" href="tendine-achille.html">Tendinopatia e rottura del tendine d&#x27;Achille</a><a class="item" href="borsite-achillea.html">Borsite del tendine d&#x27;Achille</a><a class="item" href="sever.html">Morbo di Sever</a><a class="item" href="fascite-plantare.html">Fascite plantare e sperone calcaneare</a><a class="item" href="nervo-plantare.html">Intrappolamento dei nervi plantari</a><a class="item" href="freiberg.html">Malattia di Freiberg</a><a class="item" href="morton.html">Neuroma di Morton</a><a class="item" href="alluce-tappeto.html">Alluce da tappeto erboso (turf toe)</a><a class="item" href="metatarsalgia.html">Metatarsalgia</a></div></details>
-  <details class="dist" id="elenco-altre"><summary><span>Altre patologie</span><small>1 scheda</small></summary><div class="list"><a class="item" href="paget.html">Malattia ossea di Paget</a></div></details>
+
   <div class="disc"><strong>Avvertenza.</strong> Le informazioni hanno scopo divulgativo e non sostituiscono la visita medica. In caso di dubbi o sintomi rivolgiti al tuo medico; in caso di emergenza chiama il 112.</div>
 </main>
 <footer>© iltuofisiatra.it — a cura di un medico fisiatra<br><span style="font-size:.75rem">Figura 3D basata sul corpo base di MakeHuman (hm08), rilasciato in CC0 1.0</span></footer>
@@ -142,15 +135,6 @@ const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const conta = d => d.pat.filter(p => p.href).length;
 let api = null, sel = 0;
-function zone() { $('#zone').innerHTML = DISTRETTI.map(d => `<button type="button" class="zona" data-n="${d.n}" aria-pressed="${d.n === sel}">${esc(d.nome)}<small>${conta(d)}</small></button>`).join(''); }
-function dettaglio() {
-  const el = $('#dettaglio');
-  if (!sel) { el.innerHTML = `<h2>Scegli una zona</h2><p class="sotto">Tocca il corpo o un distretto qui sopra: comparirà l'elenco delle schede di quella zona.</p><p class="aiuto">Trascina per ruotare il modello, usa la rotellina o due dita per avvicinarti.</p>`; return; }
-  const d = perN[sel];
-  el.innerHTML = `<button type="button" class="indietro" data-n="0">← Tutte le zone</button><h2>${esc(d.nome)}</h2><p class="sotto">${esc(d.sotto)}</p><ul class="schede">${d.pat.map(p => p.href
-    ? `<li><a href="${p.href}"><b>${esc(p.nome)}${p.proc ? '<span class="tag">Procedura</span>' : ''}</b><em>${esc(p.sub)}</em></a></li>`
-    : `<li><span class="vuota"><b>${esc(p.nome)}</b><em>Scheda da realizzare</em></span></li>`).join('')}</ul>`;
-}
 function apriElenco() {
   const id = sel ? perN[sel].id : '';
   document.querySelectorAll('details.dist').forEach(d => { if (d.id) d.open = d.id === 'elenco-' + id; });
@@ -164,14 +148,14 @@ function sincApri() {
   b.setAttribute('aria-expanded', aperti);
 }
 function scegli(n, daModello) {
-  sel = n || 0; zone(); dettaglio(); apriElenco();
+  sel = n || 0; apriElenco();
   $('#etich').textContent = sel ? perN[sel].nome : '';
   if (api) { api.seleziona(sel, !daModello); if (!sel) api.tutto(); }
   const h = sel ? perN[sel].id : '';
   if (location.hash.slice(1) !== h) history.replaceState(null, '', h ? '#' + h : location.pathname);
-  if (daModello && matchMedia('(max-width:860px)').matches) $('#dettaglio').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const ap = sel && document.getElementById('elenco-' + perN[sel].id);
+  if (daModello && ap) ap.scrollIntoView({ behavior: 'smooth', block: matchMedia('(max-width:980px)').matches ? 'start' : 'nearest' });
 }
-document.addEventListener('click', e => { const b = e.target.closest('button[data-n]'); if (b) scegli(+b.dataset.n === sel && b.classList.contains('zona') ? 0 : +b.dataset.n, false); });
 document.querySelectorAll('[data-vista]').forEach(b => b.addEventListener('click', () => { document.querySelectorAll('[data-vista]').forEach(x => x.setAttribute('aria-pressed', x === b)); api && api.vista(b.dataset.vista); }));
 $('#apri-tutto').addEventListener('click', () => {
   const tutti = [...document.querySelectorAll('details.dist')];
@@ -181,7 +165,7 @@ $('#apri-tutto').addEventListener('click', () => {
 });
 document.querySelectorAll('details.dist').forEach(d => d.addEventListener('toggle', sincApri));
 addEventListener('hashchange', () => { const d = perId[location.hash.slice(1)]; scegli(d ? d.n : 0, false); });
-const iniz = perId[location.hash.slice(1)]; sel = iniz ? iniz.n : 0; zone(); dettaglio(); apriElenco(); $('#etich').textContent = sel ? perN[sel].nome : '';
+const iniz = perId[location.hash.slice(1)]; sel = iniz ? iniz.n : 0; apriElenco(); $('#etich').textContent = sel ? perN[sel].nome : '';
 try {
   const mod = await import('./3d-umano.js');
   api = await mod.monta($('#v3d'), { nome: n => perN[n] ? perN[n].nome : '', onSel: n => scegli(n, true) });
