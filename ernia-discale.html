@@ -76,9 +76,11 @@ figure.fig figcaption small{display:block;margin-top:6px;font-size:.74rem;color:
 figure.fig figcaption small a{color:#5b6b78}
 figure.fig .serie{display:grid;gap:12px;align-items:end;margin-bottom:4px}
 figure.fig .serie.tre{grid-template-columns:repeat(3,1fr)}
+figure.fig .serie.quattro{grid-template-columns:repeat(4,1fr)}
 figure.fig .serie.due{grid-template-columns:repeat(2,1fr)}
 figure.fig .serie img{max-height:210px;width:auto}
 figure.fig .serie b{display:block;margin-top:6px;font-size:.84rem;color:#0f3d5e}
+@media(max-width:700px){figure.fig .serie.quattro{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){figure.fig .serie.tre,figure.fig .serie.due{grid-template-columns:1fr}}
 </style>
 <script type="application/ld+json">
@@ -214,8 +216,8 @@ figure.fig .serie b{display:block;margin-top:6px;font-size:.84rem;color:#0f3d5e}
     </ul>
     <p>Le parole che si leggono nei referti indicano quanto il disco è uscito: <strong>bulging</strong> è un rigonfiamento diffuso, <strong>protrusione</strong> una sporgenza contenuta, <strong>estrusione</strong> ed <strong>espulsione</strong> una fuoriuscita vera e propria. Un'estrusione non è una condanna: come si legge più sotto, è anzi la forma che si riassorbe più spesso.</p>
   <figure class="fig">
-    <div class="serie tre"><div><img src="img-disco-degenerazione.webp" width="820" height="1063" alt="Disco intervertebrale degenerato, visto dall'alto" loading="lazy" decoding="async"><b>Degenerazione</b></div><div><img src="img-disco-protrusione.webp" width="820" height="1066" alt="Disco con una protrusione contenuta" loading="lazy" decoding="async"><b>Protrusione</b></div><div><img src="img-disco-espulsione.webp" width="820" height="1016" alt="Disco con un frammento espulso" loading="lazy" decoding="async"><b>Espulsione</b></div></div>
-    <figcaption>Il disco visto dall'alto, nei tre momenti: prima si degenera, poi sporge restando contenuto, infine un frammento esce.<small>Illustrazione: Laboratoires Servier (SMART Servier Medical Art), <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license">CC BY-SA 3.0</a>, via Wikimedia Commons; ridimensionata.</small></figcaption>
+    <div class="serie quattro"><div><img src="img-disco-degenerazione.webp" width="820" height="1063" alt="Disco intervertebrale degenerato, visto dall'alto" loading="lazy" decoding="async"><b>Degenerazione</b></div><div><img src="img-disco-protrusione.webp" width="820" height="1066" alt="Disco con una protrusione contenuta" loading="lazy" decoding="async"><b>Protrusione</b></div><div><img src="img-disco-estrusione.webp" width="820" height="1108" alt="Disco con il nucleo estruso oltre l'anello" loading="lazy" decoding="async"><b>Estrusione</b></div><div><img src="img-disco-espulsione.webp" width="820" height="1016" alt="Disco con un frammento espulso" loading="lazy" decoding="async"><b>Espulsione</b></div></div>
+    <figcaption>Le quattro parole che trovi sul referto, viste dall'alto: il disco che si degenera, la sporgenza ancora contenuta, il nucleo che supera l'anello, il frammento che si stacca.<small>Illustrazione: Laboratoires Servier (SMART Servier Medical Art), <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license">CC BY-SA 3.0</a>, via Wikimedia Commons; ridimensionata.</small></figcaption>
   </figure>
 
   </div>
