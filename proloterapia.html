@@ -75,6 +75,18 @@ ol.fonti li{margin-bottom:8px}
 ol.fonti a{color:#0f3d5e}
 .agg{margin-top:14px;font-size:.84rem;color:#5b6b78}
 .sec h3,.allarme h3,.fai h3,.nonfare h3{text-transform:none;letter-spacing:normal}
+figure.fig{margin:20px 0;padding:14px;background:#fff;border:1px solid #dbe3e9;border-radius:12px;text-align:center}
+figure.fig img{max-width:100%;height:auto;border-radius:6px}
+figure.fig>img{max-width:min(520px,100%);max-height:360px;width:auto}
+figure.fig figcaption{margin-top:10px;font-size:.9rem;line-height:1.45;color:#14212b}
+figure.fig figcaption small{display:block;margin-top:6px;font-size:.74rem;color:#5b6b78}
+figure.fig .serie{display:grid;gap:12px;align-items:end;margin-bottom:4px}
+figure.fig .serie.tre{grid-template-columns:repeat(3,1fr)}
+figure.fig .serie.due{grid-template-columns:repeat(2,1fr)}
+figure.fig .serie img{max-height:210px;width:auto}
+figure.fig .serie b{display:block;margin-top:6px;font-size:.84rem;color:#0f3d5e}
+@media(max-width:600px){figure.fig .serie.tre,figure.fig .serie.due{grid-template-columns:1fr}}
+figure.fig>img.alta{max-height:520px}
 </style>
 <script type="application/ld+json">
 {
@@ -147,6 +159,10 @@ ol.fonti a{color:#0f3d5e}
 <p>La proloterapia consiste nell'iniettare piccole quantità di una soluzione leggermente irritante — quasi sempre destrosio, cioè glucosio concentrato — nei punti in cui tendini e legamenti si attaccano all'osso. L'idea è provocare una reazione locale che spinga il tessuto a ripararsi.</p>
 <p>È un trattamento con un'indicazione ristretta: in alcune sedi i risultati ci sono, in altre non si sono visti. Qui sotto trovi dove si colloca oggi.</p>
 </div>
+  <figure class="fig">
+    <img class="alta" src="img-proc-proloterapia.webp" width="654" height="879" alt="Ginocchio con alcuni punti dolenti segnati a penna prima della seduta" loading="eager" fetchpriority="high" decoding="async">
+    <figcaption>Prima di iniettare, i punti dolenti vengono cercati uno per uno con la pressione delle dita e segnati sulla pelle. È il passaggio che distingue questa tecnica da un'infiltrazione singola: il destrosio viene lasciato in più sedi, dentro l'articolazione e attorno, dove tendini e legamenti si attaccano all'osso.<small>Immagine: Rocha de Faria JL et al., <i>Arthroscopy Techniques</i> 2026, <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, via PubMed Central; immagine ritagliata.</small></figcaption>
+  </figure>
 
 <div class="sec">
 <h2>Dove ha mostrato di funzionare</h2>
