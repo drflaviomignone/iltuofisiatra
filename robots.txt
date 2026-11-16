@@ -6,5 +6,7 @@ Disallow: /nota96.html
 Disallow: /scale.html
 Disallow: /setting-riabilitativo.html
 Disallow: /cobb.html
+Disallow: /consenso.html
+Disallow: /spasticita/
 
 Sitemap: https://iltuofisiatra.it/sitemap.xml
