@@ -75,6 +75,18 @@ ol.fonti li{margin-bottom:8px}
 ol.fonti a{color:#0f3d5e}
 .agg{margin-top:14px;font-size:.84rem;color:#5b6b78}
 .sec h3,.allarme h3,.fai h3,.nonfare h3{text-transform:none;letter-spacing:normal}
+figure.fig{margin:20px 0;padding:14px;background:#fff;border:1px solid #dbe3e9;border-radius:12px;text-align:center}
+figure.fig img{max-width:100%;height:auto;border-radius:6px}
+figure.fig>img{max-width:min(520px,100%);max-height:360px;width:auto}
+figure.fig figcaption{margin-top:10px;font-size:.9rem;line-height:1.45;color:#14212b}
+figure.fig figcaption small{display:block;margin-top:6px;font-size:.74rem;color:#5b6b78}
+figure.fig .serie{display:grid;gap:12px;align-items:end;margin-bottom:4px}
+figure.fig .serie.tre{grid-template-columns:repeat(3,1fr)}
+figure.fig .serie.due{grid-template-columns:repeat(2,1fr)}
+figure.fig .serie img{max-height:210px;width:auto}
+figure.fig .serie b{display:block;margin-top:6px;font-size:.84rem;color:#0f3d5e}
+@media(max-width:600px){figure.fig .serie.tre,figure.fig .serie.due{grid-template-columns:1fr}}
+figure.fig>img.alta{max-height:520px}
 </style>
 <script type="application/ld+json">
 {
@@ -149,6 +161,10 @@ ol.fonti a{color:#0f3d5e}
 <p>I nervi genicolari sono piccoli rami che portano al cervello il dolore del ginocchio, senza comandare alcun muscolo. La radiofrequenza li riscalda con un ago collegato a un generatore, interrompendo per un certo tempo il passaggio del segnale doloroso.</p>
 <p>Non cura l'artrosi e non cambia l'articolazione: toglie il dolore per alcuni mesi. È un'opzione per chi non può o non vuole essere operato.</p>
 </div>
+  <figure class="fig">
+    <img class="alta" src="img-proc-genicolare-eco.webp" width="820" height="639" alt="Ecografia con il nervo genicolare, l&#x27;arteria che lo accompagna e la superficie dell&#x27;osso" loading="eager" fetchpriority="high" decoding="async">
+    <figcaption>Ecografia del ginocchio nel punto in cui passa un nervo genicolare. Il nervo si riconosce accanto all'arteria che lo accompagna, appoggiato alla superficie dell'osso: è questo il riferimento che si cerca, perché il nervo da solo sarebbe difficile da distinguere. L'ago viene portato fin lì.<small>Immagine: Cooper DG et al., <i>Current Pain and Headache Reports</i> 2026, <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>, via PubMed Central; etichette tradotte in italiano, immagine ritagliata.</small></figcaption>
+  </figure>
 
 <div class="sec">
 <h2>Quando si propone</h2>
