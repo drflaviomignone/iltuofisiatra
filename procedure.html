@@ -17,57 +17,91 @@ body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;bac
 header{background:#0f3d5e;color:#fff;padding:36px 20px 40px;text-align:center}
 header h1{margin:0 0 8px;font-size:1.9rem;letter-spacing:-.5px}
 header h1 span{color:#7fe0bf}
-header p{margin:0 auto;max-width:560px;opacity:.9}
-header a.back{display:inline-block;margin-bottom:14px;color:#cfe6f5;font-size:.88rem;text-decoration:none}
-main{max-width:860px;margin:-22px auto 40px;padding:0 16px}
-.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.card{background:#fff;border:1px solid #dbe3e9;border-radius:14px;padding:22px;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(15,61,94,.06)}
-.card h2{margin:6px 0 6px;font-size:1.15rem}
-.card p{margin:0 0 14px;color:#5b6b78;font-size:.92rem;flex:1}
-.tag{align-self:flex-start;font-size:.72rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#1b8a6b;background:#e3f5ee;padding:3px 8px;border-radius:10px}
-.btns{display:flex;gap:8px;flex-wrap:wrap}
-.btn{display:inline-block;padding:9px 14px;border-radius:9px;background:#0f3d5e;color:#fff;text-decoration:none;font-weight:600;font-size:.9rem}
-.btn.sec{background:#fff;color:#0f3d5e;border:1px solid #0f3d5e}
-.soon{opacity:.6;border-style:dashed}
-.soon .tag{color:#5b6b78;background:#eceff2}
-h3{margin:34px 0 12px;font-size:.85rem;text-transform:uppercase;letter-spacing:.6px;color:#5b6b78}
-.disc{background:#fff8e6;border:1px solid #f0d58c;border-radius:12px;padding:14px 16px;font-size:.88rem;color:#5a4a12;margin-top:28px}
-footer{text-align:center;color:#5b6b78;font-size:.82rem;padding:0 16px 32px}
-
+header p{margin:0 auto;max-width:600px;opacity:.9}
 nav.sub{background:#fff;border-bottom:1px solid #dbe3e9;position:sticky;top:0;z-index:5;display:flex;gap:4px;justify-content:center;flex-wrap:wrap;padding:8px}
 nav.sub a{padding:7px 14px;border-radius:18px;text-decoration:none;color:#0f3d5e;font-weight:600;font-size:.9rem}
 nav.sub a.on{background:#0f3d5e;color:#fff}
-.dist{margin:0 0 22px}
-.dist h2{font-size:1.05rem;margin:0 0 10px;color:#0f3d5e}
-.list{display:flex;flex-wrap:wrap;gap:8px}
-.item{background:#fff;border:1px dashed #b9c6d0;border-radius:10px;padding:8px 12px;font-size:.9rem;color:#5b6b78}
-a.item{border:1px solid #0f3d5e;color:#0f3d5e;text-decoration:none;font-weight:600}
-.item small{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.4px;color:#8896a2}
-.sec{background:#fff;border:1px solid #dbe3e9;border-radius:14px;padding:18px 20px;margin-bottom:14px}
-.sec h2{margin:0 0 6px;font-size:1.05rem;color:#0f3d5e}
-.sec p{margin:0;color:#5b6b78;font-size:.93rem}
-main{margin-top:0;padding-top:28px}
+main{max-width:1180px;margin:0 auto 44px;padding:30px 16px 0}
+
+.fam{margin:0 0 34px}
+.fam h2{margin:0;font-size:1.18rem;color:#0f3d5e;letter-spacing:-.2px}
+.fam h2::after{content:"";display:block;width:46px;height:3px;background:#7fe0bf;border-radius:2px;margin-top:7px}
+.fam p.sotto{margin:10px 0 16px;color:#5b6b78;font-size:.94rem;max-width:720px}
+
+.griglia{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(285px,1fr))}
+a.scheda{display:flex;flex-direction:column;background:#fff;border:1px solid #dbe3e9;border-radius:14px;overflow:hidden;text-decoration:none;color:inherit;box-shadow:0 2px 8px rgba(15,61,94,.06);transition:transform .16s,border-color .16s,box-shadow .16s}
+a.scheda:hover{transform:translateY(-3px);border-color:#0f3d5e;box-shadow:0 8px 20px rgba(15,61,94,.13)}
+a.scheda img{display:block;width:100%;height:auto;aspect-ratio:740/420;object-fit:cover;background:#eef3f6;border-bottom:1px solid #e4ebf0}
+.testo{padding:14px 16px 16px;display:flex;flex-direction:column;gap:5px;flex:1}
+.testo b{color:#0f3d5e;font-size:1.02rem;line-height:1.3}
+.testo em{font-style:normal;color:#5b6b78;font-size:.88rem}
+a.scheda .freccia{margin-top:auto;padding-top:10px;color:#1b8a6b;font-weight:600;font-size:.85rem}
+a.scheda:hover .freccia{color:#0f3d5e}
+
+.vuota{display:flex;flex-direction:column;justify-content:center;gap:5px;background:#fff;border:1px dashed #b9c6d0;border-radius:14px;padding:18px 16px;color:#5b6b78;min-height:120px}
+.vuota b{display:block;color:#5b6b78;font-size:1.02rem}
+.vuota small{font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;color:#8896a2}
+
+.disc{background:#fff8e6;border:1px solid #f0d58c;border-radius:12px;padding:14px 16px;font-size:.88rem;color:#5a4a12;margin-top:6px}
+footer{text-align:center;color:#5b6b78;font-size:.82rem;padding:0 16px 32px}
+:focus-visible{outline:3px solid #1b8a6b;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}a.scheda:hover{transform:none}}
+@media (max-width:460px){.griglia{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <nav class="sub"><a href="index.html">← iltuofisiatra.it</a><a href="pazienti.html">Area pazienti</a><a href="patologie.html">Patologie</a><a href="procedure.html" class=on>Procedure</a></nav>
 <header>
   <h1><span>Procedure</span></h1>
-  <p>I trattamenti proposti in ambulatorio.</p>
+  <p>I trattamenti proposti in ambulatorio, uno per uno: come si esegue la seduta, in quali casi si propone e che cosa ci si può aspettare.</p>
 </header>
 <main>
-  <section class="dist"><h2>Agopuntura</h2><div class="list"><a class="item" href="agopuntura.html">Agopuntura antalgica</a><span class="item">Riflessologia agopunturale<small>Da realizzare</small></span></div></section>
-  <section class="dist"><h2>Elettrolisi percutanea</h2><div class="list"><a class="item" href="elettrolisi-percutanea.html">Elettrolisi percutanea ecoguidata</a></div></section>
-  <section class="dist"><h2>Infiltrazioni</h2><div class="list"><a class="item" href="proloterapia.html">Proloterapia</a><a class="item" href="infiltrazione-spalla.html">Infiltrazione della spalla: a mano libera ed ecoguidata</a><a class="item" href="infiltrazione-anca.html">Infiltrazione ecoguidata dell&#x27;anca</a><a class="item" href="acido-ialuronico.html">Acido ialuronico e viscosupplementazione</a></div></section>
-  <section class="dist"><h2>Medicina manuale e manipolazioni</h2><div class="list"><a class="item" href="terapia-manuale.html">Terapia manuale e manipolazioni</a></div></section>
-  <section class="dist"><h2>Mesoterapia</h2><div class="list"><a class="item" href="mesoterapia.html">Mesoterapia</a></div></section>
-  <section class="dist"><h2>Onde d'urto</h2><div class="list"><a class="item" href="onde-durto.html">Onde d&#x27;urto extracorporee</a></div></section>
-  <section class="dist"><h2>Ossigeno-ozono terapia</h2><div class="list"><a class="item" href="ossigeno-ozono.html">Ossigeno-ozono terapia</a></div></section>
-  <section class="dist"><h2>Radioguidati</h2><div class="list"><a class="item" href="radiofrequenza-genicolare.html">Radiofrequenza dei nervi genicolari</a></div></section>
-  <section class="dist"><h2>Terapia vibrazionale</h2><div class="list"><a class="item" href="terapia-vibrazionale.html">Terapia vibrazionale focale</a></div></section>
-  <section class="dist"><h2>Tossina botulinica</h2><div class="list"><a class="item" href="tossina-botulinica.html">Tossina botulinica</a></div></section>
-  <section class="dist"><h2>Trattamenti ecoguidati</h2><div class="list"><a class="item" href="idrodilatazione-capsulite.html">Trattamento ecoguidato della capsulite adesiva (idrodilatazione)</a><a class="item" href="barbotage-calcificazioni.html">Barbotage (litoclasia) ecoguidato della spalla calcifica</a></div></section>
-  <section class="dist"><h2>Trigger point</h2><div class="list"><a class="item" href="trigger-point-dry-needling.html">Trigger point: infiltrazione e dry needling</a></div></section>
+
+  <section class="fam">
+    <h2>Infiltrazioni e iniezioni</h2>
+    <p class="sotto">Un farmaco portato nel punto esatto, a mano libera o seguendo l'ago con l'ecografo.</p>
+    <div class="griglia">
+      <a class="scheda" href="infiltrazione-spalla.html"><img src="th-infiltrazione-spalla.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Infiltrazione della spalla</b><em>A mano libera ed ecoguidata: quando si propone, com'è la seduta e quanto dura l'effetto.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="infiltrazione-anca.html"><img src="th-infiltrazione-anca.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Infiltrazione dell'anca</b><em>Perché si esegue con l'ecografo, quanto dura l'effetto e quando conviene.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="acido-ialuronico.html"><img src="th-acido-ialuronico.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Acido ialuronico</b><em>Che cosa ci si può aspettare dalla viscosupplementazione, e che cosa no.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="ossigeno-ozono.html"><img src="th-ossigeno-ozono.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Ossigeno-ozono terapia</b><em>Dove i dati sono incoraggianti, dove restano incerti e quali sono i limiti di dose.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="mesoterapia.html"><img src="th-mesoterapia.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Mesoterapia</b><em>Micro-iniezioni di farmaco appena sotto la pelle, nel punto che fa male.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="proloterapia.html"><img src="th-proloterapia.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Proloterapia</b><em>Dove ha mostrato di funzionare, e dove invece no.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="tossina-botulinica.html"><img src="th-tossina-botulinica.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Tossina botulinica</b><em>Ridurre per qualche mese la contrazione involontaria di un muscolo.</em><span class="freccia">Apri la scheda →</span></span></a>
+    </div>
+  </section>
+
+  <section class="fam">
+    <h2>Trattamenti ecoguidati con ago</h2>
+    <p class="sotto">Qui l'ago non porta un farmaco: svuota un deposito di calcio, distende una capsula retratta, porta una corrente dentro il tendine.</p>
+    <div class="griglia">
+      <a class="scheda" href="barbotage-calcificazioni.html"><img src="th-barbotage-calcificazioni.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Barbotage della spalla calcifica</b><em>Come si svuota con un ago il deposito di calcio nel tendine.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="idrodilatazione-capsulite.html"><img src="th-idrodilatazione-capsulite.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Idrodilatazione della capsulite</b><em>Distendere con un liquido la capsula retratta nella spalla congelata.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="elettrolisi-percutanea.html"><img src="th-elettrolisi-percutanea.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Elettrolisi percutanea</b><em>Una corrente portata nel tendine con un ago, sempre insieme agli esercizi.</em><span class="freccia">Apri la scheda →</span></span></a>
+    </div>
+  </section>
+
+  <section class="fam">
+    <h2>Terapie strumentali</h2>
+    <p class="sotto">Energia applicata al tessuto dall'esterno o attraverso un ago: onde acustiche, vibrazione, radiofrequenza.</p>
+    <div class="griglia">
+      <a class="scheda" href="onde-durto.html"><img src="th-onde-durto.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Onde d'urto extracorporee</b><em>Onde acustiche applicate sulla pelle per trattare tendini e fasce.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="radiofrequenza-genicolare.html"><img src="th-radiofrequenza-genicolare.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Radiofrequenza dei nervi genicolari</b><em>Interrompere per alcuni mesi i nervi che portano il dolore del ginocchio.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="terapia-vibrazionale.html"><img src="th-terapia-vibrazionale.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Terapia vibrazionale focale</b><em>Vibrazioni su un singolo muscolo per ridurne la rigidità.</em><span class="freccia">Apri la scheda →</span></span></a>
+    </div>
+  </section>
+
+  <section class="fam">
+    <h2>Agopuntura, dry needling e terapia manuale</h2>
+    <p class="sotto">Senza farmaci: l'ago da solo, oppure le mani sulle articolazioni e sui tessuti molli.</p>
+    <div class="griglia">
+      <a class="scheda" href="agopuntura.html"><img src="th-agopuntura.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Agopuntura antalgica</b><em>Dove il beneficio è stato misurato, e quanto è grande.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="trigger-point-dry-needling.html"><img src="th-trigger-point-dry-needling.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Trigger point e dry needling</b><em>L'ago nel punto dolente del muscolo, con o senza farmaco.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <a class="scheda" href="terapia-manuale.html"><img src="th-terapia-manuale.webp" width="740" height="420" alt="" loading="lazy" decoding="async"><span class="testo"><b>Terapia manuale e manipolazioni</b><em>Le mani su articolazioni e tessuti molli, e che cosa ci si può aspettare.</em><span class="freccia">Apri la scheda →</span></span></a>
+      <div class="vuota"><b>Riflessologia agopunturale</b><small>Da realizzare</small></div>
+    </div>
+  </section>
+
   <div class="disc"><strong>Avvertenza.</strong> Le informazioni hanno scopo divulgativo e non sostituiscono la visita medica. In caso di dubbi o sintomi rivolgiti al tuo medico; in caso di emergenza chiama il 112.</div>
 </main>
 <footer>© iltuofisiatra.it — Dott. Flavio Mignone</footer>
