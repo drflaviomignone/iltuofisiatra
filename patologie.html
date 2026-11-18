@@ -124,6 +124,7 @@ h3.elenco{max-width:860px}
   </div>
 </section>
 <main>
+  <div id="ricerca"></div>
 
   <div class="disc"><strong>Avvertenza.</strong> Le informazioni hanno scopo divulgativo e non sostituiscono la visita medica. In caso di dubbi o sintomi rivolgiti al tuo medico; in caso di emergenza chiama il 112.</div>
 </main>
@@ -173,5 +174,6 @@ try {
   $('#attesa').remove(); if (sel) api.seleziona(sel, true);
 } catch (err) { console.error(err); $('#attesa').textContent = 'La figura 3D non si è caricata su questo dispositivo. Puoi scegliere il distretto dall’elenco.'; }
 </script>
+<script src="ricerca.js" defer></script>
 </body>
 </html>
