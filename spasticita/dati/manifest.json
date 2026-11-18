@@ -1,6 +1,6 @@
 {
- "v": "0e3d7d63e8",
- "data": "2026-11-03",
+ "v": "2b12a230c7",
+ "data": "2026-11-17",
  "salt": "L4vVhhsugG6yVExtTbiJNQ==",
  "iter": 600000,
  "check": {
@@ -9,7 +9,7 @@
  },
  "app": {
   "file": "app.bin",
-  "iv": "3Zuo+t3VzTQNNZNp",
-  "size": 13429913
+  "iv": "MePB9XpnlC0trTaD",
+  "size": 13431926
  }
 }
