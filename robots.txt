@@ -8,5 +8,10 @@ Disallow: /setting-riabilitativo.html
 Disallow: /cobb.html
 Disallow: /consenso.html
 Disallow: /spasticita/
+Disallow: /nota66.html
+Disallow: /nota-n01.html
+Disallow: /convertitore-oppioidi.html
+Disallow: /scheda-modello.html
+Disallow: /operatori_1.html
 
 Sitemap: https://iltuofisiatra.it/sitemap.xml

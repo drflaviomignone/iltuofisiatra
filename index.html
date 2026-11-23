@@ -14,49 +14,87 @@
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f4f7f9;color:#14212b;line-height:1.5}
-header{background:#0f3d5e;color:#fff;padding:36px 20px 40px;text-align:center}
-header h1{margin:0 0 8px;font-size:1.9rem;letter-spacing:-.5px}
+header{background:#0f3d5e;color:#fff;padding:40px 20px 56px;text-align:center}
+header h1{margin:0 0 10px;font-size:2.05rem;letter-spacing:-.6px}
 header h1 span{color:#7fe0bf}
-header p{margin:0 auto;max-width:560px;opacity:.9}
-header a.back{display:inline-block;margin-bottom:14px;color:#cfe6f5;font-size:.88rem;text-decoration:none}
-main{max-width:860px;margin:-22px auto 40px;padding:0 16px}
+header p{margin:0 auto;max-width:540px;opacity:.9}
+main{max-width:860px;margin:-34px auto 40px;padding:0 16px}
+.cerca{background:#fff;border:1px solid #dbe3e9;border-radius:14px;padding:22px 24px 24px;box-shadow:0 6px 20px rgba(15,61,94,.10)}
+.cerca h2{margin:0 0 4px;font-size:1.1rem;color:#0f3d5e}
+.cerca > p{margin:0 0 16px;color:#5b6b78;font-size:.9rem}
+h3{margin:30px 0 12px;font-size:.85rem;text-transform:uppercase;letter-spacing:.6px;color:#5b6b78}
+.comuni{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 4px;padding:0;list-style:none}
+.comuni a{display:inline-block;background:#fff;border:1px solid #dbe3e9;border-radius:20px;padding:9px 15px;
+ text-decoration:none;color:#0f3d5e;font-weight:600;font-size:.9rem}
+.comuni a:hover{border-color:#7fe0bf;background:#f2fbf7}
 .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
 .card{background:#fff;border:1px solid #dbe3e9;border-radius:14px;padding:22px;display:flex;flex-direction:column;box-shadow:0 2px 8px rgba(15,61,94,.06)}
-.card h2{margin:6px 0 6px;font-size:1.15rem}
+.card h2{margin:6px 0;font-size:1.15rem}
 .card p{margin:0 0 14px;color:#5b6b78;font-size:.92rem;flex:1}
 .tag{align-self:flex-start;font-size:.72rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#1b8a6b;background:#e3f5ee;padding:3px 8px;border-radius:10px}
-.btns{display:flex;gap:8px;flex-wrap:wrap}
-.btn{display:inline-block;padding:9px 14px;border-radius:9px;background:#0f3d5e;color:#fff;text-decoration:none;font-weight:600;font-size:.9rem}
-.btn.sec{background:#fff;color:#0f3d5e;border:1px solid #0f3d5e}
-.soon{opacity:.6;border-style:dashed}
-.soon .tag{color:#5b6b78;background:#eceff2}
-h3{margin:34px 0 12px;font-size:.85rem;text-transform:uppercase;letter-spacing:.6px;color:#5b6b78}
-.disc{background:#fff8e6;border:1px solid #f0d58c;border-radius:12px;padding:14px 16px;font-size:.88rem;color:#5a4a12;margin-top:28px}
+.btn{display:inline-block;align-self:flex-start;padding:9px 14px;border-radius:9px;background:#0f3d5e;color:#fff;text-decoration:none;font-weight:600;font-size:.9rem}
+.oper{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+ background:#eef4f9;border:1px solid #dbe3e9;border-radius:12px;padding:15px 18px;margin-top:30px}
+.oper p{margin:0;font-size:.9rem;color:#31506b}
+.oper a{white-space:nowrap;font-weight:600;color:#0f3d5e;text-decoration:none;border-bottom:1px solid #9cc0d8}
+.disc{background:#fff8e6;border:1px solid #f0d58c;border-radius:12px;padding:14px 16px;font-size:.88rem;color:#5a4a12;margin-top:22px}
 footer{text-align:center;color:#5b6b78;font-size:.82rem;padding:0 16px 32px}
+:focus-visible{outline:3px solid #1b8a6b;outline-offset:2px}
 </style>
 </head>
 <body>
 <header>
   <h1>il<span>tuo</span>fisiatra.it</h1>
-  <p>Informazioni e strumenti dal medico fisiatra. Scegli la tua area.</p>
+  <p>Che cosa hai, quanto dura e che cure funzionano davvero. Scritto da un medico fisiatra, con le fonti in fondo a ogni pagina.</p>
 </header>
 <main>
+
+  <section class="cerca" aria-label="Cerca nel sito">
+    <h2>Che cosa ti fa male?</h2>
+    <p>Cerca un disturbo, un trattamento, o anche solo il punto che fa male.</p>
+    <div id="ricerca"></div>
+  </section>
+
+  <h3>I disturbi più cercati</h3>
+  <ul class="comuni">
+    <li><a href="lombalgia.html">Mal di schiena</a></li>
+    <li><a href="cervicalgia.html">Dolore al collo</a></li>
+    <li><a href="tunnel-carpale.html">Tunnel carpale</a></li>
+    <li><a href="radicolopatia.html">Sciatica</a></li>
+    <li><a href="tendinopatia-cuffia.html">Dolore alla spalla</a></li>
+    <li><a href="gonartrosi.html">Artrosi del ginocchio</a></li>
+    <li><a href="fascite-plantare.html">Dolore al tallone</a></li>
+    <li><a href="epicondilite.html">Gomito del tennista</a></li>
+    <li><a href="ernia-discale.html">Ernia del disco</a></li>
+    <li><a href="capsulite-adesiva.html">Spalla congelata</a></li>
+    <li><a href="artrosi-anca.html">Artrosi dell'anca</a></li>
+    <li><a href="tendine-achille.html">Tendine d'Achille</a></li>
+  </ul>
+
+  <h3>Oppure parti da qui</h3>
   <div class="grid">
     <article class="card">
-      <span class="tag">Medici e operatori</span>
-      <h2>Area operatori</h2>
-      <p>Strumenti di consultazione rapida per l'ambulatorio: percorsi guidati sulle Note AIFA, fino alla prescrizione con principi attivi e posologie.</p>
-      <div class="btns"><a class="btn" href="operatori.html">Entra nell'area operatori</a></div>
+      <span class="tag">Per distretto</span>
+      <h2>Patologie</h2>
+      <p>Ottanta schede sulle principali patologie muscolo-scheletriche: come si riconoscono, quanto durano e che cosa aiuta. Si parte toccando la zona del corpo che fa male.</p>
+      <a class="btn" href="patologie.html">Vedi le patologie</a>
     </article>
     <article class="card">
-      <span class="tag">Pazienti</span>
-      <h2>Area pazienti</h2>
-      <p>Informazioni chiare per i pazienti su salute, riabilitazione e percorsi di cura.</p>
-      <div class="btns"><a class="btn" href="pazienti.html">Entra nell'area pazienti</a></div>
+      <span class="tag">Cosa aspettarsi</span>
+      <h2>Procedure</h2>
+      <p>I trattamenti proposti in ambulatorio, uno per uno: come si svolge la seduta, in quali casi si propone e che risultati dà.</p>
+      <a class="btn" href="procedure.html">Vedi le procedure</a>
     </article>
   </div>
-  <div class="disc"><strong>Avvertenza.</strong> I contenuti hanno scopo informativo e di consultazione e non sostituiscono la visita medica né il giudizio clinico. Nessun dato del paziente viene inviato o salvato dal sito.</div>
+
+  <div class="oper">
+    <p><strong>Sei un medico o un operatore sanitario?</strong> Nell'area riservata ci sono gli strumenti per l'ambulatorio: percorsi guidati sulle Note AIFA e convertitore di oppioidi.</p>
+    <a href="operatori.html">Area operatori &rarr;</a>
+  </div>
+
+  <div class="disc"><strong>Avvertenza.</strong> I contenuti hanno scopo informativo e non sostituiscono la visita medica né il giudizio clinico. In caso di emergenza chiama il 112. Nessun dato del paziente viene inviato o salvato dal sito.</div>
 </main>
-<footer>© iltuofisiatra.it — Dott. Flavio Mignone</footer>
+<footer>&copy; iltuofisiatra.it &mdash; Dott. Flavio Mignone</footer>
+<script src="ricerca.js" defer></script>
 </body>
 </html>

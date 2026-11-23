@@ -15,6 +15,7 @@
     '#ricerca input::-webkit-search-cancel-button{cursor:pointer}' +
     '#ricerca ul{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 6px);margin:0;padding:6px;list-style:none;' +
     'background:#fff;border:1px solid #dbe3e9;border-radius:12px;box-shadow:0 10px 28px rgba(15,61,94,.16);max-height:62vh;overflow:auto}' +
+    '#ricerca ul.su{top:auto;bottom:calc(100% + 6px);box-shadow:0 -10px 28px rgba(15,61,94,.16)}' +
     '#ricerca ul[hidden]{display:none}' +
     '#ricerca li{margin:0}' +
     '#ricerca a{display:block;padding:9px 11px;border-radius:8px;text-decoration:none;color:#14212b}' +
@@ -24,7 +25,11 @@
     '#ricerca mark{background:#d8f2e7;color:inherit;padding:0 1px;border-radius:2px}' +
     '#ricerca .rc-eti{display:inline-block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;' +
     'color:#1b8a6b;background:#e3f5ee;padding:2px 7px;border-radius:9px;margin-right:6px;vertical-align:1px}' +
-    '#ricerca .rc-nulla{padding:11px;font-size:.9rem;color:#5b6b78}';
+    '#ricerca .rc-nulla{padding:11px;font-size:.9rem;color:#5b6b78}' +
+    'section.rc-coda{background:#fff;border:1px solid #dbe3e9;border-radius:14px;padding:20px 22px;margin:26px 0 0}' +
+    'section.rc-coda h2{margin:0 0 6px;font-size:1.05rem;color:#0f3d5e;border:none;padding:0}' +
+    'section.rc-coda > p{margin:0 0 14px;font-size:.9rem;color:#5b6b78}' +
+    'section.rc-coda #ricerca{margin:0}';
   var st = document.createElement("style"); st.textContent = CSS; document.head.appendChild(st);
 
   host.innerHTML =
@@ -95,7 +100,11 @@
           '<span><i class="rc-eti">' + eti + "</i>" + v.d + "</span></a></li>";
       }).join("");
     }
+    box.classList.remove("su");
     box.hidden = false; q.setAttribute("aria-expanded", "true");
+    // se sotto non c'è spazio ma sopra sì, il menu si apre verso l'alto
+    var r = q.getBoundingClientRect(), alto = box.offsetHeight;
+    if (r.bottom + 6 + alto > innerHeight && r.top - 6 - alto > 0) box.classList.add("su");
   }
 
   function chiudi() { box.hidden = true; q.setAttribute("aria-expanded", "false"); q.removeAttribute("aria-activedescendant"); att = -1; }

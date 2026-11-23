@@ -180,6 +180,15 @@ figure.fig .serie b{display:block;margin-top:6px;font-size:.84rem;color:#0f3d5e}
   ]
 }
 </script>
+<style>
+.rc-rel{background:#fff;border:1px solid #dbe3e9;border-radius:14px;padding:20px 22px;margin:26px 0 0;box-shadow:0 2px 8px rgba(15,61,94,.06)}
+.rc-rel h2{margin:0 0 6px;font-size:1.05rem;color:#0f3d5e;border:none;padding:0}
+.rc-rel > p{margin:0 0 14px;font-size:.88rem;color:#5b6b78}
+.rc-rel ul{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.rc-rel a{display:inline-block;background:#f7fafc;border:1px solid #dbe3e9;border-radius:20px;padding:9px 15px;
+ text-decoration:none;color:#0f3d5e;font-weight:600;font-size:.89rem;line-height:1.3}
+.rc-rel a:hover{border-color:#7fe0bf;background:#f2fbf7}
+</style>
 </head>
 <body>
 <nav class="sub"><a href="index.html">← iltuofisiatra.it</a><a href="pazienti.html">Area pazienti</a><a href="patologie.html" class="on">Patologie</a><a href="procedure.html">Procedure</a></nav>
@@ -285,7 +294,22 @@ figure.fig .serie b{display:block;margin-top:6px;font-size:.84rem;color:#0f3d5e}
 
   <p class="agg">Scheda aggiornata il 6 novembre 2026. Prossima revisione prevista entro novembre 2028.</p>
 
+
+  <section class="rc-rel" aria-label="Trattamenti citati in questa scheda">
+    <h2>Trattamenti citati in questa scheda</h2>
+    <p>Qui sopra c’è scritto se e quando sono indicati. Queste pagine spiegano in che cosa consistono.</p>
+    <ul>
+      <li><a href="terapia-manuale.html">Terapia manuale</a></li>
+    </ul>
+  </section>
+
+  <section class="rc-coda" aria-label="Cerca nel sito">
+    <h2>Cerca un'altra scheda</h2>
+    <p>Un disturbo, un trattamento, o anche solo il punto che fa male: &laquo;formicolio&raquo;, &laquo;tallone&raquo;, &laquo;spalla congelata&raquo;.</p>
+    <div id="ricerca"></div>
+  </section>
 </main>
 <footer>© iltuofisiatra.it — Dott. Flavio Mignone</footer>
+<script src="ricerca.js" defer></script>
 </body>
 </html>

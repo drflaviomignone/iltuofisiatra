@@ -63,6 +63,13 @@ main{margin-top:0;padding-top:28px}
 #v3d canvas{display:block;touch-action:none}
 .v3d-tip{position:absolute;pointer-events:none;background:#0f3d5e;color:#fff;font-size:.82rem;font-weight:600;padding:4px 9px;border-radius:7px;white-space:nowrap;z-index:3}
 .attesa{position:absolute;inset:0;display:grid;place-items:center;color:#5b6b78;font-size:.92rem;text-align:center;padding:20px}
+.avvio{position:absolute;inset:0;z-index:3;display:grid;place-content:center;justify-items:center;gap:12px;padding:24px;text-align:center}
+.avvio svg{width:54px;height:54px;stroke:#9db4c4;fill:none;stroke-width:1.6}
+.avvio b{font-size:1rem;color:#14212b;font-weight:600}
+.avvio small{display:block;max-width:300px;color:#5b6b78;font-size:.84rem;line-height:1.45}
+.avvio button{font:inherit;cursor:pointer;border:none;border-radius:10px;background:#0f3d5e;color:#fff;font-weight:600;font-size:.94rem;padding:11px 18px}
+.avvio button:hover{background:#15537f}
+.comandi button[disabled]{opacity:.45;cursor:default}
 .etich{position:absolute;top:12px;left:0;right:0;text-align:center;pointer-events:none;z-index:2}
 .etich span{display:inline-block;background:#0f3d5e;color:#fff;border-radius:18px;padding:5px 14px;font-weight:600;font-size:.9rem}
 .etich span:empty{display:none}
@@ -109,13 +116,18 @@ h3.elenco{max-width:860px}
 <section class="mappa" aria-label="Mappa del corpo">
   <div class="visore">
     <div id="v3d" role="img" aria-label="Figura umana tridimensionale divisa in zone selezionabili"></div>
-    <div class="attesa" id="attesa">Caricamento della figura…</div>
+    <div class="avvio" id="avvio">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.5" r="2.6"/><path d="M12 7.5v8m0 0-3.2 5.5m3.2-5.5 3.2 5.5M5.5 10.5 12 9l6.5 1.5" stroke-linecap="round"/></svg>
+      <b>Figura del corpo in 3D</b>
+      <small>Si tocca la zona che fa male e si apre il distretto. Sono circa 950&nbsp;KB da scaricare: se sei con i dati del telefono puoi anche scegliere il distretto dall'elenco qui sotto.</small>
+      <button type="button" id="b-avvio">Mostra la figura</button>
+    </div>
     <div class="etich" aria-hidden="true"><span id="etich"></span></div>
     <div class="comandi">
       <div class="gruppo" role="group" aria-label="Punto di vista">
-        <button type="button" data-vista="fronte" aria-pressed="true">Davanti</button>
-        <button type="button" data-vista="retro" aria-pressed="false">Dietro</button>
-        <button type="button" data-vista="lato" aria-pressed="false">Di lato</button>
+        <button type="button" data-vista="fronte" aria-pressed="true" disabled>Davanti</button>
+        <button type="button" data-vista="retro" aria-pressed="false" disabled>Dietro</button>
+        <button type="button" data-vista="lato" aria-pressed="false" disabled>Di lato</button>
       </div>
     </div>
   </div>
@@ -168,11 +180,29 @@ $('#apri-tutto').addEventListener('click', () => {
 document.querySelectorAll('details.dist').forEach(d => d.addEventListener('toggle', sincApri));
 addEventListener('hashchange', () => { const d = perId[location.hash.slice(1)]; scegli(d ? d.n : 0, false); });
 const iniz = perId[location.hash.slice(1)]; sel = iniz ? iniz.n : 0; apriElenco(); $('#etich').textContent = sel ? perN[sel].nome : '';
-try {
-  const mod = await import('./3d-umano.js');
-  api = await mod.monta($('#v3d'), { nome: n => perN[n] ? perN[n].nome : '', onSel: n => scegli(n, true) });
-  $('#attesa').remove(); if (sel) api.seleziona(sel, true);
-} catch (err) { console.error(err); $('#attesa').textContent = 'La figura 3D non si è caricata su questo dispositivo. Puoi scegliere il distretto dall’elenco.'; }
+// La figura pesa circa 950 KB fra libreria e modello: si carica solo se richiesta,
+// così chi sceglie il distretto dall'elenco non la scarica affatto.
+let avviata = false;
+async function caricaFigura() {
+  if (avviata) return; avviata = true;
+  const velo = $('#avvio');
+  velo.innerHTML = '<small>Caricamento della figura…</small>';
+  try {
+    const mod = await import('./3d-umano.js');
+    api = await mod.monta($('#v3d'), { nome: n => perN[n] ? perN[n].nome : '', onSel: n => scegli(n, true) });
+    velo.remove();
+    document.querySelectorAll('[data-vista]').forEach(b => b.removeAttribute('disabled'));
+    if (sel) api.seleziona(sel, true);
+    try { sessionStorage.setItem('figura3d', '1'); } catch (e) {}
+  } catch (err) {
+    console.error(err);
+    avviata = false;
+    velo.innerHTML = '<small>La figura 3D non si è caricata su questo dispositivo. Puoi scegliere il distretto dall\'elenco qui sotto.</small>';
+  }
+}
+$('#b-avvio').addEventListener('click', caricaFigura);
+// se l'ha già aperta in questa sessione, non glielo chiediamo di nuovo
+try { if (sessionStorage.getItem('figura3d') === '1') caricaFigura(); } catch (e) {}
 </script>
 <script src="ricerca.js" defer></script>
 </body>
